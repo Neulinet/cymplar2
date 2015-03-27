@@ -1,0 +1,9 @@
+.portlet-column {
+    display: block;
+    vertical-align: top;
+}
+
+.page-header-top {
+    border-top: medium none;
+    margin: -5px -20px 20px;
+}

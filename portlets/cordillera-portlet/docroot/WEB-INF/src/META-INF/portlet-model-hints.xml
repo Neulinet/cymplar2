@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<hint-collection name="DESCRIPTION">
+		<hint name="max-length">250</hint>
+	</hint-collection>
+	<hint-collection name="TEXTAREA">
+		<hint name="max-length">500</hint>
+	</hint-collection>
+	<model name="com.leancrm.portlet.library.model.AddressBook">
+		<field name="addressBookId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="addressBookType" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.AddressBookContact">
+		<field name="addressBookId" type="long" />
+		<field name="contactId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="assignedTo" type="long" />
+		<field name="currentProgress" type="double" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.AddressBookContactData">
+		<field name="addressBookId" type="long" />
+		<field name="contactDataId" type="long" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.AddressBookOrganization">
+		<field name="addressBookId" type="long" />
+		<field name="organizationId" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.AddressBookUser">
+		<field name="addressBookId" type="long" />
+		<field name="userId" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ColleagueAddressBookContact">
+		<field name="contactid" type="long" />
+		<field name="emailAddress" type="String" />
+		<field name="contactdataid" type="long" />
+		<field name="methodId" type="long" />
+		<field name="contactName" type="String" />
+		<field name="enterpriseName" type="String" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.Contact">
+		<field name="contactId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ContactContract">
+		<field name="contactId" type="long" />
+		<field name="contractId" type="long" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ContactData">
+		<field name="contactDataId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="contactDataType" type="int" />
+		<field name="readOnly" type="boolean" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="contactDataMethodId" type="long" />
+		<field name="contactId" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ContactDataMethod">
+		<field name="contactDataMethodId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="name" type="String" />
+		<field name="title" type="String" />
+		<field name="contactDataType" type="int" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ContactDataPhone">
+		<field name="contactDataId" type="long" />
+		<field name="extension" type="String" />
+		<field name="number" type="String" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ContactDataRef">
+		<field name="contactDataId" type="long" />
+		<field name="refValue" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.ContactDataText">
+		<field name="contactDataId" type="long" />
+		<field name="value" type="String" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.Contract">
+		<field name="contractId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="organizationId" type="long" />
+		<field name="enterpriseId" type="long" />
+		<field name="contactId" type="long" />
+		<field name="description" type="String" />
+		<field name="amount" type="double" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.Enterprise">
+		<field name="enterpriseId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="isPrivate" type="int" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint-collection name="DESCRIPTION" />
+		</field>
+		<field name="taxid" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="DESCRIPTION" />
+		</field>
+		<field name="industry" type="long" />
+		<field name="email" type="String" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.Industry">
+		<field name="industryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.MyAddressBookContact">
+		<field name="contactId" type="long" />
+		<field name="methodId" type="long" />
+		<field name="contactName" type="String" />
+		<field name="enterpriseId" type="long" />
+		<field name="enterpriseName" type="String" />
+		<field name="contractId" type="long" />
+		<field name="reportId" type="long" />
+		<field name="status" type="int" />
+		<field name="progress" type="double" />
+		<field name="description" type="String" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.NextFollowUpEvent">
+		<field name="eventId" type="long" />
+		<field name="eventDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="ownerId" type="long" />
+		<field name="contractId" type="long" />
+		<field name="reportId" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.OrganizationIndustry">
+		<field name="organizationId" type="long" />
+		<field name="industryId" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.Report">
+		<field name="reportId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="organizationId" type="long" />
+		<field name="enterpriseId" type="long" />
+		<field name="contactId" type="long" />
+		<field name="contactDataId" type="long" />
+		<field name="contactMethodId" type="long" />
+		<field name="reportDate" type="Date" />
+		<field name="comments" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="progress" type="double" />
+		<field name="status" type="int" />
+		<field name="contractId" type="long" />
+		<field name="cdNameId" type="long" />
+	</model>
+	<model name="com.leancrm.portlet.library.model.UserContract">
+		<field name="userId" type="long" />
+		<field name="contractId" type="long" />
+		<field name="active" type="boolean" />
+	</model>
+</model-hints>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.2.0//EN" "http://www.liferay.com/dtd/liferay-display_6_2_0.dtd">
+
+<display>
+	<category name="Segmax">
+		<portlet id="addOrganization"></portlet>
+		<portlet id="organizationrequest"></portlet>
+		<portlet id="colleague"></portlet>
+		<portlet id="invitationcolleagues"></portlet>
+		<portlet id="contactmanager"></portlet>
+		<portlet id="admincrm"></portlet>
+		<portlet id="organizationcontactmanager"></portlet>
+		<portlet id="reportmanager"></portlet>
+		<portlet id="reportsearch"></portlet>
+		<portlet id="contact-display"></portlet>
+		<portlet id="reportSearchResult"></portlet>
+		<portlet id="contact-migration"></portlet>
+		<portlet id="calendar"></portlet>
+		<portlet id="next-follow-up-event"></portlet>
+	</category>
+</display>

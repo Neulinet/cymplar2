@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>addOrganization</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<!-- 		<header-portlet-css>/css/main.css</header-portlet-css> -->
+		<!-- 		<footer-portlet-javascript>/js/service.js</footer-portlet-javascript> -->
+		<!-- 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript> -->
+		<css-class-wrapper>a-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>organizationrequest</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<!-- 		<header-portlet-css>/css/main.css</header-portlet-css> -->
+		<!-- 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript> -->
+		<css-class-wrapper>organizationrequest-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>colleague</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<!-- 		<header-portlet-javascript>/js/ajax.js</header-portlet-javascript> -->
+		<!-- 		<footer-portlet-css>/css/portlet.css</footer-portlet-css> -->
+		<css-class-wrapper>colleague-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>invitationcolleagues</portlet-name>
+		<icon>/icon.png</icon>
+		<configuration-action-class>com.leancrm.portlet.invitationcolleagues.util.ConfigurationActionImpl</configuration-action-class>
+		<instanceable>true</instanceable>
+		<!-- 		<header-portlet-css>/css/main.css</header-portlet-css> -->
+		<!-- 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript> -->
+		<css-class-wrapper>invitationcolleagues-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>contactmanager</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>false</instanceable>
+		<css-class-wrapper>contactmanager-portlet</css-class-wrapper>
+	</portlet>
+	<!-- portlet>
+		<portlet-name>admincrm</portlet-name>
+		<icon>/icon.png</icon>
+		<control-panel-entry-category>content</control-panel-entry-category>
+		<control-panel-entry-weight>1.5</control-panel-entry-weight>
+		<instanceable>true</instanceable>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>admincrm-portlet</css-class-wrapper>
+	</portlet -->
+	<portlet>
+		<portlet-name>organizationcontactmanager</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<css-class-wrapper>organizationcontactmanager-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>reportmanager</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<css-class-wrapper>reportmanager-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>reportsearch</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<!--
+		<header-portlet-css>http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css</header-portlet-css>
+		<header-portlet-css>/css/dataTable/demo_page.css</header-portlet-css>
+		<header-portlet-css>/css/dataTable/demo_table_jui.css</header-portlet-css>
+		<header-portlet-css>/css/dataTable/demo_table.css</header-portlet-css>
+		<header-portlet-css>/css/dataTable/jquery.dataTables_themeroller.css</header-portlet-css>
+		<header-portlet-css>/css/dataTable/jquery.dataTables.css</header-portlet-css>
+		-->
+		<!-- 		<header-portlet-css>/css/reportSearch.css</header-portlet-css> -->
+		<!-- 		<header-portlet-css>/css/main.css</header-portlet-css> -->
+		<!-- 		<header-portlet-css>/css/commonForm.css</header-portlet-css> -->
+		<!--
+		<header-portlet-javascript>http://code.jquery.com/jquery-1.9.1.js</header-portlet-javascript>
+		<header-portlet-javascript>http://code.jquery.com/ui/1.10.3/jquery-ui.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/dataTable/jquery.dataTables.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/dataTable/jquery.dataTables.js</header-portlet-javascript>
+		-->
+		<!-- 		<header-portlet-javascript>/js/ajax.js</header-portlet-javascript> -->
+		<!-- 		<footer-portlet-javascript>/js/service.js</footer-portlet-javascript> -->
+		<!-- 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript> -->
+		<!-- 		<footer-portlet-javascript>/js/reportSearch.js</footer-portlet-javascript> -->
+		<css-class-wrapper>reportsearch-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>contact-display</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>true</instanceable>
+		<css-class-wrapper>contact-display-portlet</css-class-wrapper>
+	</portlet>
+	<!-- portlet>
+		<portlet-name>reportSearchResult</portlet-name>
+		<icon>/icon.png</icon>
+		<render-weight>0</render-weight>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			reportsearchresult-portlet
+		</css-class-wrapper>
+	</portlet -->
+	<!-- portlet>
+		<portlet-name>contact-migration</portlet-name>
+		<icon>/icon.png</icon>
+		<control-panel-entry-category>portal</control-panel-entry-category>
+		<control-panel-entry-weight>15</control-panel-entry-weight>
+		<instanceable>true</instanceable>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>contact-migration-portlet</css-class-wrapper>
+	</portlet -->
+	<portlet>
+		<portlet-name>calendar</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>calendar-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>next-follow-up-event</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>next-follow-up-event-portlet</css-class-wrapper>
+	</portlet>
+	<role-mapper>
+		<role-name>administrator</role-name>
+		<role-link>Administrator</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>guest</role-name>
+		<role-link>Guest</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>power-user</role-name>
+		<role-link>Power User</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
+</liferay-portlet-app>

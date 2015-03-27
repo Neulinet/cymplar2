@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql file="custom-sql/my-contacts-query.xml" />
+    <sql file="custom-sql/my-contacts-query-count.xml" />
+    <sql file="custom-sql/colleague-contacts-query.xml" />
+    <sql file="custom-sql/colleague-contacts-query-count.xml" />
+</custom-sql> 

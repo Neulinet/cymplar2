@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.leancrm.portlet.library.service.AddressBookLocalService" class="com.leancrm.portlet.library.service.impl.AddressBookLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.AddressBookPersistence" class="com.leancrm.portlet.library.service.persistence.AddressBookPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.AddressBookContactLocalService" class="com.leancrm.portlet.library.service.impl.AddressBookContactLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.AddressBookContactPersistence" class="com.leancrm.portlet.library.service.persistence.AddressBookContactPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.AddressBookContactDataLocalService" class="com.leancrm.portlet.library.service.impl.AddressBookContactDataLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.AddressBookContactDataPersistence" class="com.leancrm.portlet.library.service.persistence.AddressBookContactDataPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.AddressBookOrganizationLocalService" class="com.leancrm.portlet.library.service.impl.AddressBookOrganizationLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.AddressBookOrganizationPersistence" class="com.leancrm.portlet.library.service.persistence.AddressBookOrganizationPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.AddressBookUserLocalService" class="com.leancrm.portlet.library.service.impl.AddressBookUserLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.AddressBookUserPersistence" class="com.leancrm.portlet.library.service.persistence.AddressBookUserPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ColleagueAddressBookContactLocalService" class="com.leancrm.portlet.library.service.impl.ColleagueAddressBookContactLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ColleagueAddressBookContactPersistence" class="com.leancrm.portlet.library.service.persistence.ColleagueAddressBookContactPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ColleagueAddressBookContactFinder" class="com.leancrm.portlet.library.service.persistence.ColleagueAddressBookContactFinderImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactLocalService" class="com.leancrm.portlet.library.service.impl.ContactLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactPersistence" class="com.leancrm.portlet.library.service.persistence.ContactPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactContractLocalService" class="com.leancrm.portlet.library.service.impl.ContactContractLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactContractPersistence" class="com.leancrm.portlet.library.service.persistence.ContactContractPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactDataLocalService" class="com.leancrm.portlet.library.service.impl.ContactDataLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactDataPersistence" class="com.leancrm.portlet.library.service.persistence.ContactDataPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactDataMethodLocalService" class="com.leancrm.portlet.library.service.impl.ContactDataMethodLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactDataMethodPersistence" class="com.leancrm.portlet.library.service.persistence.ContactDataMethodPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactDataPhoneLocalService" class="com.leancrm.portlet.library.service.impl.ContactDataPhoneLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactDataPhonePersistence" class="com.leancrm.portlet.library.service.persistence.ContactDataPhonePersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactDataRefLocalService" class="com.leancrm.portlet.library.service.impl.ContactDataRefLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactDataRefPersistence" class="com.leancrm.portlet.library.service.persistence.ContactDataRefPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContactDataTextLocalService" class="com.leancrm.portlet.library.service.impl.ContactDataTextLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContactDataTextPersistence" class="com.leancrm.portlet.library.service.persistence.ContactDataTextPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ContractLocalService" class="com.leancrm.portlet.library.service.impl.ContractLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContractPersistence" class="com.leancrm.portlet.library.service.persistence.ContractPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.EnterpriseLocalService" class="com.leancrm.portlet.library.service.impl.EnterpriseLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.EnterprisePersistence" class="com.leancrm.portlet.library.service.persistence.EnterprisePersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.IndustryLocalService" class="com.leancrm.portlet.library.service.impl.IndustryLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.IndustryPersistence" class="com.leancrm.portlet.library.service.persistence.IndustryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.MyAddressBookContactLocalService" class="com.leancrm.portlet.library.service.impl.MyAddressBookContactLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.MyAddressBookContactPersistence" class="com.leancrm.portlet.library.service.persistence.MyAddressBookContactPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.persistence.MyAddressBookContactFinder" class="com.leancrm.portlet.library.service.persistence.MyAddressBookContactFinderImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.NextFollowUpEventLocalService" class="com.leancrm.portlet.library.service.impl.NextFollowUpEventLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.NextFollowUpEventPersistence" class="com.leancrm.portlet.library.service.persistence.NextFollowUpEventPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.OrganizationIndustryLocalService" class="com.leancrm.portlet.library.service.impl.OrganizationIndustryLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.OrganizationIndustryPersistence" class="com.leancrm.portlet.library.service.persistence.OrganizationIndustryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.ReportLocalService" class="com.leancrm.portlet.library.service.impl.ReportLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ReportPersistence" class="com.leancrm.portlet.library.service.persistence.ReportPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.UserContractLocalService" class="com.leancrm.portlet.library.service.impl.UserContractLocalServiceImpl" />
+	<bean id="com.leancrm.portlet.library.service.persistence.UserContractPersistence" class="com.leancrm.portlet.library.service.persistence.UserContractPersistenceImpl" parent="basePersistence" />
+</beans>

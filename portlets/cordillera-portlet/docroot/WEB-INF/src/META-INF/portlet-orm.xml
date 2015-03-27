@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.AddressBookModelImpl">
+		<attributes>
+			<id name="addressBookId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="addressBookType" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.AddressBookContactModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.AddressBookContactPK" />
+		<attributes>
+			<id name="addressBookId" />
+			<id name="contactId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="assignedTo" />
+			<basic name="currentProgress" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.AddressBookContactDataModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.AddressBookContactDataPK" />
+		<attributes>
+			<id name="addressBookId" />
+			<id name="contactDataId" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.AddressBookOrganizationModelImpl">
+		<attributes>
+			<id name="addressBookId" />
+			<basic name="organizationId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.AddressBookUserModelImpl">
+		<attributes>
+			<id name="addressBookId" />
+			<basic name="userId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ColleagueAddressBookContactModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.ColleagueAddressBookContactPK" />
+		<attributes>
+			<id name="contactid" />
+			<id name="methodId" />
+			<basic name="emailAddress" />
+			<basic name="contactdataid" />
+			<basic name="contactName" />
+			<basic name="enterpriseName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactModelImpl">
+		<attributes>
+			<id name="contactId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactContractModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.ContactContractPK" />
+		<attributes>
+			<id name="contactId" />
+			<id name="contractId" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactDataModelImpl">
+		<attributes>
+			<id name="contactDataId" />
+			<basic name="groupId" />
+			<basic name="contactDataType" />
+			<basic name="readOnly" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="contactDataMethodId" />
+			<basic name="contactId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactDataMethodModelImpl">
+		<attributes>
+			<id name="contactDataMethodId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="name" />
+			<basic name="title" />
+			<basic name="contactDataType" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactDataPhoneModelImpl">
+		<attributes>
+			<id name="contactDataId" />
+			<basic name="extension" />
+			<basic name="number">
+				<column name="NUMBER_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactDataRefModelImpl">
+		<attributes>
+			<id name="contactDataId" />
+			<basic name="refValue" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContactDataTextModelImpl">
+		<attributes>
+			<id name="contactDataId" />
+			<basic name="value" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ContractModelImpl">
+		<attributes>
+			<id name="contractId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="organizationId" />
+			<basic name="enterpriseId" />
+			<basic name="contactId" />
+			<basic name="description" />
+			<basic name="amount" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.EnterpriseModelImpl">
+		<attributes>
+			<id name="enterpriseId" />
+			<basic name="groupId" />
+			<basic name="isPrivate" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
+			<basic name="taxid" />
+			<basic name="description" />
+			<basic name="industry" />
+			<basic name="email" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.IndustryModelImpl">
+		<attributes>
+			<id name="industryId" />
+			<basic name="groupId" />
+			<basic name="name" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.MyAddressBookContactModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.MyAddressBookContactPK" />
+		<attributes>
+			<id name="contactId" />
+			<id name="methodId" />
+			<basic name="contactName" />
+			<basic name="enterpriseId" />
+			<basic name="enterpriseName" />
+			<basic name="contractId" />
+			<basic name="reportId" />
+			<basic name="status" />
+			<basic name="progress" />
+			<basic name="description" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.NextFollowUpEventModelImpl">
+		<attributes>
+			<id name="eventId" />
+			<basic name="eventDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="status" />
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="ownerId" />
+			<basic name="contractId" />
+			<basic name="reportId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.OrganizationIndustryModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.OrganizationIndustryPK" />
+		<attributes>
+			<id name="organizationId" />
+			<id name="industryId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.ReportModelImpl">
+		<attributes>
+			<id name="reportId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userId" />
+			<basic name="organizationId" />
+			<basic name="enterpriseId" />
+			<basic name="contactId" />
+			<basic name="contactDataId" />
+			<basic name="contactMethodId" />
+			<basic name="reportDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="comments" />
+			<basic name="progress" />
+			<basic name="status" />
+			<basic name="contractId" />
+			<basic name="cdNameId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.leancrm.portlet.library.model.impl.UserContractModelImpl">
+		<id-class class="com.leancrm.portlet.library.service.persistence.UserContractPK" />
+		<attributes>
+			<id name="userId" />
+			<id name="contractId" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.leancrm.portlet.library.model.impl.AddressBookImpl" name="AddressBook">
+		<table name="crm_AddressBook" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.AddressBookContactImpl" name="AddressBookContact">
+		<table name="crm_AddressBookContact" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.AddressBookContactDataImpl" name="AddressBookContactData">
+		<table name="crm_AddressBookContactData" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.AddressBookOrganizationImpl" name="AddressBookOrganization">
+		<table name="crm_AddressBookOrganization" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.AddressBookUserImpl" name="AddressBookUser">
+		<table name="crm_AddressBookUser" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ColleagueAddressBookContactImpl" name="ColleagueAddressBookContact">
+		<table name="crm_ColleagueAddressBookContact" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactImpl" name="Contact">
+		<table name="crm_Contact" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactContractImpl" name="ContactContract">
+		<table name="crm_ContactContract" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactDataImpl" name="ContactData">
+		<table name="crm_ContactData" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactDataMethodImpl" name="ContactDataMethod">
+		<table name="crm_ContactDataMethod" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactDataPhoneImpl" name="ContactDataPhone">
+		<table name="crm_ContactDataPhone" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactDataRefImpl" name="ContactDataRef">
+		<table name="crm_ContactDataRef" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContactDataTextImpl" name="ContactDataText">
+		<table name="crm_ContactDataText" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ContractImpl" name="Contract">
+		<table name="crm_Contract" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.EnterpriseImpl" name="Enterprise">
+		<table name="crm_Enterprise" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.IndustryImpl" name="Industry">
+		<table name="crm_Industry" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.MyAddressBookContactImpl" name="MyAddressBookContact">
+		<table name="crm_MyAddressBookContact" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.NextFollowUpEventImpl" name="NextFollowUpEvent">
+		<table name="crm_NextFollowUpEvent" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.OrganizationIndustryImpl" name="OrganizationIndustry">
+		<table name="crm_OrganizationIndustry" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.ReportImpl" name="Report">
+		<table name="crm_Report" />
+		<attributes />
+	</entity>
+	<entity class="com.leancrm.portlet.library.model.impl.UserContractImpl" name="UserContract">
+		<table name="crm_UserContract" />
+		<attributes />
+	</entity>
+</entity-mappings>

@@ -1,0 +1,46 @@
+.form {
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+}
+
+.form .inputEditable {
+	width: 200px;
+}
+
+.form select.inputEditable {
+	padding: 3px;
+}
+
+.form .inputEditableAutofield {
+	width: 176px;
+}
+
+.form .slider {
+	width: 180px;
+	position: relative;
+	left: 10px;
+}
+
+.form .choise {
+	width: 58px;
+}
+
+.textarea {
+	max-width: 200px;
+}
+
+.statusReportContainer {
+	border: 1px solid #999;
+	width: 100%;
+}
+
+.statusReportLabels td {
+	padding-top: 5px;
+	text-align: center;
+}
+
+.statusReportCheckboxs td {
+	text-align: center;
+	padding-bottom: 5px;
+}

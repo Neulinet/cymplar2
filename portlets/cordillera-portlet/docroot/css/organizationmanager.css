@@ -1,0 +1,28 @@
+._organizationcontactmanager_WAR_cordilleraportlet_contactManagerContainer {
+	border: 1px solid #ccc;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+
+._organizationcontactmanager_WAR_cordilleraportlet_headerTitle {
+	background-color: #3299FF;
+	color: #fff;
+	padding-left: 5px;
+	font-size: 10px;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-moz-border-radius-bottomleft: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.taglib-header h1.header-title {
+	margin: 0;
+}

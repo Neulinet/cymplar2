@@ -1,0 +1,57 @@
+<%@ include file="/html/common/consultantInit.jsp" %>
+
+<div class="_organizationcontactmanager_WAR_cordilleraportlet_contactManagerContainer">
+	<liferay-ui:header title="My Colleagues Address Book" cssClass="_organizationcontactmanager_WAR_cordilleraportlet_headerTitle"></liferay-ui:header>
+	
+	<table id="contactCollegueList">
+		<thead>
+			<tr>
+				<th>Company</th>
+				<th>Contact Full Name</th>
+				<th>Contract</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${consultant.colleaguesContacts}" var="contact">
+				<tr>
+					<td>${contact.enterprise.name}</td>
+					<td>${contact.name}</td>
+					<td>
+						<c:if test="${not empty contact.contracts}">
+							<table>
+								<c:forEach items="${contact.contracts}" var="contract" >
+									<tr>
+										<td>${contract.description} - ${contract.progress}% - ${contract.status.label}</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</c:if>
+						<c:if test="${empty contact.contracts}">
+							N/A
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${not empty contact.owners}">
+							<liferay-ui:icon-menu>
+								<liferay-ui:icon image="reply" message="Send Email" url="mailto:${contact.owners[0].emailAddress}" />
+								<liferay-ui:icon image="post" message="Request Lead" url="" />
+							</liferay-ui:icon-menu>
+						</c:if>
+						<c:if test="${empty contact.owners}">
+							Not Assigned
+						</c:if>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		oTable = $('#contactCollegueList').dataTable({
+			"bJQueryUI": true
+		});
+	});
+</script>

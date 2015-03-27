@@ -1,0 +1,155 @@
+.hidden {
+	display: none;
+}
+.portlet-body .portlet-msg-error {
+	display : none;
+}
+
+.portlet-body ._contactmanager_WAR_cordilleraportlet_contactManagerContainer .portlet-msg-error {
+	display : block;
+}
+
+._contactmanager_WAR_cordilleraportlet_selectField {
+	font-size: 14px;
+	height: 25px;
+}
+
+._contactmanager_WAR_cordilleraportlet_buttonSection {
+	border-top: 1px solid #bbb;
+	padding-top: 10px;
+}
+
+div div ul.aui-helper-reset {
+	overflow: scroll;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactManagerContainer {
+	border: 1px solid #ccc;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	width: 500px;
+}
+
+._contactmanager_WAR_cordilleraportlet_headerTitle {
+	background-color: #3299FF;
+	color: #fff;
+	padding-left: 5px;
+	font-size: 10px;
+	
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-moz-border-radius-bottomleft: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.aui-form fieldset {
+	margin-bottom: 0;
+}
+
+.taglib-header h1.header-title {
+	margin: 0;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactManagerContainer ._contactmanager_WAR_cordilleraportlet_bottomMessage {
+	margin-top: 20px;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactManagerContainer ._contactmanager_WAR_cordilleraportlet_topMessage {
+	font-size: 12px;
+	color: #666;
+	margin-bottom: 10px;
+	padding-left: 10px;
+}
+
+._contactmanager_WAR_cordilleraportlet_customButton {
+	font-size: 50px;
+}
+
+._contactmanager_WAR_cordilleraportlet_mediumButton {
+	font-size: 15px;
+}
+
+._contactmanager_WAR_cordilleraportlet_bigButton {
+	font-size: 20px;
+}
+
+._contactmanager_WAR_cordilleraportlet_startButtonSection {
+	text-align: center;
+}
+
+._contactmanager_WAR_cordilleraportlet_enterpriseSearch ._contactmanager_WAR_cordilleraportlet_container {
+	margin-left: 35px;
+	margin-top: 25px;
+	margin-bottom: 30px;
+}
+
+._contactmanager_WAR_cordilleraportlet_enterpriseSearch ._contactmanager_WAR_cordilleraportlet_container #_contactmanager_WAR_cordilleraportlet_enterpriseName {
+	width: 200px;
+}
+
+._contactmanager_WAR_cordilleraportlet_enterpriseDetailContainer {
+    padding: 10px 20px;
+    color: black;
+    border-radius: 20px;
+    box-shadow: 0 0 7px black;
+    background-color: #FFF1C1;
+    border: 2px solid white;
+    width: 170px;
+    margin-left: 10px;
+}
+  
+._contactmanager_WAR_cordilleraportlet_enterpriseDetailContainer h4 {
+	text-decoration: underline;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactFormContainer {
+	width: 100%;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactFields label {
+	width: 200px;
+	display: block;
+	float: left;
+	text-align: right;
+	margin-right: 10px;
+	line-height: 30px;
+	font-size: 14px;
+	color: #888;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactFields ._contactmanager_WAR_cordilleraportlet_inputEditable {
+	width: 200px;
+	height: 15px;
+	font-size: 14px; 
+}
+
+._contactmanager_WAR_cordilleraportlet_contactFields ._contactmanager_WAR_cordilleraportlet_nextField {
+	height: 15px;
+	font-size: 14px; 
+	width: 144px;
+}
+
+._contactmanager_WAR_cordilleraportlet_contactFields ._contactmanager_WAR_cordilleraportlet_headField {
+	height: 25px;
+	font-size: 14px; 
+	width: 55px;
+	float: left;
+}
+
+._contactmanager_WAR_cordilleraportlet_checkboxLeftLabel {
+	margin-top: 8px;
+}
+
+._contactmanager_WAR_cordilleraportlet_asLink {
+	color: #0000ff;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
+}

@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.leancrm.portlet.library">
+	<namespace>crm</namespace>
+	<entity name="AddressBookContact" local-service="true" remote-service="false">
+		<!-- FK fields -->
+		<column name="addressBookId" type="long" primary="true"></column>
+		<column name="contactId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<!-- Other fields -->
+		<column name="assignedTo" type="long"></column>
+		<column name="currentProgress" type="double"></column>
+		<finder name="ContactAddressBook" return-type="Collection">
+			<finder-column name="addressBookId"></finder-column>
+			<finder-column name="contactId"></finder-column>
+		</finder>
+		<finder name="AddressBook" return-type="Collection">
+			<finder-column name="addressBookId"></finder-column>
+		</finder>
+		<finder name="Contact" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="AddressBook" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="addressBookId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<!-- Other fields -->
+		<column name="addressBookType" type="long"></column>
+	</entity>
+	<entity name="AddressBookOrganization" local-service="true" remote-service="false">
+		<!-- FK fields-->
+		<column name="addressBookId" type="long" primary="true"></column>
+		<column name="organizationId" type="long"></column>
+		<!-- Finders -->
+		<finder name="Organization" return-type="Collection">
+			<finder-column name="organizationId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="AddressBookUser" local-service="true" remote-service="false">
+		<!-- FK fields-->
+		<column name="addressBookId" type="long" primary="true"></column>
+		<column name="userId" type="long"></column>
+		<!-- Finders -->
+		<finder name="User" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="AddressBookContactData" local-service="true" remote-service="false">
+		<!-- FK fields-->
+		<column name="addressBookId" type="long" primary="true"></column>
+		<column name="contactDataId" type="long" primary="true"></column>
+		<!-- Other fields -->
+		<column name="active" type="boolean"></column>
+		<!-- Finders -->
+		<finder name="AddressBook" return-type="Collection">
+			<finder-column name="addressBookId"></finder-column>
+		</finder>
+		<finder name="ContactData" return-type="Collection">
+			<finder-column name="contactDataId"></finder-column>
+		</finder>
+		<finder name="AddressBookContactData" return-type="Collection">
+			<finder-column name="addressBookId"></finder-column>
+			<finder-column name="contactDataId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="ContactData" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactDataId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<column name="contactDataType" type="int"></column>
+		<!-- Other fields -->
+		<column name="readOnly" type="boolean"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<!-- FK fields -->
+		<column name="contactDataMethodId" type="long"></column>
+		<column name="contactId" type="long"></column>
+		<finder name="Contact" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+		</finder>
+		<finder name="ContactAndMethod" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+			<finder-column name="contactDataMethodId"></finder-column>
+		</finder>
+		<finder name="Method" return-type="Collection">
+			<finder-column name="contactDataMethodId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="ContactDataText" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactDataId" type="long" primary="true"></column>
+		<!-- Other fields -->
+		<column name="value" type="String"></column>
+	</entity>
+	<entity name="ContactDataRef" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactDataId" type="long" primary="true"></column>
+		<!-- Other fields -->
+		<column name="refValue" type="long"></column>
+	</entity>
+	<entity name="ContactDataPhone" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactDataId" type="long" primary="true"></column>
+		<!-- Other fields -->
+		<column name="extension" type="String"></column>
+		<column name="number" type="String"></column>
+	</entity>
+	<entity name="ContactDataMethod" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactDataMethodId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<!-- Other fields -->
+		<column name="name" type="String"></column>
+		<column name="title" type="String"></column>
+		<column name="contactDataType" type="int"></column>
+		<!-- Finders -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Contact" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="Industry" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="industryId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Others fields -->
+		<column name="name" type="String"></column>
+		<!-- Finders -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Enterprise" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="enterpriseId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<column name="isPrivate" type="int"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<!-- Other fields -->
+		<column name="name" type="String"></column>
+		<column name="taxid" type="String"></column>
+		<column name="description" type="String"></column>
+		<column name="industry" type="long"></column>
+		<column name="email" type="String"></column>
+		<!-- Finders -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name"></finder-column>
+		</finder>
+		<finder name="Taxid" return-type="Collection">
+			<finder-column name="taxid"></finder-column>
+		</finder>
+		<finder name="Industry" return-type="Collection">
+			<finder-column name="industry"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Report" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="reportId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<!-- Other fields -->
+		<column name="userId" type="long"></column>
+		<column name="organizationId" type="long"></column>
+		<column name="enterpriseId" type="long"></column>
+		<column name="contactId" type="long"></column>
+		<column name="contactDataId" type="long"></column>
+		<column name="contactMethodId" type="long"></column>
+		<column name="reportDate" type="Date"></column>
+		<column name="comments" type="String"></column>
+		<column name="progress" type="double"></column>
+		<column name="status" type="int"></column>
+		<column name="contractId" type="long"></column>
+		<column name="cdNameId" type="long"></column>
+		<!-- Finders -->
+		<finder name="User" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder name="ContactOrganization" return-type="Collection">
+			<finder-column name="enterpriseId"></finder-column>
+			<finder-column name="contactId"></finder-column>
+			<finder-column name="organizationId"></finder-column>
+		</finder>
+		<finder name="Contract" return-type="Collection">
+			<finder-column name="contractId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="UserContract" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="userId" type="long" primary="true"></column>
+		<column name="contractId" type="long" primary="true"></column>
+		<column name="active" type="boolean"></column>
+		<!-- Finders -->
+		<finder name="UserContract" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="contractId"></finder-column>
+		</finder>
+		<finder name="Contract" return-type="Collection">
+			<finder-column name="contractId"></finder-column>
+		</finder>
+		<finder name="User" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder name="UserAndState" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="active"></finder-column>
+		</finder>
+	</entity>
+	<entity name="ContactContract" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contactId" type="long" primary="true"></column>
+		<column name="contractId" type="long" primary="true"></column>
+		<column name="active" type="boolean"></column>
+		<!-- Finders -->
+		<finder name="ContactContract" return-type="Collection">
+			<finder-column name="contractId"></finder-column>
+			<finder-column name="contactId"></finder-column>
+		</finder>
+		<finder name="Contract" return-type="Collection">
+			<finder-column name="contractId"></finder-column>
+		</finder>
+		<finder name="Contact" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+		</finder>
+		<finder name="ContactAndState" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+			<finder-column name="active"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Contract" local-service="true" remote-service="false">
+		<!-- PK fields -->
+		<column name="contractId" type="long" primary="true"></column>
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<!-- Other fields -->
+		<column name="organizationId" type="long"></column>
+		<column name="enterpriseId" type="long"></column>
+		<column name="contactId" type="long"></column>
+		<!-- Contact assigned -->
+		<column name="description" type="String"></column>
+		<column name="amount" type="double"></column>
+		<!-- Finders -->
+		<finder name="Contact" return-type="Collection">
+			<finder-column name="organizationId"></finder-column>
+			<finder-column name="enterpriseId"></finder-column>
+			<finder-column name="contactId"></finder-column>
+		</finder>
+		<finder name="OrganizationAndEnterprise" return-type="Collection">
+			<finder-column name="organizationId"></finder-column>
+			<finder-column name="enterpriseId"></finder-column>
+		</finder>
+		<finder name="Organization" return-type="Collection">
+			<finder-column name="organizationId"></finder-column>
+		</finder>
+		<finder name="Enterprise" return-type="Collection">
+			<finder-column name="enterpriseId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="MyAddressBookContact" local-service="true" remote-service="false">
+		<column name="contactId" type="long" primary="true"></column>
+		<column name="methodId" type="long" primary="true"></column>
+		<column name="contactName" type="String"></column>
+		<column name="enterpriseId" type="long"></column>
+		<column name="enterpriseName" type="String"></column>
+		<column name="contractId" type="long"></column>
+		<column name="reportId" type="long"></column>
+		<column name="status" type="int"></column>
+		<column name="progress" type="double"></column>
+		<column name="description" type="String"></column>
+	</entity>
+	<entity name="ColleagueAddressBookContact" local-service="true" remote-service="false">
+		<column name="contactid" type="long" primary="true"></column>
+		<column name="emailAddress" type="String"></column>
+		<column name="contactdataid" type="long"></column>
+		<column name="methodId" type="long" primary="true"></column>
+		<column name="contactName" type="String" primary="false"></column>
+		<column name="enterpriseName" type="String"></column>
+	</entity>
+	<entity name="OrganizationIndustry" local-service="true" remote-service="false">
+		<column name="organizationId" type="long" primary="true"></column>
+		<column name="industryId" type="long" primary="true"></column>
+	</entity>
+	<entity name="NextFollowUpEvent" local-service="true" remote-service="false">
+		<column name="eventId" type="long" primary="true"></column>
+		<column name="eventDate" type="Date"></column>
+		<column name="status" type="int"></column>
+		<column name="title" type="String"></column>
+		<column name="description" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="ownerId" type="long"></column>
+		<column name="contractId" type="long"></column>
+		<column name="reportId" type="long"></column>
+		<finder name="Contract" return-type="Collection">
+			<finder-column name="contractId"></finder-column>
+		</finder>
+		<finder name="Report" return-type="Collection">
+			<finder-column name="reportId"></finder-column>
+		</finder>
+		<finder name="ReportStatus" return-type="Collection">
+			<finder-column name="reportId"></finder-column>
+			<finder-column name="status"></finder-column>
+		</finder>
+	</entity>
+</service-builder>

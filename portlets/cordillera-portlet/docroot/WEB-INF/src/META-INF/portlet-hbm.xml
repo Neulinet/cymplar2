@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.leancrm.portlet.library.model.AddressBook" />
+	<import class="com.leancrm.portlet.library.model.AddressBookContact" />
+	<import class="com.leancrm.portlet.library.model.AddressBookContactData" />
+	<import class="com.leancrm.portlet.library.model.AddressBookOrganization" />
+	<import class="com.leancrm.portlet.library.model.AddressBookUser" />
+	<import class="com.leancrm.portlet.library.model.ColleagueAddressBookContact" />
+	<import class="com.leancrm.portlet.library.model.Contact" />
+	<import class="com.leancrm.portlet.library.model.ContactContract" />
+	<import class="com.leancrm.portlet.library.model.ContactData" />
+	<import class="com.leancrm.portlet.library.model.ContactDataMethod" />
+	<import class="com.leancrm.portlet.library.model.ContactDataPhone" />
+	<import class="com.leancrm.portlet.library.model.ContactDataRef" />
+	<import class="com.leancrm.portlet.library.model.ContactDataText" />
+	<import class="com.leancrm.portlet.library.model.Contract" />
+	<import class="com.leancrm.portlet.library.model.Enterprise" />
+	<import class="com.leancrm.portlet.library.model.Industry" />
+	<import class="com.leancrm.portlet.library.model.MyAddressBookContact" />
+	<import class="com.leancrm.portlet.library.model.NextFollowUpEvent" />
+	<import class="com.leancrm.portlet.library.model.OrganizationIndustry" />
+	<import class="com.leancrm.portlet.library.model.Report" />
+	<import class="com.leancrm.portlet.library.model.UserContract" />
+	<class name="com.leancrm.portlet.library.model.impl.AddressBookImpl" table="crm_AddressBook">
+		<cache usage="read-write" />
+		<id name="addressBookId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="addressBookType" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.AddressBookContactImpl" table="crm_AddressBookContact">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.AddressBookContactPK">
+			<key-property name="addressBookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="assignedTo" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="currentProgress" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.AddressBookContactDataImpl" table="crm_AddressBookContactData">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.AddressBookContactDataPK">
+			<key-property name="addressBookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="contactDataId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.AddressBookOrganizationImpl" table="crm_AddressBookOrganization">
+		<cache usage="read-write" />
+		<id name="addressBookId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.AddressBookUserImpl" table="crm_AddressBookUser">
+		<cache usage="read-write" />
+		<id name="addressBookId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ColleagueAddressBookContactImpl" table="crm_ColleagueAddressBookContact">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.ColleagueAddressBookContactPK">
+			<key-property name="contactid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="methodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contactdataid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="enterpriseName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactImpl" table="crm_Contact">
+		<cache usage="read-write" />
+		<id name="contactId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactContractImpl" table="crm_ContactContract">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.ContactContractPK">
+			<key-property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="contractId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactDataImpl" table="crm_ContactData">
+		<cache usage="read-write" />
+		<id name="contactDataId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactDataType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="readOnly" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="contactDataMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactDataMethodImpl" table="crm_ContactDataMethod">
+		<cache usage="read-write" />
+		<id name="contactDataMethodId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contactDataType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactDataPhoneImpl" table="crm_ContactDataPhone">
+		<cache usage="read-write" />
+		<id name="contactDataId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="extension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" column="number_" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactDataRefImpl" table="crm_ContactDataRef">
+		<cache usage="read-write" />
+		<id name="contactDataId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="refValue" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContactDataTextImpl" table="crm_ContactDataText">
+		<cache usage="read-write" />
+		<id name="contactDataId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ContractImpl" table="crm_Contract">
+		<cache usage="read-write" />
+		<id name="contractId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="enterpriseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="amount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.EnterpriseImpl" table="crm_Enterprise">
+		<cache usage="read-write" />
+		<id name="enterpriseId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="isPrivate" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="taxid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="industry" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.IndustryImpl" table="crm_Industry">
+		<cache usage="read-write" />
+		<id name="industryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.MyAddressBookContactImpl" table="crm_MyAddressBookContact">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.MyAddressBookContactPK">
+			<key-property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="methodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="contactName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="enterpriseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="enterpriseName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contractId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="reportId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="progress" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.NextFollowUpEventImpl" table="crm_NextFollowUpEvent">
+		<cache usage="read-write" />
+		<id name="eventId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="eventDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="ownerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contractId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="reportId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.OrganizationIndustryImpl" table="crm_OrganizationIndustry">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.OrganizationIndustryPK">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="industryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.ReportImpl" table="crm_Report">
+		<cache usage="read-write" />
+		<id name="reportId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="enterpriseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactDataId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="reportDate" type="org.hibernate.type.TimestampType" />
+		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="progress" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="contractId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="cdNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.leancrm.portlet.library.model.impl.UserContractImpl" table="crm_UserContract">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.leancrm.portlet.library.service.persistence.UserContractPK">
+			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="contractId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+</hibernate-mapping>
