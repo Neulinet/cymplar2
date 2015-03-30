@@ -1,10 +1,10 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <div id="_reportsearch_WAR_cordilleraportlet_results">
-	<%@ include file="/html/reportsearchresult/results.jsp" %>
+	<%@ include file="/html/reportsearchresult/results2.jsp" %>
 </div>
 
-<script type="text/javascript">
+<!-- script type="text/javascript">
 $(document).ready(function() {
 	jQuery.fn.dataTableExt.oSort['usdate-asc']  = function(a,b) {
 	    var usDatea = a.split('/'); 
@@ -44,4 +44,4 @@ $(document).ready(function() {
 		aaSorting:[]
 	});
 });
-</script>
+</script -->

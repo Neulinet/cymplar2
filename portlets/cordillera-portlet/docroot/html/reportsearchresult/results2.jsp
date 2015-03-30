@@ -24,38 +24,48 @@
 		className="com.leancrm.portlet.reportSearch.ReportResultItem"
 		escapedModel="<%= true %>"
 		modelVar="aItem" >
-
+		<%
+			String rowStyle = "leads-status-" + aItem.getStatus().name().toLowerCase();
+		%>
 	<liferay-ui:search-container-column-text
 		name="Date"
-		value="<%=dateFormat.format(aItem.getReportDate()) %>" 
+		value="<%=dateFormat.format(aItem.getReportDate()) %>"
+		cssClass='<%= "leads-date " + rowStyle %>' 
 	/>
 	<liferay-ui:search-container-column-text
 		name="Company Name"
-		value="<%=aItem.getEnterprise().getName() %>" 
+		value="<%=aItem.getEnterprise().getName() %>"
+		cssClass='<%= "leads-company " + rowStyle %>' 
 	/>
 	<liferay-ui:search-container-column-text
 		name="Contact"
-		value="<%=aItem.getContactName() %>" 
+		value="<%=aItem.getContactName() %>"
+		cssClass='<%= "leads-contact " + rowStyle %>' 
 	/>
 	<liferay-ui:search-container-column-text
 		name="Contract"
 		value="<%=aItem.getContract().getDescription() %>"
+		cssClass='<%= "leads-contract " + rowStyle %>'
 	/>
 	<liferay-ui:search-container-column-text
 		name="Method"
 		value="<%=aItem.getMethodUsedName() %>"
+		cssClass='<%= "leads-method " + rowStyle %>'
 	/>
 	<liferay-ui:search-container-column-text
 		name="Progress"
 		value="<%=String.valueOf(aItem.getProgress()) %>"
+		cssClass='<%= "leads-progress " + rowStyle %>'
 	/>
 	<liferay-ui:search-container-column-text
 		name="Status"
-		value="<%=aItem.getStatus().name() %>"
+		value='<%=aItem.getStatus() == null ? "" : aItem.getStatus().name() %>'
+		cssClass='<%= "leads-status " + rowStyle %>'
 	/>
 	<liferay-ui:search-container-column-text
 		name="Comments"
 		value="<%=aItem.getComments() %>"
+		cssClass='<%= "leads-comments " + rowStyle %>'
 	/>
 	
 	</liferay-ui:search-container-row>
