@@ -49,7 +49,7 @@
 	/>
 	<liferay-ui:search-container-column-text
 		name="Method"
-		value="<%=aItem.getMethodUsedName() %>"
+		value="<%=aItem.getMethodUsedValue() %>"
 		cssClass='<%= "leads-method " + rowStyle %>'
 	/>
 	<liferay-ui:search-container-column-text
