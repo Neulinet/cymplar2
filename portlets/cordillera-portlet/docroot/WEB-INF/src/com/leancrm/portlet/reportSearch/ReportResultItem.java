@@ -41,6 +41,7 @@ public class ReportResultItem {
 //	<th>Status</th>
 //	<th>Comments</th>
 	
+	private long reportId;
 	private Date reportDate;
 	private Enterprise enterprise;
 	private Contract contract;
@@ -72,6 +73,7 @@ public class ReportResultItem {
 	
 	public ReportResultItem(Report report) throws PortalException, SystemException {
 		printReport(report);
+		reportId = report.getReportId();
 		reportDate = report.getReportDate();
 		enterprise = EnterpriseLocalServiceUtil.getEnterprise(report.getEnterpriseId());
 		// List<ContactData> contactData = ContactDataLocalServiceUtil.getContactDataList(report.getContactId(), ContactDataMethodEnum.NAME.getMethodName());
@@ -100,6 +102,10 @@ public class ReportResultItem {
 		progress = report.getProgress();
 		status = ContactSatusEnum.getStatus(report.getStatus());
 		comments = report.getComments();
+	}
+	
+	public long getReportId() {
+		return reportId;
 	}
 	
 	public Date getReportDate() {

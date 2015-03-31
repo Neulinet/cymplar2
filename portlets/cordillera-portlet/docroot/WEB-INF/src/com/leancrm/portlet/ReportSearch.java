@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
@@ -365,5 +367,24 @@ public class ReportSearch extends MVCPortlet {
 		} else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
+	}
+	
+	/** Delete report
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void removeReport(ActionRequest request, ActionResponse response) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long reportId = ParamUtil.getLong(request, "reportId");
+		
+		logger.info("User " + themeDisplay.getUserId() + " attempts to delete report " + reportId);
+		
+		try {
+			ReportLocalServiceUtil.deleteReport(reportId);
+		} catch (Exception ex) {
+			logger.error("Cannot remote report", ex);
+		}
+		
 	}
 }
