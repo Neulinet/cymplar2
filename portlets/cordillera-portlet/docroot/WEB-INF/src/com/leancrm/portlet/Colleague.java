@@ -1,13 +1,9 @@
 package com.leancrm.portlet;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -98,6 +94,8 @@ public class Colleague extends MVCPortlet {
 	
 	public void removeColleague(ActionRequest actionRequest, ActionResponse actionResponse) {
 		long userId = ParamUtil.getLong(actionRequest, "userId");
+		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
 		
 		try {
 			List<Organization> organizationList = OrganizationLocalServiceUtil.getUserOrganizations(userId);
@@ -106,15 +104,16 @@ public class Colleague extends MVCPortlet {
 			}
 			
 			// this is temporal until found a better solution for thoses static user groups
-			if (ValidationsUtil.isUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID)) {
-				UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID);
+			UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGULAR_USER_GROUP_NAME);
+			UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGISTER_ONLY_GROUP_NAME);
+			
+			if (ValidationsUtil.isUserGroup(regularUserGroup.getUserGroupId())) {
 				UserLocalServiceUtil.deleteUserGroupUser(regularUserGroup.getUserGroupId(), userId);
 			} else {
 				logger.error("Error when try to add a user (" + userId+ ") in the regular uset group.");
 			}
 			
-			if (ValidationsUtil.isUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID)) {
-				UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID);
+			if (ValidationsUtil.isUserGroup(registerOnlyGroup.getUserGroupId())) {
 				UserLocalServiceUtil.addUserGroupUsers(registerOnlyGroup.getUserGroupId(), new long[] { userId });
 			} else {
 				logger.error("Error when try to add a user (" + userId + ") in the regular uset group.");

@@ -36,10 +36,12 @@ import com.liferay.portal.model.CountryConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.RegionConstants;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
@@ -207,28 +209,30 @@ public class AddOrganization extends MVCPortlet {
 				UserLocalServiceUtil.addOrganizationUsers(organizationCreated.getOrganizationId(), new long[] { themeDisplay.getUserId() });
 				
 				Industry industry = IndustryLocalServiceUtil.getIndustry(industryId);
-				// CustomFieldUtils.setCustomValue(themeDisplay.getCompanyId(), ConstantDefinitions.INDUSTRY_FIELD, themeDisplay.getUserId(), industry.getName());
-				
-				
-				organizationCreated.getExpandoBridge().setAttribute("industry", industry.getName());
-				
+				CustomFieldUtils.setCustomValue(themeDisplay.getCompanyId(), ConstantDefinitions.INDUSTRY_FIELD, organizationCreated, new String[] {industry.getName()});
+								
 				// ADD USER TO REGULAR USERGROUP
-				if (ValidationsUtil.isUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID)) {
-					UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID);
+				UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGULAR_USER_GROUP_NAME);
+				UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGISTER_ONLY_GROUP_NAME);
+				
+				if (ValidationsUtil.isUserGroup(regularUserGroup.getUserGroupId())) {
+					
 					UserLocalServiceUtil.addUserGroupUsers(regularUserGroup.getUserGroupId(), new long[] { themeDisplay.getUserId() });
 				} else {
 					logger.error("Error when try to add a user (" + themeDisplay.getUserId()+ ") in the regular group.");
 				}
 				
 				// REMOVE USER FROM REGISTER ONLY USERGROUP
-				if (ValidationsUtil.isUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID)) {
-					UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID);
+				if (ValidationsUtil.isUserGroup(registerOnlyGroup.getUserGroupId())) {
+					
 					UserLocalServiceUtil.deleteUserGroupUser(registerOnlyGroup.getUserGroupId(), themeDisplay.getUserId());
 				} else {
 					logger.error("Error when try to delete a user (" + themeDisplay.getUserId()+ ") from the register only group.");
 				}
 				
-				// UserLocalServiceUtil.addRoleUsers(11855, new long[] { themeDisplay.getUserId() });
+				// add user to the role
+				Role companyAdministratorRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), ConstantDefinitions.ROLE_COMPANY_ADMINISTRATOR);
+				RoleLocalServiceUtil.addUserRoles(themeDisplay.getUserId(), new long[] { companyAdministratorRole.getRoleId() });
 				
 				// List<UserGroupRole> o = UserGroupRoleLocalServiceUtil.getUserGroupRoles(themeDisplay.getUserId());
 				// for (UserGroupRole ugr : o) {
@@ -245,8 +249,10 @@ public class AddOrganization extends MVCPortlet {
 				SessionMessages.add(actionRequest, CRMErrorKey.ORGANIZATION_CREATED_SUCCESS);
 				
 				// REDIRECT TO THE USER PRIVATE PAGES
-				String userPrivatePageUrl = "/group" + themeDisplay.getUser().getGroup().getFriendlyURL();
-				actionResponse.sendRedirect(userPrivatePageUrl);				
+				String redirectUrl = "/group/" + themeDisplay.getUser().getScreenName() + "/~/"
+						+ regularUserGroup.getUserGroupId()
+						+ "/my-dashboard";
+				actionResponse.sendRedirect(redirectUrl);				
 			} else {
 				for (String message : validator.getMessageList()) {
 					SessionErrors.add(actionRequest, message);
@@ -257,12 +263,15 @@ public class AddOrganization extends MVCPortlet {
 			}
 			
 		} catch (PortalException e) {
+			logger.error("Cannot add organization", e);
 			SessionErrors.add(actionRequest, e.getMessage());
 			actionResponse.setRenderParameter("jspPage", "/html/addOrganization/view.jsp");
 		} catch (SystemException e) {
+			logger.error("Cannot add organization", e);
 			SessionErrors.add(actionRequest, e.getMessage());
 			actionResponse.setRenderParameter("jspPage", "/html/addOrganization/view.jsp");
 		} catch (IOException e) {
+			logger.error("Cannot add organization", e);
 			SessionErrors.add(actionRequest, e.getMessage());
 			actionResponse.setRenderParameter("jspPage", "/html/addOrganization/view.jsp");
 		}

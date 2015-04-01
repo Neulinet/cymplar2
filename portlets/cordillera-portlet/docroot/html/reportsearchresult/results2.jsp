@@ -38,7 +38,8 @@
 	<liferay-ui:search-container-column-text
 		name="Date"
 		value="<%=dateFormat.format(aItem.getReportDate()) %>"
-		cssClass='<%= "leads-date " + rowStyle %>' 
+		cssClass='<%= "leads-date " + rowStyle %>'
+		orderable="<%= true %>" 
 	/>
 	<liferay-ui:search-container-column-text
 		name="Company Name"
@@ -69,6 +70,7 @@
 		name="Status"
 		value='<%=aItem.getStatus() == null ? "" : aItem.getStatus().name() %>'
 		cssClass='<%= "leads-status " + rowStyle %>'
+		orderable="<%= true %>"
 	/>
 	<liferay-ui:search-container-column-text
 		name="Comments"

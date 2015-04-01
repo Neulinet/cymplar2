@@ -328,6 +328,7 @@ public class AdminCRM extends MVCPortlet {
 		// remove address book? ab - ab organization
 		// remove user in group?
 		long organizationId = ParamUtil.getLong(actionRequest, "organizationId");
+		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		try {
 			AddressBook addressBook = AddressBookUtils.getAddressBook(OrganizationLocalServiceUtil.getOrganization(organizationId));
@@ -356,10 +357,10 @@ public class AdminCRM extends MVCPortlet {
 						List<User> userList = UserLocalServiceUtil.getOrganizationUsers(organizationId);
 						if (userList != null) {
 							for (User user : userList) {
-								UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID);
+								UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGULAR_USER_GROUP_NAME);
 								UserLocalServiceUtil.deleteUserGroupUser(regularUserGroup.getUserGroupId(), user.getUserId());
 								
-								UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID);
+								UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGISTER_ONLY_GROUP_NAME);
 								UserLocalServiceUtil.addUserGroupUsers(registerOnlyGroup.getUserGroupId(), new long[] { user.getUserId() });
 								
 								logger.info("User with id " + user.getUserId() + " unlinked of an organization with id " + organizationId + ".");
@@ -390,6 +391,8 @@ public class AdminCRM extends MVCPortlet {
 		// remove address book? ab - ab user
 		// remove from group?
 		long userId = ParamUtil.getLong(actionRequest, "userId");
+		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
 		
 		try {
 			AddressBook addressBook = AddressBookUtils.getAddressBook(UserLocalServiceUtil.getUser(userId));
@@ -414,10 +417,10 @@ public class AdminCRM extends MVCPortlet {
 					logger.info("Address book of an user with id " + userId + " removed.");
 					break;
 				case REMOVE_USER_GROUP:
-					UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID);
+					UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGULAR_USER_GROUP_NAME);
 					UserLocalServiceUtil.deleteUserGroupUser(regularUserGroup.getUserGroupId(), userId);
 					
-					UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID);
+					UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGISTER_ONLY_GROUP_NAME);
 					UserLocalServiceUtil.addUserGroupUsers(registerOnlyGroup.getUserGroupId(), new long[] { userId });
 					
 					logger.info("User with id " + userId + " unlinked of an organization with id " + regularUserGroup.getGroup().getOrganizationId() + ".");

@@ -9,11 +9,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -23,7 +26,9 @@ public class OrganizationRequest extends MVCPortlet {
 	
 
 	public void acceptUser(ActionRequest actionRequest, ActionResponse actionResponse) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = ParamUtil.getLong(actionRequest, "userId");
+		
 		User pendingUser;
 		try {
 			pendingUser = UserLocalServiceUtil.getUser(userId);
@@ -33,12 +38,13 @@ public class OrganizationRequest extends MVCPortlet {
 				UserLocalServiceUtil.addOrganizationUsers(organizationId, new long[] { pendingUser.getUserId() });
 				CustomFieldUtils.setCustomValue(pendingUser.getCompanyId(), ConstantDefinitions.PENDING_COMPANY_FIELD, userId, 0);
 				
-				UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGULAR_USER_GROUP_ID);
+				UserGroup regularUserGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGULAR_USER_GROUP_NAME);
 				UserLocalServiceUtil.addUserGroupUsers(regularUserGroup.getUserGroupId(), new long[] { pendingUser.getUserId() });
-				UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(ConstantDefinitions.REGISTER_ONLY_GROUP_ID);
+				UserGroup registerOnlyGroup = UserGroupLocalServiceUtil.getUserGroup(themeDisplay.getCompanyId(), ConstantDefinitions.REGISTER_ONLY_GROUP_NAME);
 				UserLocalServiceUtil.deleteUserGroupUser(registerOnlyGroup.getUserGroupId(), pendingUser.getUserId());
 				
-				RoleLocalServiceUtil.addUserRoles(userId, new long[] { 12023 });
+				Role companyConsultantRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), ConstantDefinitions.ROLE_COMPANY_CONSULTANT);
+				RoleLocalServiceUtil.addUserRoles(userId, new long[] { companyConsultantRole.getRoleId() });
 				
 			}
 		} catch (PortalException e) {
