@@ -17,7 +17,13 @@
 <%@ include file="/html/portlet/site_map/init.jsp" %>
 
 <%
-List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
+List<Layout> rootLayouts = null;
+
+if (rootLayout != null) {
+	rootLayouts = LayoutLocalServiceUtil.getLayouts(rootLayout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
+} else {
+	rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
+}
 
 long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 %>

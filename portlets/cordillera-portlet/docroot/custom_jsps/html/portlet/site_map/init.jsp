@@ -30,8 +30,13 @@ Layout rootLayout = null;
 
 long rootLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
+System.out.println("rootLayout UUID: " + rootLayoutUuid);
+
+
 if (Validator.isNotNull(rootLayoutUuid)) {
-	rootLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(rootLayoutUuid, scopeGroupId, layout.isPrivateLayout());
+	//rootLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(rootLayoutUuid, scopeGroupId, layout.isPrivateLayout());
+	rootLayout = LayoutLocalServiceUtil.getLayoutByUuidAndCompanyId(rootLayoutUuid, themeDisplay.getCompanyId());
+	System.out.println("rootLayout: " + rootLayout);
 
 	if (rootLayout != null) {
 		rootLayoutId = rootLayout.getLayoutId();
