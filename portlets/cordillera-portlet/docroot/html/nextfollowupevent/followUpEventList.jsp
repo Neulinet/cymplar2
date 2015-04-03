@@ -1,3 +1,9 @@
+<%@page import="com.leancrm.portlet.utils.ReportSearchUtils"%>
+<%@page import="com.leancrm.portlet.library.service.ContactDataPhoneLocalServiceUtil"%>
+<%@page import="com.leancrm.portlet.library.model.ContactDataPhone"%>
+<%@page import="com.leancrm.portlet.library.service.ContactDataTextLocalServiceUtil"%>
+<%@page import="com.leancrm.portlet.library.model.ContactDataText"%>
+<%@page import="com.leancrm.portlet.utils.ContactDataType"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.leancrm.portlet.entity.ContactEntity"%>
@@ -77,9 +83,20 @@ iteratorURL.setParameter("jspPage", "/html/nextfollowupevent/view.jsp");
 	/>
 	
 	<liferay-ui:search-container-column-text
-		name="Method"
-		value="<%=method.getName() %>" 
-	/>
+		name="Method">
+		<%
+		String methodValue = "";
+		if (method.getContactDataType() == ContactDataType.TEXT.ordinal()) {
+			ContactDataText contactDataText = ContactDataTextLocalServiceUtil.getContactDataText(aReport.getContactDataId());
+			methodValue = contactDataText.getValue();
+		} else if (method.getContactDataType() == ContactDataType.PHONE.ordinal()) {
+			ContactDataPhone contactDataPhone = ContactDataPhoneLocalServiceUtil.getContactDataPhone(aReport.getContactDataId());
+			methodValue = ReportSearchUtils.getFirstDigits(contactDataPhone.getExtension()) + contactDataPhone.getNumber();
+		}
+		%>
+		<%= methodValue %>
+	</liferay-ui:search-container-column-text> 
+	
 	
 	<liferay-ui:search-container-column-text
 		name="Comment"
