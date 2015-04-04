@@ -1,6 +1,7 @@
 package com.leancrm.portlet.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.validator.ValidationsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -141,7 +143,7 @@ public class ConsultantEntity {
 		return contacts;
 	}
 	
-	public List<com.leancrm.portlet.entity.Contact> getMyContacts(int start, int end) {
+	public List<com.leancrm.portlet.entity.Contact> getMyContacts(int start, int end, OrderByComparator comparator) {
 		List<com.leancrm.portlet.entity.Contact> contactList = new ArrayList<com.leancrm.portlet.entity.Contact>();
 		try {
 			if (getOrganization() != null) {
@@ -174,6 +176,11 @@ public class ConsultantEntity {
 					}
 				}
 				contactList.addAll(temporaryResult.values());
+				
+				// TODO better to sort by DB
+				if (comparator != null) {
+					Collections.sort(contactList, comparator);
+				}
 			}
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
