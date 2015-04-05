@@ -1,7 +1,11 @@
 <%@ include file="/html/common/init.jsp" %>
 
 
-<form action="javascript:void(0)" method="post" name="searchReportForm" id="searchReportForm" class="form-box remove-margin">
+<portlet:actionURL name="search" var="searchActionURL">
+</portlet:actionURL>
+
+
+<aui:form action="<%= searchActionURL %>" method="post" name="searchReportForm" id="searchReportForm" cssClass="form-box remove-margin searchReportForm">
 	
 	<!-- Consultant Select -->
 	<liferay-portlet:actionURL var="getEnterprisesURL" name="getEnterprises" />
@@ -64,9 +68,9 @@
 	
 	<div class="buttonBox">
 		<button type="reset" class="btn btn-info">Reset</button>
-		<button type="submit" class="btn btn-primary" onclick="javascript:searchReport()">Submit</button>
+		<button type="submit" class="btn btn-primary">Submit</button>
 	</div>
-</form>
+</aui:form>
 
 <div id="reportSearchResultTable">
 	<%@ include file="/html/reportsearchresult/results2.jsp" %>

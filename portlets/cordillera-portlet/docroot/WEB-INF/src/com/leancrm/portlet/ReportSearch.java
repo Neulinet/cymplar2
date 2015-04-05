@@ -221,7 +221,7 @@ public class ReportSearch extends MVCPortlet {
 	public void searchJson(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 		JSONObject json = JSONFactoryUtil.createJSONObject();
 		
-		Long enterpriseId = ParamUtil.getLong(resourceRequest, "enterprise", 0);
+		Long enterpriseId = ParamUtil.getLong(resourceRequest, "enterpriseId", 0);
 		Long contactId = ParamUtil.getLong(resourceRequest, "contact", 0);
 		Long contractId = ParamUtil.getLong(resourceRequest, "contract", 0);
 		Long consultantId = ParamUtil.getLong(resourceRequest, "consultant", 0);
@@ -294,7 +294,8 @@ public class ReportSearch extends MVCPortlet {
 	
 	
 	public void search(ActionRequest request, ActionResponse response) {
-		searchImpl(request, response);
+		// just copy action params into render
+		copyRequestParameters(request, response);
 	}
 	
 	public void search(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
@@ -435,4 +436,23 @@ public class ReportSearch extends MVCPortlet {
 		}
 		
 	}
+	
+    /**
+     * Copy request parameters into response request
+     * 
+     * Used to pass values from original request sent into action into render -
+     * to restore entered values
+     * 
+     * @param request
+     * @param response
+     */
+    public void copyRequestParameters(ActionRequest request, ActionResponse response) {
+        // copy parameters from action request to response
+        for (Object key : request.getParameterMap().keySet()) {
+            String val = request.getParameter((String) key);
+            if (val != null && !"image".equals(key) && !((String) key).startsWith("fileName")) {
+                response.setRenderParameter((String) key, val);
+            }
+        }
+    }
 }
