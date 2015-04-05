@@ -1,3 +1,7 @@
+<%@page import="com.leancrm.portlet.sort.LeadOrderByComparator"%>
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
+<%@page import="com.liferay.portal.kernel.util.OrderByComparator"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ include file="/html/common/init.jsp" %>
 
 <%@page import="java.text.SimpleDateFormat"%>
@@ -15,8 +19,27 @@
 
     // TODO clarify permissions - who can remove leads
 	boolean isAdmin = RoleServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.ADMINISTRATOR, true);
+    
+	String orderByCol = ParamUtil.getString(request, "orderByCol");
+	String orderByType = ParamUtil.getString(request, "orderByType");
+	OrderByComparator comparator = null;
+
+	if (Validator.isNull(orderByType)) {
+		orderByType = "asc";	
+	}
+
+	if (Validator.isNotNull(orderByCol) &&
+		Validator.isNotNull(orderByType)) {
+		comparator = new LeadOrderByComparator(orderByCol, orderByType);
+	}
+
 %>
-<liferay-ui:search-container delta="" curParam="cur1" emptyResultsMessage="No Results">
+<liferay-ui:search-container delta="10" 
+							curParam="cur1" 
+							emptyResultsMessage="No Leads" 
+							orderByCol="<%= orderByCol %>"
+							orderByType="<%= orderByType %>"
+						     >
 	<liferay-ui:search-container-results>
 		<%
 			

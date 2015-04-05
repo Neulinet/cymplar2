@@ -68,7 +68,9 @@
 	</div>
 </form>
 
-<div id="reportSearchResultTable"></div>
+<div id="reportSearchResultTable">
+	<%@ include file="/html/reportsearchresult/results2.jsp" %>
+</div>
 
 <liferay-portlet:resourceURL id="getConsultants" var="getConsultantsURL" />
 <liferay-portlet:resourceURL id="getEnterprises" var="getEnterprisesURL"/>

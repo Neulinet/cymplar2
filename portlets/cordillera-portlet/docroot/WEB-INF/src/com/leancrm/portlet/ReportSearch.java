@@ -3,6 +3,7 @@ package com.leancrm.portlet;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -19,6 +23,8 @@ import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.service.ContractLocalServiceUtil;
 import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
+import com.leancrm.portlet.reportSearch.ReportResultItem;
+import com.leancrm.portlet.sort.LeadOrderByComparator;
 import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.utils.PermissionChecker;
 import com.leancrm.portlet.utils.ReportComparator;
@@ -28,7 +34,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
@@ -38,6 +46,15 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 public class ReportSearch extends MVCPortlet {
 	
 	private Logger logger = Logger.getLogger(ReportSearch.class);
+	
+	@Override
+	public void render(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+		// call search just during render
+		searchImpl(request, response);
+		
+		super.render(request, response);
+	}
+	
 	
 	public void getConsultants(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 		JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -275,28 +292,42 @@ public class ReportSearch extends MVCPortlet {
 		}
 	}
 	
+	
+	public void search(ActionRequest request, ActionResponse response) {
+		searchImpl(request, response);
+	}
+	
 	public void search(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+		searchImpl(resourceRequest, resourceResponse);
 		
-		Long enterpriseId = ParamUtil.getLong(resourceRequest, "enterprise", 0);
-		Long contactId = ParamUtil.getLong(resourceRequest, "contact", 0);
-		Long contractId = ParamUtil.getLong(resourceRequest, "contract", 0);
-		Long consultantId = ParamUtil.getLong(resourceRequest, "consultant", 0);
-		Double fromProgress = ParamUtil.getDouble(resourceRequest, "progressFrom", 0);
-		Double toProgress = ParamUtil.getDouble(resourceRequest, "progressTo", 100);
+		try {
+			include("/html/reportsearchresult/results2.jsp", resourceRequest, resourceResponse, PortletRequest.RESOURCE_PHASE);
+		} catch (Exception e) {
+			logger.error("Unexpected error when search report.", e);
+		}
+	}
+	
+	public void searchImpl(PortletRequest request, PortletResponse response) {
+		Long enterpriseId = ParamUtil.getLong(request, "enterprise", 0);
+		Long contactId = ParamUtil.getLong(request, "contact", 0);
+		Long contractId = ParamUtil.getLong(request, "contract", 0);
+		Long consultantId = ParamUtil.getLong(request, "consultant", 0);
+		Double fromProgress = ParamUtil.getDouble(request, "progressFrom", 0);
+		Double toProgress = ParamUtil.getDouble(request, "progressTo", 100);
 		
-		int statusCode1 = ParamUtil.getInteger(resourceRequest, "statusCode1", -1);
-		int statusCode2 = ParamUtil.getInteger(resourceRequest, "statusCode2", -1);
-		int statusCode3 = ParamUtil.getInteger(resourceRequest, "statusCode3", -1);
-		int statusCode4 = ParamUtil.getInteger(resourceRequest, "statusCode4", -1);
+		int statusCode1 = ParamUtil.getInteger(request, "statusCode1", -1);
+		int statusCode2 = ParamUtil.getInteger(request, "statusCode2", -1);
+		int statusCode3 = ParamUtil.getInteger(request, "statusCode3", -1);
+		int statusCode4 = ParamUtil.getInteger(request, "statusCode4", -1);
 		
 		Date fromDate = null;
-		if (! ValidationsUtil.isEmpty(resourceRequest.getParameter("fromDate"))) {
-			fromDate = ParamUtil.getDate(resourceRequest, "fromDate", new SimpleDateFormat("dd/MM/yyyy"));
+		if (! ValidationsUtil.isEmpty(request.getParameter("fromDate"))) {
+			fromDate = ParamUtil.getDate(request, "fromDate", new SimpleDateFormat("dd/MM/yyyy"));
 		}
 		
 		Date toDate = null;
-		if (!ValidationsUtil.isEmpty(resourceRequest.getParameter("toDate"))) {
-			toDate = ParamUtil.getDate(resourceRequest, "toDate", new SimpleDateFormat("dd/MM/yyyy"));
+		if (!ValidationsUtil.isEmpty(request.getParameter("toDate"))) {
+			toDate = ParamUtil.getDate(request, "toDate", new SimpleDateFormat("dd/MM/yyyy"));
 		}
 		
 		logger.info("Enterprise ID: " + enterpriseId);
@@ -312,8 +343,21 @@ public class ReportSearch extends MVCPortlet {
 		logger.info("From Date: " + fromDate);
 		logger.info("To Date: " + toDate);
 		
+		String orderByCol = ParamUtil.getString(request, "orderByCol");
+		String orderByType = ParamUtil.getString(request, "orderByType");
+		OrderByComparator comparator = null;
+
+		if (Validator.isNull(orderByType)) {
+			orderByType = "asc";	
+		}
+
+		if (Validator.isNotNull(orderByCol) &&
+			Validator.isNotNull(orderByType)) {
+			comparator = new LeadOrderByComparator(orderByCol, orderByType);
+		}
+		
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 			
 			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
 				Long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
@@ -332,17 +376,21 @@ public class ReportSearch extends MVCPortlet {
 					statusCodeList.add(statusCode4);
 				}
 				List<Report> results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+				 
+				List<ReportResultItem> reportResultList = ReportSearchUtils.getResults(results);
 				
-				resourceRequest.setAttribute("searchResultsItems", ReportSearchUtils.getResults(results));
+				if (comparator != null) {
+					Collections.sort(reportResultList, comparator);
+				}
+				
+				request.setAttribute("searchResultsItems", reportResultList);
 				
 				logger.info("Search Reports. Total Report Founds: " + results.size());
 			} else {
 				logger.error("Invalid persmission to search reports");
 				
-				resourceRequest.setAttribute("searchResultsItems", ReportSearchUtils.getResults(new ArrayList<Report>())); // SET EMPTY RESULT
+				request.setAttribute("searchResultsItems", ReportSearchUtils.getResults(new ArrayList<Report>())); // SET EMPTY RESULT
 			}
-			
-			include("/html/reportsearchresult/results2.jsp", resourceRequest, resourceResponse, PortletRequest.RESOURCE_PHASE);
 		} catch (Exception e) {
 			logger.error("Unexpected error when search report.", e);
 		}
