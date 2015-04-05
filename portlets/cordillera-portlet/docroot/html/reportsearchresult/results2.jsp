@@ -44,10 +44,11 @@
 		<%
 			
 			List<ReportResultItem> searchResult = (List<ReportResultItem>) request.getAttribute("searchResultsItems");
+			int searchResultCount = (Integer) request.getAttribute("searchResultsCount");
 			results = searchResult;
 			
 			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", results.size());
+			pageContext.setAttribute("total", searchResultCount);
 			
 		%>
 	</liferay-ui:search-container-results>

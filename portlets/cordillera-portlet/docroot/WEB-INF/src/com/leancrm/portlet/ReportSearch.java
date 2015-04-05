@@ -12,6 +12,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -30,10 +31,12 @@ import com.leancrm.portlet.utils.PermissionChecker;
 import com.leancrm.portlet.utils.ReportComparator;
 import com.leancrm.portlet.utils.ReportSearchUtils;
 import com.leancrm.portlet.validator.ValidationsUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -299,7 +302,7 @@ public class ReportSearch extends MVCPortlet {
 	}
 	
 	public void search(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-		searchImpl(resourceRequest, resourceResponse);
+		//searchImpl(resourceRequest, resourceResponse);
 		
 		try {
 			include("/html/reportsearchresult/results2.jsp", resourceRequest, resourceResponse, PortletRequest.RESOURCE_PHASE);
@@ -308,7 +311,7 @@ public class ReportSearch extends MVCPortlet {
 		}
 	}
 	
-	public void searchImpl(PortletRequest request, PortletResponse response) {
+	public void searchImpl(PortletRequest request, RenderResponse response) {
 		Long enterpriseId = ParamUtil.getLong(request, "enterprise", 0);
 		Long contactId = ParamUtil.getLong(request, "contact", 0);
 		Long contractId = ParamUtil.getLong(request, "contract", 0);
@@ -331,18 +334,18 @@ public class ReportSearch extends MVCPortlet {
 			toDate = ParamUtil.getDate(request, "toDate", new SimpleDateFormat("dd/MM/yyyy"));
 		}
 		
-		logger.info("Enterprise ID: " + enterpriseId);
-		logger.info("Contact ID: " + contactId);
-		logger.info("Contract ID: " + contractId);
-		logger.info("Consultant ID: " + consultantId);
-		logger.info("Progress From: " + fromProgress);
-		logger.info("Progress To: " + toProgress);
-		logger.info("Status Code1: " + statusCode1);
-		logger.info("Status Code2: " + statusCode2);
-		logger.info("Status Code3: " + statusCode3);
-		logger.info("Status Code4: " + statusCode4);
-		logger.info("From Date: " + fromDate);
-		logger.info("To Date: " + toDate);
+		logger.debug("Enterprise ID: " + enterpriseId);
+		logger.debug("Contact ID: " + contactId);
+		logger.debug("Contract ID: " + contractId);
+		logger.debug("Consultant ID: " + consultantId);
+		logger.debug("Progress From: " + fromProgress);
+		logger.debug("Progress To: " + toProgress);
+		logger.debug("Status Code1: " + statusCode1);
+		logger.debug("Status Code2: " + statusCode2);
+		logger.debug("Status Code3: " + statusCode3);
+		logger.debug("Status Code4: " + statusCode4);
+		logger.debug("From Date: " + fromDate);
+		logger.debug("To Date: " + toDate);
 		
 		String orderByCol = ParamUtil.getString(request, "orderByCol");
 		String orderByType = ParamUtil.getString(request, "orderByType");
@@ -356,6 +359,10 @@ public class ReportSearch extends MVCPortlet {
 			Validator.isNotNull(orderByType)) {
 			comparator = new LeadOrderByComparator(orderByCol, orderByType);
 		}
+
+		PortletURL portletURL = response.createRenderURL();
+		SearchContainer<ReportResultItem> sc = new SearchContainer<ReportResultItem>(request, null, null, "cur1", 10, portletURL, null, null);
+		
 		
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -380,10 +387,18 @@ public class ReportSearch extends MVCPortlet {
 				 
 				List<ReportResultItem> reportResultList = ReportSearchUtils.getResults(results);
 				
+				// TODO itis better to do soring and getting part of reports by SQL query - not in Java
+				// sort records
 				if (comparator != null) {
 					Collections.sort(reportResultList, comparator);
 				}
+				logger.info("Search Reports. Total Report Founds: " + reportResultList.size());
+				request.setAttribute("searchResultsCount", reportResultList.size());
 				
+				// get required part
+				int start = sc.getStart();
+				int end = sc.getEnd();
+				reportResultList = ListUtil.subList(reportResultList, start, end);
 				request.setAttribute("searchResultsItems", reportResultList);
 				
 				logger.info("Search Reports. Total Report Founds: " + results.size());

@@ -390,6 +390,7 @@ function searchReport() {
 	);
 }
 
+/*
 function loadResults(result) {
 document.getElementById('reportSearchResultTable').innerHTML = '';
 YUI().use(
@@ -407,7 +408,7 @@ YUI().use(
     ).render('#reportSearchResultTable');
   }
 );
-}
+}*/
 </script>
 
 <script>
