@@ -112,7 +112,7 @@ public class ReportManager extends MVCPortlet {
 			AddressBookUser addressBookUser = AddressBookUserLocalServiceUtil.getAddressBookUserList(themeDisplay.getUserId()).get(0);
 			
 			long enterpriseId = ParamUtil.getLong(resourceRequest, "enterpriseId");
-			System.out.println(enterpriseId);
+			logger.debug("Get contacts and contracts for enterprise id: " + enterpriseId);
 			long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
 			
 			json.put("contacts", ReportManagerUtils.getContactAsJson(AddressBookLocalServiceUtil.getContacts(addressBookUser.getAddressBookId()), enterpriseId, addressBookUser.getAddressBookId()));

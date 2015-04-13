@@ -107,6 +107,11 @@
 		cssClass='<%= "leads-actions "%>'
 	>
 		<liferay-ui:icon-menu>
+			<%
+				String reportInfoUrl = "javascript:addReportInfo(" + aItem.getReportId() + ")";
+			%>
+			<liferay-ui:icon image="edit" message="New Comment" url="<%=reportInfoUrl %>"/>		
+		
 			<portlet:actionURL name="removeReport" var="removeReportURL">
 				<portlet:param name="reportId" value="<%= String.valueOf(aItem.getReportId()) %>"/>
 				<%--Strange, but standard redirect is not working as expected. Probably because portlet called in ajax --%>
@@ -120,3 +125,31 @@
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+
+<liferay-portlet:resourceURL id="getReportInfo" var="getReportInfoURL"/>
+<script>
+function addReportInfo(reportId) {
+	YUI().use(
+			'aui-io-request',
+			function (Y) {
+				Y.io.request('<%=getReportInfoURL %>',
+				{
+					data: {
+						<portlet:namespace />reportId: reportId
+					},
+					dataType: 'json',
+					on: {
+						success: function() {
+							var data = this.get('responseData');
+							console.log('DATA: ' + data);
+							fillReportFormForAdd(data);
+						}
+					}
+				});
+			}
+		);
+}
+
+
+</script>

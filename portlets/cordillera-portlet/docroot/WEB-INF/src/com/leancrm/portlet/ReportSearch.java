@@ -221,6 +221,37 @@ public class ReportSearch extends MVCPortlet {
 		}
 	}
 	
+	/** Return information about report in JSON format
+	 * 
+	 * @param resourceRequest
+	 * @param resourceResponse
+	 */
+	public void getReportInfo(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+		JSONObject json = JSONFactoryUtil.createJSONObject();
+		Long reportId = ParamUtil.getLong(resourceRequest, "reportId");
+		
+		try {
+			// get report
+			Report report = ReportLocalServiceUtil.getReport(reportId);
+			
+			// convert it into report result item
+			ReportResultItem item = new ReportResultItem(report);
+			
+			// get it as json
+			ReportSearchUtils.getReportResultItemAsJson(item, json);
+			
+		} catch (Exception ex) {
+			logger.error("Cannot get report info", ex);
+			json.put("error", "Unexpected error when get report by report Id: " + reportId);
+		}
+		
+		try {
+			writeJSON(resourceRequest, resourceResponse, json);
+		} catch (IOException e) {
+			logger.error("Unexpected error when try to get enterprises from report manager.", e);
+		}
+	}
+	
 	public void searchJson(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 		JSONObject json = JSONFactoryUtil.createJSONObject();
 		
@@ -428,6 +459,8 @@ public class ReportSearch extends MVCPortlet {
 			getContractDetail(resourceRequest, resourceResponse);
 		} if ("search".equals(resourceID)) {
 			search(resourceRequest, resourceResponse);
+		} if ("getReportInfo".equals(resourceID)) {
+			getReportInfo(resourceRequest, resourceResponse);
 		} else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}

@@ -3,7 +3,10 @@
 <%@ include file="/html/reportmanager/reportError.jsp" %>
 
 <form action="javascript:void(0)" method="post" name="reportManagerForm" id="reportManagerForm" class="form-box remove-margin">
-
+	<aui:input type="hidden" name="command" id="command" value="NEW"/>
+	<aui:input type="hidden" name="reportId" id="reportId" value=""/>
+	
+	
 	<!-- 
 	Enterprise Id
 	Mandatory
@@ -417,7 +420,7 @@ AUI().use(
 				select: function(event) {
 					var result = event.result.raw;
 					updateEnterpriseId(result.enterpriseId);
-					loadContactAndContracts(result.enterpriseId);
+					loadContactAndContracts(result.enterpriseId, -1, -1);
 				},
 				clear: function(prevVal, src) {
 					//console.log("(clear) Prev Val: " + prevVal);
@@ -502,30 +505,40 @@ function cleanNextFollowUp() {
 	document.getElementById('<portlet:namespace />nextFollowUpTime').value = '';
 }
 
-function rm_loadContacts(contactList, select) {
+function rm_loadContacts(contactList, select, contactId) {
 	cleanMethodDropDown();
 	var options = '<option value="-1">Choose a contact...</option>';
 	for (var i=0; i<contactList.length; i++) {
 		options += '<option value="' + contactList[i].id + '">' + contactList[i].name + '</option>';
 	}
 	select.innerHTML = options;
+	
+	select.value = contactId;
+	if (contactId > 0) {
+		loadContactDetail(select);
+	}
 }
 
-function rm_loadContracts(contractList, select) {
+function rm_loadContracts(contractList, select, contractId) {
 	cleanContractDropDown();
 	cleanContractDetail();
 	var options = '<option value="-1">New contract</option>';
 	for (var i=0; i<contractList.length; i++) {
 		options += '<option value="' + contractList[i].id + '">' + contractList[i].description + '</option>';
 	}
-	select.innerHTML = options;
+	select.innerHTML = options;	
+	
+	select.value = contractId;
+	if (contractId > 0) {
+		rm_loadContractDetail(select);
+	}
 }
 
 function updateEnterpriseId(enterpriseId) {
 	document.getElementById('<portlet:namespace />enterpriseId').value = enterpriseId;
 }
 
-function loadContactAndContracts(enterpriseId) {
+function loadContactAndContracts(enterpriseId, contactId, contractId) {
 	YUI().use(
 		'aui-io-request',
 		function (Y) {
@@ -544,11 +557,11 @@ function loadContactAndContracts(enterpriseId) {
 						
 						var selectContact = document.getElementById('<portlet:namespace />contact');
 						rm_loadingSelect(selectContact);
-						rm_loadContacts(data.contacts, selectContact);
+						rm_loadContacts(data.contacts, selectContact, contactId);
 						
 						var selectContract = document.getElementById('<portlet:namespace />contract');
 						rm_loadingSelect(selectContract);
-						rm_loadContracts(data.contracts, selectContract);
+						rm_loadContracts(data.contracts, selectContract, contractId);
 					}
 				}
 			});
@@ -656,6 +669,29 @@ function fixEnterpriseSelected() {
 		// document.getElementById("_contactmanager_WAR_cordilleraportlet_enterpriseSelect").value = "";
 		// cleanEnterpriseDetail();
 	}
+}
+
+/* Fill Report Form with data, prepared to add new report for same contract (contact and enterprise)
+ * 
+ */
+function fillReportFormForAdd(data) {
+	console.log('DATA FOR REPORT FORM: ' + data);
+	
+	document.getElementById('<portlet:namespace />enterpriseId').value = data.enterpriseId;
+	document.getElementById('<portlet:namespace />enterpriseName').value = data.enterpriseName;
+	document.getElementById('<portlet:namespace />enterpriseName').readOnly = true;
+	
+	loadContactAndContracts(data.enterpriseId, data.contactId, data.contractId);
+	document.getElementById('<portlet:namespace />contact').disabled = true;
+	document.getElementById('<portlet:namespace />contract').disabled = true;
+	
+	document.getElementById('<portlet:namespace />contractDescription').readOnly = true;
+	document.getElementById('<portlet:namespace />contractAmount').readOnly = true;
+	
+	// set report id
+	document.getElementById('<portlet:namespace />reportId').value = data.reportId;
+	// set command
+	document.getElementById('<portlet:namespace />command').value = "ADD";
 }
 </script>
 

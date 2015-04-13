@@ -45,6 +45,7 @@ public class ReportResultItem {
 	private Date reportDate;
 	private Enterprise enterprise;
 	private Contract contract;
+	private Long contactId;
 	private String contactName;
 	private User consultant;
 	private String methodUsedValue;
@@ -81,6 +82,7 @@ public class ReportResultItem {
 		ContactDataMethod contactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
 		ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), report.getContactId(), contactDataMethod.getContactDataMethodId());
 		contactName = ContactDataTextLocalServiceUtil.getContactDataText(contactData.getContactDataId()).getValue();
+		contactId = report.getContactId();
 		contract = ContractLocalServiceUtil.getContract(report.getContractId());
 		consultant = UserLocalServiceUtil.getUser(report.getUserId());
 		
@@ -140,6 +142,14 @@ public class ReportResultItem {
 		this.consultant = consultant;
 	}
 
+	public Long getContactId() {
+		return contactId;
+	}
+	
+	public void setContactId(Long contactId) {
+		this.contactId = contactId;
+	}
+	
 	public String getContactName() {
 		return contactName;
 	}

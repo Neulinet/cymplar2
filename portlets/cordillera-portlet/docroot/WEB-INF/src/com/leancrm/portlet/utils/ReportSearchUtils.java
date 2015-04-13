@@ -136,15 +136,8 @@ public class ReportSearchUtils {
 				try {
 					ReportResultItem item = new ReportResultItem(report);
 					JSONObject json = JSONFactoryUtil.createJSONObject();
-					json.put("reportDate", dateFormat.format(item.getReportDate()));
-					json.put("enterpriseName", item.getEnterprise().getName());
-					json.put("contractDescription", item.getContract().getDescription());
-					json.put("contactFullName", item.getConsultant().getFullName());
-					json.put("methodName", item.getMethodUsedName());
-					json.put("methodValue", item.getMethodUsedValue());
-					json.put("contractProgress", item.getProgress());
-					json.put("contractStatus", String.valueOf(item.getStatus()));
-					json.put("reportComment", item.getComments());
+					
+					getReportResultItemAsJson(item, json);
 					results.put(json);
 				} catch (PortalException e) {
 					logger.error("Unexpected error when try to get report search result.", e);
@@ -154,6 +147,26 @@ public class ReportSearchUtils {
 			}
 		}
 		return results;
+	}
+	
+	public static void getReportResultItemAsJson(ReportResultItem item, JSONObject json) {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		json.put("reportDate", dateFormat.format(item.getReportDate()));
+		
+		json.put("enterpriseId", item.getEnterprise().getEnterpriseId());
+		json.put("enterpriseName", item.getEnterprise().getName());
+		
+		json.put("contactId", item.getContactId());
+		json.put("contactFullName", item.getConsultant().getFullName());
+		
+		json.put("contractId", item.getContract().getContractId());
+		json.put("contractDescription", item.getContract().getDescription());
+		
+		json.put("methodName", item.getMethodUsedName());
+		json.put("methodValue", item.getMethodUsedValue());
+		json.put("contractProgress", item.getProgress());
+		json.put("contractStatus", String.valueOf(item.getStatus()));
+		json.put("reportComment", item.getComments());
 	}
 	
 	public static List<ReportResultItem> getResults(List<Report> reportList) {
