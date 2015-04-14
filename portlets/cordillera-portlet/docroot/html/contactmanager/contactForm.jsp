@@ -33,6 +33,7 @@
 	<liferay-ui:error key="<%=CRMErrorKey.EMPTY_ENTERPRISE_CITY %>" message="empty-enterprise-city-msg"/>
 	<liferay-ui:error key="<%=CRMErrorKey.INVALID_ENTERPRISE_EMAIL %>" message="invalid-enterprise-email-msg"/>
 	<liferay-ui:error key="<%=CRMErrorKey.EMPTY_ENTERPRISE_COUNTRY %>" message="empty-enterprise-country-msg"/>
+	<liferay-ui:error key="<%=CRMErrorKey.NON_EXIXTENT_ADDRESS_BOOK %>" message="non-existent-address-book-msg"/>
 	
 	<!-- Company Fields -->
 	<aui:input type="checkbox" id="isPrivate" name="isPrivate" label="Private" autocomplete="off"  />
