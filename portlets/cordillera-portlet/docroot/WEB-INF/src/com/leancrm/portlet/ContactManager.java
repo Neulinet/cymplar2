@@ -19,6 +19,7 @@ import com.leancrm.portlet.library.model.ContactDataMethod;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.impl.AddressBookContactImpl;
 import com.leancrm.portlet.library.service.AddressBookContactLocalServiceUtil;
+import com.leancrm.portlet.library.service.AddressBookLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookUserLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataPhoneLocalServiceUtil;
@@ -385,6 +386,13 @@ public class ContactManager extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			List<AddressBookUser> aBookUserList = AddressBookUserLocalServiceUtil.getAddressBookUserList(themeDisplay.getUserId());
+			
+			// AKA - I'm not sure why - but in y case address book was not create for my user.
+			// So, I suggest to add it here
+			if (aBookUserList == null || aBookUserList.isEmpty()) {
+				AddressBookLocalServiceUtil.addAddressBookUser(themeDisplay.getUserId(), themeDisplay.getCompanyId());
+			}
+			aBookUserList = AddressBookUserLocalServiceUtil.getAddressBookUserList(themeDisplay.getUserId());
 			
 			if (enterprise != null) {
 				if (aBookUserList != null && !aBookUserList.isEmpty()) {
