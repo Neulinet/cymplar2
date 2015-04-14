@@ -336,7 +336,7 @@ public class ContactManager extends MVCPortlet {
 		DESCRIPTION("description"),
 		ENTERPRISE_EMAIL("enterpriseEmail"),
 		EMAIL("email"),
-		INDUSTRY("insustry"),
+		INDUSTRY("industryId"),
 		STREET1("street1"),
 		STREET2("street2"),
 		STREET3("street3"),
