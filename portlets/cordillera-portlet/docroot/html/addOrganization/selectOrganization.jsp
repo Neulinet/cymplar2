@@ -16,7 +16,7 @@
 		</portlet:renderURL>
 		<a href="<%=showOrganizationAddFormURL.toString() %>">No One?</a>
 	</div>
-	<button type="submit" class="btn" id="joinButton" disabled="disabled">Register Organistion</button>
+	<button type="submit" class="btn" id="joinButton" disabled="disabled">Join Organization</button>
 	<div id="organizationCodeDetail" class="alert alert-success hide"></div>
 	<div id="organizationCodeError" class="alert alert-danger hide"></div>
 </form>
