@@ -14,11 +14,12 @@
 		<portlet:renderURL var="showOrganizationAddFormURL">
 			<portlet:param name="jspPage" value="/html/addOrganization/companyAddForm.jsp"/>
 		</portlet:renderURL>
-		<a href="<%=showOrganizationAddFormURL.toString() %>">No One?</a>
+		<div id="organizationCodeDetail" class="alert alert-success hide"></div>
+		<div id="organizationCodeError" class="alert alert-danger hide"></div>
+		<button type="submit" class="btn" id="joinButton" disabled="disabled">Join Organization</button>
 	</div>
-	<button type="submit" class="btn" id="joinButton" disabled="disabled">Join Organization</button>
-	<div id="organizationCodeDetail" class="alert alert-success hide"></div>
-	<div id="organizationCodeError" class="alert alert-danger hide"></div>
+	
+	<a href="<%=showOrganizationAddFormURL.toString() %>">No One?</a>
 </form>
 
 
