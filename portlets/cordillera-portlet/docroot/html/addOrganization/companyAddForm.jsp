@@ -24,7 +24,7 @@
 				</div>
 				<!-- Tax Id -->
 				<div class="controls span6">
-						<aui:input label="" placeholder="ABN" type="text" id="taxId" name="taxId" cssClass="span12" value="${taxId}" autocomplete="off"/>
+						<aui:input label="" placeholder="ABN/tax number/other identifier" type="text" id="taxId" name="taxId" cssClass="span12" value="${taxId}" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="control-group row-fluid">
@@ -55,7 +55,7 @@
 			<div class="control-group row-fluid">
 				<!-- Postal Code -->
 				<div class="controls span6">
-						<aui:input label="" type="text" id="postalCode" placeholder="Postal Code" name="postalCode" cssClass="span12" value="${postalCode}" autocomplete="off"/>
+						<aui:input label="" type="text" id="postalCode" placeholder="Postcode/Zip Code" name="postalCode" cssClass="span12" value="${postalCode}" autocomplete="off"/>
 				</div>
 				<!-- City -->
 				<div class="controls span6">
@@ -65,21 +65,21 @@
 			<div class="control-group row-fluid">
 				<!-- Street 1 -->
 				<div class="controls span6">
-						<aui:input label="" type="text" id="street1" name="street1" placeholder="Street 1" cssClass="span12" value="${street1}" autocomplete="off"/>
+						<aui:input label="" type="text" id="street1" name="street1" placeholder="Street Number" cssClass="span12" value="${street1}" autocomplete="off"/>
 				</div>
 				<!-- Street 2 -->
 				<div class="controls span6">
-						<aui:input label="" type="text" id="street2" name="street2" placehoder="Street 2" cssClass="span12" value="${street2}" autocomplete="off"/>
+						<aui:input label="" type="text" id="street2" name="street2" placeholder="Street Name" cssClass="span12" value="${street2}" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="control-group row-fluid">
 				<!-- Street 3 -->
 				<div class="controls span6">
-						<aui:input label="" type="text" id="street3" name="street3" placehoder="Street 3" cssClass="span12" value="${street3}" autocomplete="off"/>
+						<aui:input label="" type="text" id="street3" name="street3" placeholder="Street Type" cssClass="span12" value="${street3}" autocomplete="off"/>
 				</div>
 				<!-- Other -->
 				<div class="controls span6">
-						<aui:input label="" type="text" id="Other" name="Other" placeholder="Other" cssClass="span12" value="${Other}" autocomplete="off"/>
+						<aui:input label="" type="text" id="Other" name="Other" placeholder="Company slogan / missison statement/ or quick description" cssClass="span12" value="${Other}" autocomplete="off"/>
 					</div>
 			</div>
 			<div class="form-group clearfix">
