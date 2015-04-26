@@ -1,3 +1,5 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ include file="/html/common/init.jsp" %>
 
 <%@ include file="/html/reportmanager/reportError.jsp" %>
@@ -99,8 +101,13 @@
 	No before the last report date o one month
 	No future date
 	 -->
+	<%
+		java.util.Date now = new java.util.Date();
+		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
+		dateFormatDate.setTimeZone(timeZone);
 	
-	<aui:input label="Report Date" type="text" id="reportDate" name="reportDate" class="form-control" placeholder="dd/MM/yyyy" autocomplete="off" contenteditable="false" readonly="readonly" />
+	%>
+	<aui:input label="Report Date" type="text" id="reportDate" name="reportDate" class="form-control" placeholder="dd/MM/yyyy" autocomplete="off" contenteditable="false" readonly="readonly" value="<%= dateFormatDate.format(now) %>"/>
 	
 	<!-- 
 	Comments
@@ -210,8 +217,10 @@ function validateReportDate() {
 	
 	var reportDateArray = reportDateInput.value.split('/');
 	var currentReportDate = new Date(reportDateArray[2]+','+reportDateArray[1]+','+reportDateArray[0]);
-
-	if (lastReportDate.getTime() > currentReportDate.getTime() || currentReportDate.getTime() > new Date()) {
+	var now = new Date();
+	
+	
+	if (lastReportDate.getTime() > currentReportDate.getTime() || currentReportDate.getTime() > now.getTime()) {
 		reportDateInput.value = '';
 		if (reportDateInput.className.indexOf('reportDateError') < 0) {
 			reportDateInput.className = reportDateInput.className + ' reportDateError';
@@ -331,9 +340,10 @@ YUI().use(
         		min: 0,
         		max: 100
         	},
-        	<portlet:namespace />reportDate: {
-        		date: true
-        	},
+        	// AKA - commented this validation. It looks like it is not working with formats like 'dd/MM/yyyy' - only with 'MM/dd/yyyy'
+        	//<portlet:namespace />reportDate: {
+        	//	date: true
+        	//},
         	<portlet:namespace />comments: {
         		maxlength: 200
         	},
@@ -496,7 +506,7 @@ function cleanContractDetail() {
 	document.getElementById('<portlet:namespace />contractAmount').value = '';	
 	document.getElementById('<portlet:namespace />comments').value = '';
 	document.getElementById("report_date_value").innerHTML = '';
-	document.getElementById('<portlet:namespace />reportDate').value = '';
+	//!!! document.getElementById('<portlet:namespace />reportDate').value = '';
 	setDefaultLastReportDate();
 }
 
