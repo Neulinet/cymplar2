@@ -21,14 +21,14 @@
 					<h3>
 						Welcome to CYMPLAR
 					</h3>
-						<p>This page is for you to join a company or create your own </p>
+						
 					<!-- Error Tabs -->
 					<div class="row">
 						<div class="col-md-offset-2 col-md-8">
 							<div class=" error-container">
 								<p>
-									You have a pending request for the company
-									<%=OrganizationLocalServiceUtil.getOrganization(requestOrganizationId).getName() %>.
+									We have notified your company manager. <br/>
+									Please log in back again once you receive the acceptance email.
 								</p>
 								<p>
 									<portlet:actionURL name="removeRequest" var="removeRequestURL" />
