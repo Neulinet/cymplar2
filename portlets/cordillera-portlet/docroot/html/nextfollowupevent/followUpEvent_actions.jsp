@@ -27,7 +27,6 @@
 	Long nextFollowUpEventId = (Long) request.getAttribute("nextFollowUpEventId");
 %>
 
-<liferay-ui:icon-menu>
 	<liferay-ui:icon image="preview" message="View" url="<%=onNextFollowUpEventView %>" />
 	
 	<liferay-portlet:actionURL var="doneFollowUpEventURL" name="doneFollowUpEvent">
@@ -39,4 +38,3 @@
 		<portlet:param name="nextFollowUpEventId" value="<%=nextFollowUpEventId.toString() %>" />
 	</liferay-portlet:actionURL>
 	<liferay-ui:icon image="close" message="Cancel" url="<%=cancelFollowUpEventURL.toString() %>" />
-</liferay-ui:icon-menu>

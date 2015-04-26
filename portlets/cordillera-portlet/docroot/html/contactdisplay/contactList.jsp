@@ -81,6 +81,7 @@ if (Validator.isNotNull(orderByCol) &&
 	/>
 
 	<liferay-ui:search-container-column-jsp
+		name="Actions"
 		path="/html/contactdisplay/contactList_actions.jsp"
 		align="center"
 	/>

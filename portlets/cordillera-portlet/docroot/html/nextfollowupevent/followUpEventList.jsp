@@ -104,6 +104,7 @@ iteratorURL.setParameter("jspPage", "/html/nextfollowupevent/view.jsp");
 	/>
 	
 	<liferay-ui:search-container-column-jsp
+		name="Actions"
 		path="/html/nextfollowupevent/followUpEvent_actions.jsp"
 		align="center"
 	/>

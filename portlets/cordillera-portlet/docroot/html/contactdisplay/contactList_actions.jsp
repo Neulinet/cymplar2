@@ -10,7 +10,6 @@
 	ContactEntity contactEntity = new ContactEntity(themeDisplay.getCompanyId(), c.getContactId(), themeDisplay.getUserId());
 	boolean isAdmin = RoleServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.ADMINISTRATOR, true);
 %>
-<liferay-ui:icon-menu>
 	<%
 		String contactInfoUrl = "javascript:getContactInfo(" + c.getContactId() + ")";
 	%>
@@ -22,7 +21,6 @@
 		</portlet:actionURL>
 		<liferay-ui:icon image="delete" message="Delete" url="<%=removeContactURL.toString() %>"/>
 	<%} %>
-</liferay-ui:icon-menu>
 
 
 <liferay-portlet:resourceURL id="getContactInfo" var="getContactInfoURL"/>
