@@ -106,7 +106,6 @@
 		name="Actions"
 		cssClass='<%= "leads-actions "%>'
 	>
-		<liferay-ui:icon-menu>
 			<%
 				String reportInfoUrl = "javascript:addReportInfo(" + aItem.getReportId() + ")";
 			%>
@@ -119,7 +118,6 @@
 			</portlet:actionURL>
 			<liferay-ui:icon-delete message="Delete" url="<%= removeReportURL.toString() %>" confirmation="Are you really want to remove this lead?"/>
 			
-		</liferay-ui:icon-menu>	
 	</liferay-ui:search-container-column-text>
 	
 	</liferay-ui:search-container-row>
