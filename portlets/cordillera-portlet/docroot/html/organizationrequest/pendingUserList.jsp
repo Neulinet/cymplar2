@@ -32,6 +32,8 @@ if (organizationList != null && !organizationList.isEmpty()) {
 	}
 }
 %>
+
+
 <c:if test="<%=organizationList != null && !organizationList.isEmpty() && permissionChecker.hasPermission(layout.getGroupId(), Organization.class.getName(), organizationList.get(0).getOrganizationId(), ActionKeys.ASSIGN_MEMBERS) %>">
 
 	<table id="pendingListDataTable" class="table table-striped table-bordered table-hover">
@@ -68,7 +70,7 @@ if (organizationList != null && !organizationList.isEmpty()) {
 	
 </c:if>
 
-<c:if test="<%= !permissionChecker.hasPermission(layout.getGroupId(), Organization.class.getName(), currentUser.getCompanyId(), ActionKeys.ASSIGN_MEMBERS) %>">
+<c:if test="<%= organizationList != null && !organizationList.isEmpty() && !permissionChecker.hasPermission(layout.getGroupId(), Organization.class.getName(), organizationList.get(0).getOrganizationId(), ActionKeys.ASSIGN_MEMBERS) %>">
 	You don't have permission to assign members to the company.
 </c:if>
 <c:if test="<%=organizationList == null || organizationList.isEmpty()%>">
