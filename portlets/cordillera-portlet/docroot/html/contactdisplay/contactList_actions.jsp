@@ -19,7 +19,7 @@
 		<portlet:actionURL name="removeContact" var="removeContactURL">
 			<portlet:param name="contactId" value="<%=c.getContactId().toString() %>"></portlet:param>
 		</portlet:actionURL>
-		<liferay-ui:icon image="delete" message="Delete" url="<%=removeContactURL.toString() %>"/>
+		<liferay-ui:icon-delete message="Delete" url="<%= removeContactURL.toString() %>" confirmation="Are you really want to remove this contact?"/>
 	<%} %>
 
 
