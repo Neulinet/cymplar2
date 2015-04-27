@@ -150,7 +150,7 @@ AUI().use(
 				render: function() {
 				},
 				results: function(data, query, results) {
-					cleanEnterpriseDetail();
+					//cleanEnterpriseDetail();
 					return results;
 				}
 			},
