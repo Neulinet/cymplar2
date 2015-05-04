@@ -16,11 +16,18 @@ package com.leancrm.portlet.library.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.leancrm.portlet.library.ContractConstants;
+import com.leancrm.portlet.library.model.Contact;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.UserContract;
 import com.leancrm.portlet.library.model.impl.UserContractImpl;
 import com.leancrm.portlet.library.service.base.UserContractLocalServiceBaseImpl;
+import com.leancrm.portlet.reportSearch.ReportResultItem;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * The implementation of the user contract local service.
@@ -38,31 +45,100 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class UserContractLocalServiceImpl
 	extends UserContractLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.leancrm.portlet.library.service.UserContractLocalServiceUtil} to access the user contract local service.
-	 */
+	private Logger logger = Logger.getLogger(UserContractLocalServiceImpl.class);
 	
-	public UserContract addUserContract(long userId, long contractId) throws SystemException {
+	public UserContract addUserContract(long userId, long contractId, int accessLevel) throws SystemException {
+		
+		// TODO check different cases:
+		// 1. Only one owner allowed - so, then we add userContract with owner access level - we should remove
+		// 2. Only one pair user<->contract allowed - so, if we already have related between them - it should be updated - not the new added
+		
+		if (accessLevel == ContractConstants.ACCESS_OWNER) {
+			// check - does this contract already has owner?
+			List<UserContract> userContracts = userContractPersistence.findByContractAccess(contractId, ContractConstants.ACCESS_OWNER);
+			UserContract sameUserContract = null;
+			
+			// if has - remove all of them (except itself)
+			for (UserContract userContractToCheck : userContracts) {
+				if (userContractToCheck.getUserId() != userId) {
+					try {
+						userContractPersistence.removeByUserContract(userContractToCheck.getUserId(), contractId);
+					} catch (Exception ex) {
+						logger.warn("Cannot remove user contract", ex);
+					}
+				} else {
+					sameUserContract = userContractToCheck;
+				}
+			}
+			
+			if (sameUserContract != null) {
+				return sameUserContract;
+			}
+		} else {
+			// check - do we already have record for this pair user <-> contract?
+			UserContract userContractToCheck = null;
+			try {
+				userContractToCheck = userContractPersistence.findByUserContract(userId, contractId);
+			} catch (Exception ex) {
+				logger.warn("Cannot get user contract", ex);
+			}
+			
+			if (userContractToCheck != null) {
+				// exists - check should we update or ignore
+				if (userContractToCheck.getAccessLevel() == ContractConstants.ACCESS_OWNER) {
+					logger.warn("Cannot reduce owner access level - first need reassign contract to some other user");
+					return null;
+				} else if (userContractToCheck.getAccessLevel() == accessLevel) {
+					// change to same level - do not do anything
+					return userContractToCheck;
+				} else {
+					userContractToCheck.setAccessLevel(accessLevel);
+					userContractPersistence.update(userContractToCheck);
+					
+					return userContractToCheck;
+				}
+			}
+		}
+
+		/// add new user <-> contract relation
 		UserContract userContract = new UserContractImpl();
+		
 		userContract.setUserId(userId);
 		userContract.setContractId(contractId);
 		userContract.setActive(true);
+		userContract.setAccessLevel(accessLevel);
 		
 		return userContractLocalService.addUserContract(userContract);
 	}
 	
 	public Contract getByUserContract(long userId, long contractId) {
 		try {
-			List<UserContract> contracts = userContractPersistence.findByUserContract(userId, contractId);
-			if (contracts != null && !contracts.isEmpty() && contracts.get(0).isActive()) {
-				return contractLocalService.getContract(contracts.get(0).getContractId());
-			}
+			UserContract userContract = userContractPersistence.findByUserContract(userId, contractId);
+			return contractLocalService.getContract(userContract.getContractId());
 		} catch (Exception e) {
-			System.out.println("[ERROR] [UserContractLocalServiceImpl] getContractByUser method: " + e.getMessage());
+			logger.error("getContractByUser method: " + e.getMessage());
 		}
 		return null;
 	}
 	
+	public User getContractOwner(long contractId) {
+		try {
+			List<UserContract> userContracts = userContractPersistence.findByContractAccess(contractId, ContractConstants.ACCESS_OWNER);
+			
+			if (userContracts.size() < 1) {
+				logger.warn("Cannot find owner for contract " + contractId);
+				return null;
+			}
+			
+			if (userContracts.size() > 1) {
+				logger.warn("Found more then 1 owner for contract " + contractId);
+			}
+			
+			return UserLocalServiceUtil.getUser(userContracts.get(0).getUserId());
+		} catch (Exception ex) {
+			logger.error("Cannot find owner for contract " + contractId, ex);
+		}
+		
+		return null;
+	}
 }

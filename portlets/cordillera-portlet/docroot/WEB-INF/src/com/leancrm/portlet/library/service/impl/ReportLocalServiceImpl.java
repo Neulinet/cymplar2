@@ -23,6 +23,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.leancrm.portlet.library.model.ContactContract;
 import com.leancrm.portlet.library.model.ContactData;
 import com.leancrm.portlet.library.model.Report;
@@ -51,11 +53,7 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see com.leancrm.portlet.library.service.ReportLocalServiceUtil
  */
 public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.leancrm.portlet.library.service.ReportLocalServiceUtil} to access the report local service.
-	 */
+	private Logger logger = Logger.getLogger(ReportLocalServiceImpl.class);
 	
 	private DateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	
@@ -173,52 +171,52 @@ public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
 	
 	@SuppressWarnings("unchecked")
 	public List<Report> searchReports(int order, Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, Integer[] statusCodeList, Date fromDate, Date toDate) throws SystemException {
-		logger("- - - - - - - ReportLocalServiceImpl - - - - - - -");
-		logger("Search Report By: ");
+		logger.debug("- - - - - - - ReportLocalServiceImpl - - - - - - -");
+		logger.debug("Search Report By: ");
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Report.class);
 		
 		if (enterpriseId != null && enterpriseId > 0) {
 			query.add(PropertyFactoryUtil.forName("enterpriseId").eq(enterpriseId));
-			logger("  --  EnterpriseId: " + enterpriseId);
+			logger.debug("  --  EnterpriseId: " + enterpriseId);
 		}
 		
 		if (contactId != null && contactId > 0) {
 			query.add(PropertyFactoryUtil.forName("contactId").eq(contactId));
-			logger("  --  ContactId: " + contactId);
+			logger.debug("  --  ContactId: " + contactId);
 		}
 
 		if (contractId != null && contractId > 0) {
 			query.add(PropertyFactoryUtil.forName("contractId").eq(contractId));
-			logger("  --  ContractId: " + contractId);
+			logger.debug("  --  ContractId: " + contractId);
 		}
 		
 		if (organizationId != null && organizationId > 0) {
 			query.add(PropertyFactoryUtil.forName("organizationId").eq(organizationId));
-			logger("  --  OrganizationId: " + organizationId);
+			logger.debug("  --  OrganizationId: " + organizationId);
 		}
 
 		if (userId != null && userId > 0) {
 			query.add(PropertyFactoryUtil.forName("userId").eq(userId));
-			logger("  --  ConsultantId: " + userId);
+			logger.debug("  --  ConsultantId: " + userId);
 		}
 		
 		if (statusCodeList != null && statusCodeList.length > 0) {
 			query.add(PropertyFactoryUtil.forName("status").in(statusCodeList));
-			logger("  --  Status: " + Arrays.toString(statusCodeList));
+			logger.debug("  --  Status: " + Arrays.toString(statusCodeList));
 		}
 		
 		query.add(PropertyFactoryUtil.forName("progress").between(fromProgress, toProgress));
-		logger("  --  Progress: " + fromProgress + " | " + toProgress);
+		logger.debug("  --  Progress: " + fromProgress + " | " + toProgress);
 		
 		if (fromDate != null && toDate != null) {
 			query.add(PropertyFactoryUtil.forName("reportDate").between(fromDate, toDate));
-			logger("  --  Date: " + formatDate.format(fromDate) + " | " + formatDate.format(toDate));
+			logger.debug("  --  Date: " + formatDate.format(fromDate) + " | " + formatDate.format(toDate));
 		} else if (fromDate != null) {
 			query.add(PropertyFactoryUtil.forName("reportDate").ge(fromDate));
-			logger("  --  Date: >> " + formatDate.format(fromDate));
+			logger.debug("  --  Date: >> " + formatDate.format(fromDate));
 		} else if (toDate != null) {
 			query.add(PropertyFactoryUtil.forName("reportDate").le(toDate));
-			logger("  --  Date: << " + formatDate.format(toDate));
+			logger.debug("  --  Date: << " + formatDate.format(toDate));
 		}
 		
 		List<Report> results = new ArrayList<Report>();
@@ -226,14 +224,15 @@ public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
 		
 		Collections.sort(results, new ReportComparator(order));
 		
-		logger("Total Results: " + results.size());
+		logger.debug("Total Results: " + results.size());
 		
-		logger("- - - - - - - - - - - - - - - - - - - - - - - - -");
+		logger.debug("- - - - - - - - - - - - - - - - - - - - - - - - -");
 		
 		return results;
 	}
-	
-	private void logger(String message) {
-		System.out.println(formatDate.format(new Date()) + " [SERVICE] " + message);
+
+	private void logger(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 }

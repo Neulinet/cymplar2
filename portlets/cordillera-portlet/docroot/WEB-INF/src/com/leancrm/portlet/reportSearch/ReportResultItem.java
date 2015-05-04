@@ -12,6 +12,7 @@ import com.leancrm.portlet.library.model.ContactDataText;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.Report;
+import com.leancrm.portlet.library.model.UserContract;
 import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
@@ -19,6 +20,7 @@ import com.leancrm.portlet.library.service.ContactDataPhoneLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataTextLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContractLocalServiceUtil;
 import com.leancrm.portlet.library.service.EnterpriseLocalServiceUtil;
+import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.utils.AddressBookUtils;
 import com.leancrm.portlet.utils.ContactDataMethodEnum;
 import com.leancrm.portlet.utils.ContactDataType;
@@ -53,6 +55,7 @@ public class ReportResultItem {
 	private double progress;
 	private ContactSatusEnum status;
 	private String comments;
+	private User leadOwner;
 	
 	private void printReport(Report report) {
 		logger.info("Report: " +
@@ -104,6 +107,9 @@ public class ReportResultItem {
 		progress = report.getProgress();
 		status = ContactSatusEnum.getStatus(report.getStatus());
 		comments = report.getComments();
+		
+		// get lead owner
+		leadOwner = UserContractLocalServiceUtil.getContractOwner(report.getContractId());
 	}
 	
 	public long getReportId() {
@@ -196,5 +202,13 @@ public class ReportResultItem {
 
 	public void setMethodUsedName(String methodUsedName) {
 		this.methodUsedName = methodUsedName;
+	}
+	
+	public User getLeadOwner() {
+		return leadOwner;
+	}
+	
+	public void setLeadOwner(User leadOwner) {
+		this.leadOwner = leadOwner;
 	}
 }

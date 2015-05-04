@@ -289,15 +289,21 @@ public class UserContractLocalServiceWrapper implements UserContractLocalService
 
 	@Override
 	public com.leancrm.portlet.library.model.UserContract addUserContract(
-		long userId, long contractId)
+		long userId, long contractId, int accessLevel)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userContractLocalService.addUserContract(userId, contractId);
+		return _userContractLocalService.addUserContract(userId, contractId,
+			accessLevel);
 	}
 
 	@Override
 	public com.leancrm.portlet.library.model.Contract getByUserContract(
 		long userId, long contractId) {
 		return _userContractLocalService.getByUserContract(userId, contractId);
+	}
+
+	@Override
+	public com.liferay.portal.model.User getContractOwner(long contractId) {
+		return _userContractLocalService.getContractOwner(contractId);
 	}
 
 	/**

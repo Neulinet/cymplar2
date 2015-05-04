@@ -52,6 +52,7 @@ public class UserContractWrapper implements UserContract,
 		attributes.put("userId", getUserId());
 		attributes.put("contractId", getContractId());
 		attributes.put("active", getActive());
+		attributes.put("accessLevel", getAccessLevel());
 
 		return attributes;
 	}
@@ -74,6 +75,12 @@ public class UserContractWrapper implements UserContract,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Integer accessLevel = (Integer)attributes.get("accessLevel");
+
+		if (accessLevel != null) {
+			setAccessLevel(accessLevel);
 		}
 	}
 
@@ -188,6 +195,26 @@ public class UserContractWrapper implements UserContract,
 	@Override
 	public void setActive(boolean active) {
 		_userContract.setActive(active);
+	}
+
+	/**
+	* Returns the access level of this user contract.
+	*
+	* @return the access level of this user contract
+	*/
+	@Override
+	public int getAccessLevel() {
+		return _userContract.getAccessLevel();
+	}
+
+	/**
+	* Sets the access level of this user contract.
+	*
+	* @param accessLevel the access level of this user contract
+	*/
+	@Override
+	public void setAccessLevel(int accessLevel) {
+		_userContract.setAccessLevel(accessLevel);
 	}
 
 	@Override

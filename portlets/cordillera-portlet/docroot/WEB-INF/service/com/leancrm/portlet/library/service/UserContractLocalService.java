@@ -250,10 +250,13 @@ public interface UserContractLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public com.leancrm.portlet.library.model.UserContract addUserContract(
-		long userId, long contractId)
+		long userId, long contractId, int accessLevel)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.leancrm.portlet.library.model.Contract getByUserContract(
 		long userId, long contractId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.User getContractOwner(long contractId);
 }

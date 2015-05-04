@@ -172,5 +172,6 @@
 		<field name="userId" type="long" />
 		<field name="contractId" type="long" />
 		<field name="active" type="boolean" />
+		<field name="accessLevel" type="int" />
 	</model>
 </model-hints>

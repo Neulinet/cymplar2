@@ -34,6 +34,7 @@ public class UserContractSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setContractId(model.getContractId());
 		soapModel.setActive(model.getActive());
+		soapModel.setAccessLevel(model.getAccessLevel());
 
 		return soapModel;
 	}
@@ -115,7 +116,16 @@ public class UserContractSoap implements Serializable {
 		_active = active;
 	}
 
+	public int getAccessLevel() {
+		return _accessLevel;
+	}
+
+	public void setAccessLevel(int accessLevel) {
+		_accessLevel = accessLevel;
+	}
+
 	private long _userId;
 	private long _contractId;
 	private boolean _active;
+	private int _accessLevel;
 }

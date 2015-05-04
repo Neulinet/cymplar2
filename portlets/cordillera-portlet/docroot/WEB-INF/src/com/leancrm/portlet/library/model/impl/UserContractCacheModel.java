@@ -35,7 +35,7 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{userId=");
 		sb.append(userId);
@@ -43,6 +43,8 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		sb.append(contractId);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", accessLevel=");
+		sb.append(accessLevel);
 		sb.append("}");
 
 		return sb.toString();
@@ -55,6 +57,7 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		userContractImpl.setUserId(userId);
 		userContractImpl.setContractId(contractId);
 		userContractImpl.setActive(active);
+		userContractImpl.setAccessLevel(accessLevel);
 
 		userContractImpl.resetOriginalValues();
 
@@ -66,6 +69,7 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		userId = objectInput.readLong();
 		contractId = objectInput.readLong();
 		active = objectInput.readBoolean();
+		accessLevel = objectInput.readInt();
 	}
 
 	@Override
@@ -74,9 +78,11 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(contractId);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeInt(accessLevel);
 	}
 
 	public long userId;
 	public long contractId;
 	public boolean active;
+	public int accessLevel;
 }

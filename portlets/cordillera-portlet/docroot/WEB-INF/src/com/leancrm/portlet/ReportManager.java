@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.leancrm.portlet.entity.ContactEntity;
+import com.leancrm.portlet.library.ContractConstants;
 import com.leancrm.portlet.library.model.AddressBook;
 import com.leancrm.portlet.library.model.AddressBookUser;
 import com.leancrm.portlet.library.model.ContactDataRef;
@@ -323,7 +324,7 @@ public class ReportManager extends MVCPortlet {
 								Double.parseDouble(contractAmountParam));
 						
 						contractId = contract.getContractId();
-						UserContractLocalServiceUtil.addUserContract(themeDisplay.getUserId(), contractId);
+						UserContractLocalServiceUtil.addUserContract(themeDisplay.getUserId(), contractId, ContractConstants.ACCESS_OWNER);
 						
 					} else {
 						ContractLocalServiceUtil.updateAmount(contractId, Double.parseDouble(contractAmountParam));

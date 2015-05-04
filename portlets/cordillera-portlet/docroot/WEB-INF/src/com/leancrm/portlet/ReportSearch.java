@@ -20,12 +20,20 @@ import javax.portlet.ResourceResponse;
 
 import org.apache.log4j.Logger;
 
+import com.leancrm.portlet.library.model.AddressBook;
+import com.leancrm.portlet.library.model.ContactData;
+import com.leancrm.portlet.library.model.ContactDataMethod;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
+import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
+import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContractLocalServiceUtil;
 import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
+import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.reportSearch.ReportResultItem;
 import com.leancrm.portlet.sort.LeadOrderByComparator;
+import com.leancrm.portlet.utils.AddressBookUtils;
+import com.leancrm.portlet.utils.ContactDataMethodEnum;
 import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.utils.PermissionChecker;
 import com.leancrm.portlet.utils.ReportComparator;
@@ -43,6 +51,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -484,7 +493,32 @@ public class ReportSearch extends MVCPortlet {
 		}
 		
 	}
+
 	
+	/** Action to share lead with another user in organization
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void shareLead(ActionRequest request, ActionResponse response) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long reportId = ParamUtil.getLong(request, "reportId");
+		long consultantId = ParamUtil.getLong(request, "consultant");
+		int leadAccess = ParamUtil.getInteger(request, "leadAccess"); 
+		
+		logger.info("User " + themeDisplay.getUserId() + " attempts to share lead " + reportId + " to consultant " + consultantId + " with access level " + leadAccess);
+		
+		// TODO - check permissions
+		try {
+			Report report = ReportLocalServiceUtil.getReport(reportId);
+			
+			// add new user <-> contract relation
+			UserContractLocalServiceUtil.addUserContract(consultantId, report.getContractId(), leadAccess);
+		} catch (Exception ex) {
+			logger.error("Cannot reassign report", ex);
+		}
+		
+	}
     /**
      * Copy request parameters into response request
      * 

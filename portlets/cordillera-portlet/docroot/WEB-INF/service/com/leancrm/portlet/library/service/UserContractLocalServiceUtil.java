@@ -276,14 +276,19 @@ public class UserContractLocalServiceUtil {
 	}
 
 	public static com.leancrm.portlet.library.model.UserContract addUserContract(
-		long userId, long contractId)
+		long userId, long contractId, int accessLevel)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addUserContract(userId, contractId);
+		return getService().addUserContract(userId, contractId, accessLevel);
 	}
 
 	public static com.leancrm.portlet.library.model.Contract getByUserContract(
 		long userId, long contractId) {
 		return getService().getByUserContract(userId, contractId);
+	}
+
+	public static com.liferay.portal.model.User getContractOwner(
+		long contractId) {
+		return getService().getContractOwner(contractId);
 	}
 
 	public static void clearService() {

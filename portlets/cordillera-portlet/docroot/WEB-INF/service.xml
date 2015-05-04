@@ -218,12 +218,16 @@
 		</finder>
 	</entity>
 	<entity name="UserContract" local-service="true" remote-service="false">
-		<!-- PK fields -->
-		<column name="userId" type="long" primary="true"></column>
-		<column name="contractId" type="long" primary="true"></column>
+		<!-- PK -->
+		<column name="userId" type="long" primary="true"/>
+		<column name="contractId" type="long" primary="true"/>
+		
 		<column name="active" type="boolean"></column>
+		<!--  Access Level for specific contract: 0 - owner, 1 - read, 2 - contributor -->
+		<column name="accessLevel" type="int"></column>
+		
 		<!-- Finders -->
-		<finder name="UserContract" return-type="Collection">
+		<finder name="UserContract" return-type="UserContract">
 			<finder-column name="userId"></finder-column>
 			<finder-column name="contractId"></finder-column>
 		</finder>
@@ -237,6 +241,11 @@
 			<finder-column name="userId"></finder-column>
 			<finder-column name="active"></finder-column>
 		</finder>
+ 		<finder name="ContractAccess" return-type="Collection">
+			<finder-column name="contractId"></finder-column>
+			<finder-column name="accessLevel"></finder-column>
+		</finder>
+		
 	</entity>
 	<entity name="ContactContract" local-service="true" remote-service="false">
 		<!-- PK fields -->

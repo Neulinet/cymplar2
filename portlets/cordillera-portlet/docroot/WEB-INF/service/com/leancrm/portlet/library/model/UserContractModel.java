@@ -123,6 +123,20 @@ public interface UserContractModel extends BaseModel<UserContract> {
 	 */
 	public void setActive(boolean active);
 
+	/**
+	 * Returns the access level of this user contract.
+	 *
+	 * @return the access level of this user contract
+	 */
+	public int getAccessLevel();
+
+	/**
+	 * Sets the access level of this user contract.
+	 *
+	 * @param accessLevel the access level of this user contract
+	 */
+	public void setAccessLevel(int accessLevel);
+
 	@Override
 	public boolean isNew();
 

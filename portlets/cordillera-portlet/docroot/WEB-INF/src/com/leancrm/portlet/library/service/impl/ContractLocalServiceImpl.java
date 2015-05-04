@@ -147,13 +147,15 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 		List<ContactContract> contactContractList = ContactContractLocalServiceUtil.getByContact(contactId);
 		if (contactContractList != null) {
 			for (ContactContract contactContract : contactContractList) {
-				List<UserContract> userContractList = userContractPersistence.findByUserContract(userId, contactContract.getContractId());
-				if (!ValidationsUtil.isEmpty(userContractList)) {
-					Contract contract = contractLocalService.getContract(contactContract.getContractId());
-					if (contract.getOrganizationId() == organizationId && contract.getEnterpriseId() == enterpriseId) {
-						contractList.add(contract);
+				try {
+					UserContract userContract = userContractPersistence.findByUserContract(userId, contactContract.getContractId());
+					if (userContract != null) {
+						Contract contract = contractLocalService.getContract(contactContract.getContractId());
+						if (contract.getOrganizationId() == organizationId && contract.getEnterpriseId() == enterpriseId) {
+							contractList.add(contract);
+						}
 					}
-				}
+				} catch (Exception ex) {} // just ignore exception here
 			}
 		}
 		

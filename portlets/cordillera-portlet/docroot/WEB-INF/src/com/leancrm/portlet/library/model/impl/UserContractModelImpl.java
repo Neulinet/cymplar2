@@ -58,9 +58,10 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "userId", Types.BIGINT },
 			{ "contractId", Types.BIGINT },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "accessLevel", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table crm_UserContract (userId LONG not null,contractId LONG not null,active_ BOOLEAN,primary key (userId, contractId))";
+	public static final String TABLE_SQL_CREATE = "create table crm_UserContract (userId LONG not null,contractId LONG not null,active_ BOOLEAN,accessLevel INTEGER,primary key (userId, contractId))";
 	public static final String TABLE_SQL_DROP = "drop table crm_UserContract";
 	public static final String ORDER_BY_JPQL = " ORDER BY userContract.id.userId ASC, userContract.id.contractId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_UserContract.userId ASC, crm_UserContract.contractId ASC";
@@ -76,9 +77,10 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.leancrm.portlet.library.model.UserContract"),
 			true);
-	public static long ACTIVE_COLUMN_BITMASK = 1L;
-	public static long CONTRACTID_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long ACCESSLEVEL_COLUMN_BITMASK = 1L;
+	public static long ACTIVE_COLUMN_BITMASK = 2L;
+	public static long CONTRACTID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.leancrm.portlet.library.model.UserContract"));
 
@@ -123,6 +125,7 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		attributes.put("userId", getUserId());
 		attributes.put("contractId", getContractId());
 		attributes.put("active", getActive());
+		attributes.put("accessLevel", getAccessLevel());
 
 		return attributes;
 	}
@@ -145,6 +148,12 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Integer accessLevel = (Integer)attributes.get("accessLevel");
+
+		if (accessLevel != null) {
+			setAccessLevel(accessLevel);
 		}
 	}
 
@@ -229,6 +238,28 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		return _originalActive;
 	}
 
+	@Override
+	public int getAccessLevel() {
+		return _accessLevel;
+	}
+
+	@Override
+	public void setAccessLevel(int accessLevel) {
+		_columnBitmask |= ACCESSLEVEL_COLUMN_BITMASK;
+
+		if (!_setOriginalAccessLevel) {
+			_setOriginalAccessLevel = true;
+
+			_originalAccessLevel = _accessLevel;
+		}
+
+		_accessLevel = accessLevel;
+	}
+
+	public int getOriginalAccessLevel() {
+		return _originalAccessLevel;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -250,6 +281,7 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		userContractImpl.setUserId(getUserId());
 		userContractImpl.setContractId(getContractId());
 		userContractImpl.setActive(getActive());
+		userContractImpl.setAccessLevel(getAccessLevel());
 
 		userContractImpl.resetOriginalValues();
 
@@ -306,6 +338,10 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 		userContractModelImpl._setOriginalActive = false;
 
+		userContractModelImpl._originalAccessLevel = userContractModelImpl._accessLevel;
+
+		userContractModelImpl._setOriginalAccessLevel = false;
+
 		userContractModelImpl._columnBitmask = 0;
 	}
 
@@ -319,12 +355,14 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 		userContractCacheModel.active = getActive();
 
+		userContractCacheModel.accessLevel = getAccessLevel();
+
 		return userContractCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{userId=");
 		sb.append(getUserId());
@@ -332,6 +370,8 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		sb.append(getContractId());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", accessLevel=");
+		sb.append(getAccessLevel());
 		sb.append("}");
 
 		return sb.toString();
@@ -339,7 +379,7 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.leancrm.portlet.library.model.UserContract");
@@ -356,6 +396,10 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>accessLevel</column-name><column-value><![CDATA[");
+		sb.append(getAccessLevel());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -377,6 +421,9 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private int _accessLevel;
+	private int _originalAccessLevel;
+	private boolean _setOriginalAccessLevel;
 	private long _columnBitmask;
 	private UserContract _escapedModel;
 }

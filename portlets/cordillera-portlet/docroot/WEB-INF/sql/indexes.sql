@@ -62,8 +62,10 @@ create index IX_951FAE71 on crm_UserContact (contactId);
 create index IX_1836EDD4 on crm_UserContact (userId);
 
 create index IX_88CEDA25 on crm_UserContract (contractId);
+create index IX_6EE91EAB on crm_UserContract (contractId, accessLevel);
 create index IX_CF19D35E on crm_UserContract (userId);
 create index IX_5F5A856B on crm_UserContract (userId, active_);
 create index IX_AE3E475F on crm_UserContract (userId, contractId);
+create index IX_70F27FB1 on crm_UserContract (userId, contractId, accessLevel);
 
 create index IX_1E873567 on crm_enterprise (name);

@@ -79,6 +79,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		attributes.put("userId", getUserId());
 		attributes.put("contractId", getContractId());
 		attributes.put("active", getActive());
+		attributes.put("accessLevel", getAccessLevel());
 
 		return attributes;
 	}
@@ -101,6 +102,12 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Integer accessLevel = (Integer)attributes.get("accessLevel");
+
+		if (accessLevel != null) {
+			setAccessLevel(accessLevel);
 		}
 	}
 
@@ -188,6 +195,29 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		}
 	}
 
+	@Override
+	public int getAccessLevel() {
+		return _accessLevel;
+	}
+
+	@Override
+	public void setAccessLevel(int accessLevel) {
+		_accessLevel = accessLevel;
+
+		if (_userContractRemoteModel != null) {
+			try {
+				Class<?> clazz = _userContractRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAccessLevel", int.class);
+
+				method.invoke(_userContractRemoteModel, accessLevel);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getUserContractRemoteModel() {
 		return _userContractRemoteModel;
 	}
@@ -260,6 +290,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		clone.setUserId(getUserId());
 		clone.setContractId(getContractId());
 		clone.setActive(getActive());
+		clone.setAccessLevel(getAccessLevel());
 
 		return clone;
 	}
@@ -300,7 +331,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{userId=");
 		sb.append(getUserId());
@@ -308,6 +339,8 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		sb.append(getContractId());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", accessLevel=");
+		sb.append(getAccessLevel());
 		sb.append("}");
 
 		return sb.toString();
@@ -315,7 +348,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.leancrm.portlet.library.model.UserContract");
@@ -333,6 +366,10 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>accessLevel</column-name><column-value><![CDATA[");
+		sb.append(getAccessLevel());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -343,5 +380,6 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 	private String _userUuid;
 	private long _contractId;
 	private boolean _active;
+	private int _accessLevel;
 	private BaseModel<?> _userContractRemoteModel;
 }

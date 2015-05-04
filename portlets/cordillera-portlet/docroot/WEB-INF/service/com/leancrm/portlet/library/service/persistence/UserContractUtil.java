@@ -111,172 +111,64 @@ public class UserContractUtil {
 	}
 
 	/**
-	* Returns all the user contracts where userId = &#63; and contractId = &#63;.
+	* Returns the user contract where userId = &#63; and contractId = &#63; or throws a {@link com.leancrm.portlet.library.NoSuchUserContractException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param contractId the contract ID
-	* @return the matching user contracts
+	* @return the matching user contract
+	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.leancrm.portlet.library.model.UserContract> findByUserContract(
+	public static com.leancrm.portlet.library.model.UserContract findByUserContract(
 		long userId, long contractId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.leancrm.portlet.library.NoSuchUserContractException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByUserContract(userId, contractId);
 	}
 
 	/**
-	* Returns a range of all the user contracts where userId = &#63; and contractId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
+	* Returns the user contract where userId = &#63; and contractId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param userId the user ID
 	* @param contractId the contract ID
-	* @param start the lower bound of the range of user contracts
-	* @param end the upper bound of the range of user contracts (not inclusive)
-	* @return the range of matching user contracts
+	* @return the matching user contract, or <code>null</code> if a matching user contract could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.leancrm.portlet.library.model.UserContract> findByUserContract(
-		long userId, long contractId, int start, int end)
+	public static com.leancrm.portlet.library.model.UserContract fetchByUserContract(
+		long userId, long contractId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByUserContract(userId, contractId, start, end);
+		return getPersistence().fetchByUserContract(userId, contractId);
 	}
 
 	/**
-	* Returns an ordered range of all the user contracts where userId = &#63; and contractId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
+	* Returns the user contract where userId = &#63; and contractId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param userId the user ID
 	* @param contractId the contract ID
-	* @param start the lower bound of the range of user contracts
-	* @param end the upper bound of the range of user contracts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching user contracts
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching user contract, or <code>null</code> if a matching user contract could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.leancrm.portlet.library.model.UserContract> findByUserContract(
-		long userId, long contractId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.leancrm.portlet.library.model.UserContract fetchByUserContract(
+		long userId, long contractId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUserContract(userId, contractId, start, end,
-			orderByComparator);
+				   .fetchByUserContract(userId, contractId, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first user contract in the ordered set where userId = &#63; and contractId = &#63;.
+	* Removes the user contract where userId = &#63; and contractId = &#63; from the database.
 	*
 	* @param userId the user ID
 	* @param contractId the contract ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user contract
-	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
+	* @return the user contract that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.leancrm.portlet.library.model.UserContract findByUserContract_First(
-		long userId, long contractId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.leancrm.portlet.library.model.UserContract removeByUserContract(
+		long userId, long contractId)
 		throws com.leancrm.portlet.library.NoSuchUserContractException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByUserContract_First(userId, contractId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	*
-	* @param userId the user ID
-	* @param contractId the contract ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user contract, or <code>null</code> if a matching user contract could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.leancrm.portlet.library.model.UserContract fetchByUserContract_First(
-		long userId, long contractId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByUserContract_First(userId, contractId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	*
-	* @param userId the user ID
-	* @param contractId the contract ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user contract
-	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.leancrm.portlet.library.model.UserContract findByUserContract_Last(
-		long userId, long contractId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.leancrm.portlet.library.NoSuchUserContractException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByUserContract_Last(userId, contractId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	*
-	* @param userId the user ID
-	* @param contractId the contract ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user contract, or <code>null</code> if a matching user contract could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.leancrm.portlet.library.model.UserContract fetchByUserContract_Last(
-		long userId, long contractId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByUserContract_Last(userId, contractId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the user contracts before and after the current user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	*
-	* @param userContractPK the primary key of the current user contract
-	* @param userId the user ID
-	* @param contractId the contract ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next user contract
-	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a user contract with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.leancrm.portlet.library.model.UserContract[] findByUserContract_PrevAndNext(
-		com.leancrm.portlet.library.service.persistence.UserContractPK userContractPK,
-		long userId, long contractId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.leancrm.portlet.library.NoSuchUserContractException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByUserContract_PrevAndNext(userContractPK, userId,
-			contractId, orderByComparator);
-	}
-
-	/**
-	* Removes all the user contracts where userId = &#63; and contractId = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @param contractId the contract ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUserContract(long userId, long contractId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUserContract(userId, contractId);
+		return getPersistence().removeByUserContract(userId, contractId);
 	}
 
 	/**
@@ -793,6 +685,188 @@ public class UserContractUtil {
 	public static int countByUserAndState(long userId, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByUserAndState(userId, active);
+	}
+
+	/**
+	* Returns all the user contracts where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @return the matching user contracts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.leancrm.portlet.library.model.UserContract> findByContractAccess(
+		long contractId, int accessLevel)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByContractAccess(contractId, accessLevel);
+	}
+
+	/**
+	* Returns a range of all the user contracts where contractId = &#63; and accessLevel = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param start the lower bound of the range of user contracts
+	* @param end the upper bound of the range of user contracts (not inclusive)
+	* @return the range of matching user contracts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.leancrm.portlet.library.model.UserContract> findByContractAccess(
+		long contractId, int accessLevel, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByContractAccess(contractId, accessLevel, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user contracts where contractId = &#63; and accessLevel = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param start the lower bound of the range of user contracts
+	* @param end the upper bound of the range of user contracts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user contracts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.leancrm.portlet.library.model.UserContract> findByContractAccess(
+		long contractId, int accessLevel, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByContractAccess(contractId, accessLevel, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user contract
+	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.leancrm.portlet.library.model.UserContract findByContractAccess_First(
+		long contractId, int accessLevel,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.leancrm.portlet.library.NoSuchUserContractException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByContractAccess_First(contractId, accessLevel,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user contract, or <code>null</code> if a matching user contract could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.leancrm.portlet.library.model.UserContract fetchByContractAccess_First(
+		long contractId, int accessLevel,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByContractAccess_First(contractId, accessLevel,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user contract
+	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.leancrm.portlet.library.model.UserContract findByContractAccess_Last(
+		long contractId, int accessLevel,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.leancrm.portlet.library.NoSuchUserContractException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByContractAccess_Last(contractId, accessLevel,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user contract, or <code>null</code> if a matching user contract could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.leancrm.portlet.library.model.UserContract fetchByContractAccess_Last(
+		long contractId, int accessLevel,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByContractAccess_Last(contractId, accessLevel,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the user contracts before and after the current user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param userContractPK the primary key of the current user contract
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user contract
+	* @throws com.leancrm.portlet.library.NoSuchUserContractException if a user contract with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.leancrm.portlet.library.model.UserContract[] findByContractAccess_PrevAndNext(
+		com.leancrm.portlet.library.service.persistence.UserContractPK userContractPK,
+		long contractId, int accessLevel,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.leancrm.portlet.library.NoSuchUserContractException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByContractAccess_PrevAndNext(userContractPK,
+			contractId, accessLevel, orderByComparator);
+	}
+
+	/**
+	* Removes all the user contracts where contractId = &#63; and accessLevel = &#63; from the database.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByContractAccess(long contractId, int accessLevel)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByContractAccess(contractId, accessLevel);
+	}
+
+	/**
+	* Returns the number of user contracts where contractId = &#63; and accessLevel = &#63;.
+	*
+	* @param contractId the contract ID
+	* @param accessLevel the access level
+	* @return the number of matching user contracts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByContractAccess(long contractId, int accessLevel)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByContractAccess(contractId, accessLevel);
 	}
 
 	/**

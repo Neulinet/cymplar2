@@ -84,20 +84,9 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
 			UserContractModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERCONTRACT =
-		new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_USERCONTRACT = new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
 			UserContractModelImpl.FINDER_CACHE_ENABLED, UserContractImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserContract",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERCONTRACT =
-		new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
-			UserContractModelImpl.FINDER_CACHE_ENABLED, UserContractImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserContract",
+			FINDER_CLASS_NAME_ENTITY, "fetchByUserContract",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			UserContractModelImpl.USERID_COLUMN_BITMASK |
 			UserContractModelImpl.CONTRACTID_COLUMN_BITMASK);
@@ -107,117 +96,94 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the user contracts where userId = &#63; and contractId = &#63;.
+	 * Returns the user contract where userId = &#63; and contractId = &#63; or throws a {@link com.leancrm.portlet.library.NoSuchUserContractException} if it could not be found.
 	 *
 	 * @param userId the user ID
 	 * @param contractId the contract ID
-	 * @return the matching user contracts
+	 * @return the matching user contract
+	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserContract> findByUserContract(long userId, long contractId)
-		throws SystemException {
-		return findByUserContract(userId, contractId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public UserContract findByUserContract(long userId, long contractId)
+		throws NoSuchUserContractException, SystemException {
+		UserContract userContract = fetchByUserContract(userId, contractId);
+
+		if (userContract == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(", contractId=");
+			msg.append(contractId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchUserContractException(msg.toString());
+		}
+
+		return userContract;
 	}
 
 	/**
-	 * Returns a range of all the user contracts where userId = &#63; and contractId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
+	 * Returns the user contract where userId = &#63; and contractId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param userId the user ID
 	 * @param contractId the contract ID
-	 * @param start the lower bound of the range of user contracts
-	 * @param end the upper bound of the range of user contracts (not inclusive)
-	 * @return the range of matching user contracts
+	 * @return the matching user contract, or <code>null</code> if a matching user contract could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserContract> findByUserContract(long userId, long contractId,
-		int start, int end) throws SystemException {
-		return findByUserContract(userId, contractId, start, end, null);
+	public UserContract fetchByUserContract(long userId, long contractId)
+		throws SystemException {
+		return fetchByUserContract(userId, contractId, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the user contracts where userId = &#63; and contractId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
+	 * Returns the user contract where userId = &#63; and contractId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
 	 * @param contractId the contract ID
-	 * @param start the lower bound of the range of user contracts
-	 * @param end the upper bound of the range of user contracts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user contracts
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching user contract, or <code>null</code> if a matching user contract could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserContract> findByUserContract(long userId, long contractId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+	public UserContract fetchByUserContract(long userId, long contractId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { userId, contractId };
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERCONTRACT;
-			finderArgs = new Object[] { userId, contractId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERCONTRACT;
-			finderArgs = new Object[] {
-					userId, contractId,
-					
-					start, end, orderByComparator
-				};
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_USERCONTRACT,
+					finderArgs, this);
 		}
 
-		List<UserContract> list = (List<UserContract>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		if (result instanceof UserContract) {
+			UserContract userContract = (UserContract)result;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (UserContract userContract : list) {
-				if ((userId != userContract.getUserId()) ||
-						(contractId != userContract.getContractId())) {
-					list = null;
-
-					break;
-				}
+			if ((userId != userContract.getUserId()) ||
+					(contractId != userContract.getContractId())) {
+				result = null;
 			}
 		}
 
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_USERCONTRACT_WHERE);
 
 			query.append(_FINDER_COLUMN_USERCONTRACT_USERID_2);
 
 			query.append(_FINDER_COLUMN_USERCONTRACT_CONTRACTID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(UserContractModelImpl.ORDER_BY_JPQL);
-			}
 
 			String sql = query.toString();
 
@@ -234,25 +200,36 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 
 				qPos.add(contractId);
 
-				if (!pagination) {
-					list = (List<UserContract>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+				List<UserContract> list = q.list();
 
-					Collections.sort(list);
-
-					list = new UnmodifiableList<UserContract>(list);
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERCONTRACT,
+						finderArgs, list);
 				}
 				else {
-					list = (List<UserContract>)QueryUtil.list(q, getDialect(),
-							start, end);
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"UserContractPersistenceImpl.fetchByUserContract(long, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					UserContract userContract = list.get(0);
+
+					result = userContract;
+
+					cacheResult(userContract);
+
+					if ((userContract.getUserId() != userId) ||
+							(userContract.getContractId() != contractId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERCONTRACT,
+							finderArgs, userContract);
+					}
 				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERCONTRACT,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -261,297 +238,28 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 			}
 		}
 
-		return list;
-	}
-
-	/**
-	 * Returns the first user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param contractId the contract ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user contract
-	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public UserContract findByUserContract_First(long userId, long contractId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserContractException, SystemException {
-		UserContract userContract = fetchByUserContract_First(userId,
-				contractId, orderByComparator);
-
-		if (userContract != null) {
-			return userContract;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("userId=");
-		msg.append(userId);
-
-		msg.append(", contractId=");
-		msg.append(contractId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserContractException(msg.toString());
-	}
-
-	/**
-	 * Returns the first user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param contractId the contract ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user contract, or <code>null</code> if a matching user contract could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public UserContract fetchByUserContract_First(long userId, long contractId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<UserContract> list = findByUserContract(userId, contractId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param contractId the contract ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user contract
-	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public UserContract findByUserContract_Last(long userId, long contractId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserContractException, SystemException {
-		UserContract userContract = fetchByUserContract_Last(userId,
-				contractId, orderByComparator);
-
-		if (userContract != null) {
-			return userContract;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("userId=");
-		msg.append(userId);
-
-		msg.append(", contractId=");
-		msg.append(contractId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserContractException(msg.toString());
-	}
-
-	/**
-	 * Returns the last user contract in the ordered set where userId = &#63; and contractId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param contractId the contract ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user contract, or <code>null</code> if a matching user contract could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public UserContract fetchByUserContract_Last(long userId, long contractId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByUserContract(userId, contractId);
-
-		if (count == 0) {
+		if (result instanceof List<?>) {
 			return null;
 		}
-
-		List<UserContract> list = findByUserContract(userId, contractId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		else {
+			return (UserContract)result;
 		}
-
-		return null;
 	}
 
 	/**
-	 * Returns the user contracts before and after the current user contract in the ordered set where userId = &#63; and contractId = &#63;.
+	 * Removes the user contract where userId = &#63; and contractId = &#63; from the database.
 	 *
-	 * @param userContractPK the primary key of the current user contract
 	 * @param userId the user ID
 	 * @param contractId the contract ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user contract
-	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a user contract with the primary key could not be found
+	 * @return the user contract that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserContract[] findByUserContract_PrevAndNext(
-		UserContractPK userContractPK, long userId, long contractId,
-		OrderByComparator orderByComparator)
+	public UserContract removeByUserContract(long userId, long contractId)
 		throws NoSuchUserContractException, SystemException {
-		UserContract userContract = findByPrimaryKey(userContractPK);
+		UserContract userContract = findByUserContract(userId, contractId);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserContract[] array = new UserContractImpl[3];
-
-			array[0] = getByUserContract_PrevAndNext(session, userContract,
-					userId, contractId, orderByComparator, true);
-
-			array[1] = userContract;
-
-			array[2] = getByUserContract_PrevAndNext(session, userContract,
-					userId, contractId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected UserContract getByUserContract_PrevAndNext(Session session,
-		UserContract userContract, long userId, long contractId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_USERCONTRACT_WHERE);
-
-		query.append(_FINDER_COLUMN_USERCONTRACT_USERID_2);
-
-		query.append(_FINDER_COLUMN_USERCONTRACT_CONTRACTID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(UserContractModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(userId);
-
-		qPos.add(contractId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userContract);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<UserContract> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the user contracts where userId = &#63; and contractId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @param contractId the contract ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByUserContract(long userId, long contractId)
-		throws SystemException {
-		for (UserContract userContract : findByUserContract(userId, contractId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(userContract);
-		}
+		return remove(userContract);
 	}
 
 	/**
@@ -2124,6 +1832,539 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 
 	private static final String _FINDER_COLUMN_USERANDSTATE_USERID_2 = "userContract.id.userId = ? AND ";
 	private static final String _FINDER_COLUMN_USERANDSTATE_ACTIVE_2 = "userContract.active = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CONTRACTACCESS =
+		new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
+			UserContractModelImpl.FINDER_CACHE_ENABLED, UserContractImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContractAccess",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTRACTACCESS =
+		new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
+			UserContractModelImpl.FINDER_CACHE_ENABLED, UserContractImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContractAccess",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			UserContractModelImpl.CONTRACTID_COLUMN_BITMASK |
+			UserContractModelImpl.ACCESSLEVEL_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CONTRACTACCESS = new FinderPath(UserContractModelImpl.ENTITY_CACHE_ENABLED,
+			UserContractModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContractAccess",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the user contracts where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @return the matching user contracts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserContract> findByContractAccess(long contractId,
+		int accessLevel) throws SystemException {
+		return findByContractAccess(contractId, accessLevel, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the user contracts where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param start the lower bound of the range of user contracts
+	 * @param end the upper bound of the range of user contracts (not inclusive)
+	 * @return the range of matching user contracts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserContract> findByContractAccess(long contractId,
+		int accessLevel, int start, int end) throws SystemException {
+		return findByContractAccess(contractId, accessLevel, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the user contracts where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.leancrm.portlet.library.model.impl.UserContractModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param start the lower bound of the range of user contracts
+	 * @param end the upper bound of the range of user contracts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user contracts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserContract> findByContractAccess(long contractId,
+		int accessLevel, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTRACTACCESS;
+			finderArgs = new Object[] { contractId, accessLevel };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CONTRACTACCESS;
+			finderArgs = new Object[] {
+					contractId, accessLevel,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<UserContract> list = (List<UserContract>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (UserContract userContract : list) {
+				if ((contractId != userContract.getContractId()) ||
+						(accessLevel != userContract.getAccessLevel())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_USERCONTRACT_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTRACTACCESS_CONTRACTID_2);
+
+			query.append(_FINDER_COLUMN_CONTRACTACCESS_ACCESSLEVEL_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(UserContractModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contractId);
+
+				qPos.add(accessLevel);
+
+				if (!pagination) {
+					list = (List<UserContract>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<UserContract>(list);
+				}
+				else {
+					list = (List<UserContract>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user contract
+	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserContract findByContractAccess_First(long contractId,
+		int accessLevel, OrderByComparator orderByComparator)
+		throws NoSuchUserContractException, SystemException {
+		UserContract userContract = fetchByContractAccess_First(contractId,
+				accessLevel, orderByComparator);
+
+		if (userContract != null) {
+			return userContract;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contractId=");
+		msg.append(contractId);
+
+		msg.append(", accessLevel=");
+		msg.append(accessLevel);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserContractException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user contract, or <code>null</code> if a matching user contract could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserContract fetchByContractAccess_First(long contractId,
+		int accessLevel, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<UserContract> list = findByContractAccess(contractId, accessLevel,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user contract
+	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a matching user contract could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserContract findByContractAccess_Last(long contractId,
+		int accessLevel, OrderByComparator orderByComparator)
+		throws NoSuchUserContractException, SystemException {
+		UserContract userContract = fetchByContractAccess_Last(contractId,
+				accessLevel, orderByComparator);
+
+		if (userContract != null) {
+			return userContract;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contractId=");
+		msg.append(contractId);
+
+		msg.append(", accessLevel=");
+		msg.append(accessLevel);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserContractException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user contract, or <code>null</code> if a matching user contract could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserContract fetchByContractAccess_Last(long contractId,
+		int accessLevel, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByContractAccess(contractId, accessLevel);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<UserContract> list = findByContractAccess(contractId, accessLevel,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the user contracts before and after the current user contract in the ordered set where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param userContractPK the primary key of the current user contract
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user contract
+	 * @throws com.leancrm.portlet.library.NoSuchUserContractException if a user contract with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserContract[] findByContractAccess_PrevAndNext(
+		UserContractPK userContractPK, long contractId, int accessLevel,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserContractException, SystemException {
+		UserContract userContract = findByPrimaryKey(userContractPK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserContract[] array = new UserContractImpl[3];
+
+			array[0] = getByContractAccess_PrevAndNext(session, userContract,
+					contractId, accessLevel, orderByComparator, true);
+
+			array[1] = userContract;
+
+			array[2] = getByContractAccess_PrevAndNext(session, userContract,
+					contractId, accessLevel, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserContract getByContractAccess_PrevAndNext(Session session,
+		UserContract userContract, long contractId, int accessLevel,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERCONTRACT_WHERE);
+
+		query.append(_FINDER_COLUMN_CONTRACTACCESS_CONTRACTID_2);
+
+		query.append(_FINDER_COLUMN_CONTRACTACCESS_ACCESSLEVEL_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserContractModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(contractId);
+
+		qPos.add(accessLevel);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(userContract);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<UserContract> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the user contracts where contractId = &#63; and accessLevel = &#63; from the database.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByContractAccess(long contractId, int accessLevel)
+		throws SystemException {
+		for (UserContract userContract : findByContractAccess(contractId,
+				accessLevel, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(userContract);
+		}
+	}
+
+	/**
+	 * Returns the number of user contracts where contractId = &#63; and accessLevel = &#63;.
+	 *
+	 * @param contractId the contract ID
+	 * @param accessLevel the access level
+	 * @return the number of matching user contracts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByContractAccess(long contractId, int accessLevel)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CONTRACTACCESS;
+
+		Object[] finderArgs = new Object[] { contractId, accessLevel };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_USERCONTRACT_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTRACTACCESS_CONTRACTID_2);
+
+			query.append(_FINDER_COLUMN_CONTRACTACCESS_ACCESSLEVEL_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contractId);
+
+				qPos.add(accessLevel);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTRACTACCESS_CONTRACTID_2 = "userContract.id.contractId = ? AND ";
+	private static final String _FINDER_COLUMN_CONTRACTACCESS_ACCESSLEVEL_2 = "userContract.accessLevel = ?";
 
 	public UserContractPersistenceImpl() {
 		setModelClass(UserContract.class);
@@ -2138,6 +2379,10 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 	public void cacheResult(UserContract userContract) {
 		EntityCacheUtil.putResult(UserContractModelImpl.ENTITY_CACHE_ENABLED,
 			UserContractImpl.class, userContract.getPrimaryKey(), userContract);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERCONTRACT,
+			new Object[] { userContract.getUserId(), userContract.getContractId() },
+			userContract);
 
 		userContract.resetOriginalValues();
 	}
@@ -2195,6 +2440,8 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(userContract);
 	}
 
 	@Override
@@ -2205,6 +2452,58 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 		for (UserContract userContract : userContracts) {
 			EntityCacheUtil.removeResult(UserContractModelImpl.ENTITY_CACHE_ENABLED,
 				UserContractImpl.class, userContract.getPrimaryKey());
+
+			clearUniqueFindersCache(userContract);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(UserContract userContract) {
+		if (userContract.isNew()) {
+			Object[] args = new Object[] {
+					userContract.getUserId(), userContract.getContractId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERCONTRACT, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERCONTRACT, args,
+				userContract);
+		}
+		else {
+			UserContractModelImpl userContractModelImpl = (UserContractModelImpl)userContract;
+
+			if ((userContractModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_USERCONTRACT.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						userContract.getUserId(), userContract.getContractId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERCONTRACT,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERCONTRACT,
+					args, userContract);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(UserContract userContract) {
+		UserContractModelImpl userContractModelImpl = (UserContractModelImpl)userContract;
+
+		Object[] args = new Object[] {
+				userContract.getUserId(), userContract.getContractId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERCONTRACT, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERCONTRACT, args);
+
+		if ((userContractModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_USERCONTRACT.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					userContractModelImpl.getOriginalUserId(),
+					userContractModelImpl.getOriginalContractId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERCONTRACT, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERCONTRACT, args);
 		}
 	}
 
@@ -2351,29 +2650,6 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 
 		else {
 			if ((userContractModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERCONTRACT.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userContractModelImpl.getOriginalUserId(),
-						userContractModelImpl.getOriginalContractId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERCONTRACT,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERCONTRACT,
-					args);
-
-				args = new Object[] {
-						userContractModelImpl.getUserId(),
-						userContractModelImpl.getContractId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERCONTRACT,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERCONTRACT,
-					args);
-			}
-
-			if ((userContractModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTRACT.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						userContractModelImpl.getOriginalContractId()
@@ -2429,10 +2705,36 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERANDSTATE,
 					args);
 			}
+
+			if ((userContractModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTRACTACCESS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						userContractModelImpl.getOriginalContractId(),
+						userContractModelImpl.getOriginalAccessLevel()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONTRACTACCESS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTRACTACCESS,
+					args);
+
+				args = new Object[] {
+						userContractModelImpl.getContractId(),
+						userContractModelImpl.getAccessLevel()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONTRACTACCESS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTRACTACCESS,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(UserContractModelImpl.ENTITY_CACHE_ENABLED,
 			UserContractImpl.class, userContract.getPrimaryKey(), userContract);
+
+		clearUniqueFindersCache(userContract);
+		cacheUniqueFindersCache(userContract);
 
 		return userContract;
 	}
@@ -2450,6 +2752,7 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 		userContractImpl.setUserId(userContract.getUserId());
 		userContractImpl.setContractId(userContract.getContractId());
 		userContractImpl.setActive(userContract.isActive());
+		userContractImpl.setAccessLevel(userContract.getAccessLevel());
 
 		return userContractImpl;
 	}

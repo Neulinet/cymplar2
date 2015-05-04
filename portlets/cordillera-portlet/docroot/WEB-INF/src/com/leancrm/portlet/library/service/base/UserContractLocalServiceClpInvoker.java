@@ -124,11 +124,15 @@ public class UserContractLocalServiceClpInvoker {
 
 		_methodName122 = "addUserContract";
 
-		_methodParameterTypes122 = new String[] { "long", "long" };
+		_methodParameterTypes122 = new String[] { "long", "long", "int" };
 
 		_methodName123 = "getByUserContract";
 
 		_methodParameterTypes123 = new String[] { "long", "long" };
+
+		_methodName124 = "getContractOwner";
+
+		_methodParameterTypes124 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -235,13 +239,19 @@ public class UserContractLocalServiceClpInvoker {
 		if (_methodName122.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return UserContractLocalServiceUtil.addUserContract(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return UserContractLocalServiceUtil.getByUserContract(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			return UserContractLocalServiceUtil.getContractOwner(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -287,4 +297,6 @@ public class UserContractLocalServiceClpInvoker {
 	private String[] _methodParameterTypes122;
 	private String _methodName123;
 	private String[] _methodParameterTypes123;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
 }

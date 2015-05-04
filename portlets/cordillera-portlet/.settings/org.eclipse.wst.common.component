@@ -2,6 +2,7 @@
     <wb-module deploy-name="cordillera-portlet">
         <wb-resource deploy-path="/" source-path="/docroot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/service"/>
         <property name="context-root" value="cordillera-portlet"/>
         <property name="java-output-path" value="/cordillera-portlet/docroot/WEB-INF/classes"/>
     </wb-module>

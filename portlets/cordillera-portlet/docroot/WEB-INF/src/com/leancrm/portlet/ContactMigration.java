@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import com.leancrm.portlet.entity.ConsultantEntity;
 import com.leancrm.portlet.entity.ContactEntity;
 import com.leancrm.portlet.entity.OrganizationEntity;
+import com.leancrm.portlet.library.ContractConstants;
 import com.leancrm.portlet.library.model.AddressBook;
 import com.leancrm.portlet.library.model.AddressBookContact;
 import com.leancrm.portlet.library.model.AddressBookUser;
@@ -848,7 +849,7 @@ public class ContactMigration extends MVCPortlet {
 								Double.parseDouble(contractAmountParam));
 						
 						contractId = contract.getContractId();
-						UserContractLocalServiceUtil.addUserContract(userId, contractId);
+						UserContractLocalServiceUtil.addUserContract(userId, contractId, ContractConstants.ACCESS_OWNER);
 						logger.info("Contract created.");
 					} else {
 						ContractLocalServiceUtil.updateAmount(contractId, Double.parseDouble(contractAmountParam));

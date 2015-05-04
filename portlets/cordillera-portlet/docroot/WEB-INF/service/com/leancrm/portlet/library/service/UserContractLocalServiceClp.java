@@ -125,11 +125,15 @@ public class UserContractLocalServiceClp implements UserContractLocalService {
 
 		_methodName19 = "addUserContract";
 
-		_methodParameterTypes19 = new String[] { "long", "long" };
+		_methodParameterTypes19 = new String[] { "long", "long", "int" };
 
 		_methodName20 = "getByUserContract";
 
 		_methodParameterTypes20 = new String[] { "long", "long" };
+
+		_methodName21 = "getContractOwner";
+
+		_methodParameterTypes21 = new String[] { "long" };
 	}
 
 	@Override
@@ -688,13 +692,14 @@ public class UserContractLocalServiceClp implements UserContractLocalService {
 
 	@Override
 	public com.leancrm.portlet.library.model.UserContract addUserContract(
-		long userId, long contractId)
+		long userId, long contractId, int accessLevel)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { userId, contractId });
+					_methodParameterTypes19,
+					new Object[] { userId, contractId, accessLevel });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -739,6 +744,29 @@ public class UserContractLocalServiceClp implements UserContractLocalService {
 		return (com.leancrm.portlet.library.model.Contract)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public com.liferay.portal.model.User getContractOwner(long contractId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { contractId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.model.User)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -780,4 +808,6 @@ public class UserContractLocalServiceClp implements UserContractLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }
