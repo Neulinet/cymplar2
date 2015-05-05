@@ -114,40 +114,27 @@ public class AddressBookContactDataLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.AddressBookContactData"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "copyContactData";
+		_methodName124 = "copyContactData";
 
-		_methodParameterTypes122 = new String[] { "long", "long", "long" };
+		_methodParameterTypes124 = new String[] { "long", "long", "long" };
 
-		_methodName123 = "removerContactDatas";
+		_methodName125 = "removerContactDatas";
 
-		_methodParameterTypes123 = new String[] { "long" };
+		_methodParameterTypes125 = new String[] { "long" };
 
-		_methodName124 = "removeContactData";
+		_methodName126 = "removeContactData";
 
-		_methodParameterTypes124 = new String[] { "long", "long" };
+		_methodParameterTypes126 = new String[] { "long", "long" };
 
-		_methodName125 = "getContactData";
-
-		_methodParameterTypes125 = new String[] {
-				"com.leancrm.portlet.library.model.AddressBook",
-				"java.lang.Long"
-			};
-
-		_methodName126 = "getContactData";
-
-		_methodParameterTypes126 = new String[] {
-				"com.leancrm.portlet.library.model.AddressBook"
-			};
-
-		_methodName127 = "getContactDataGroupByMethod";
+		_methodName127 = "getContactData";
 
 		_methodParameterTypes127 = new String[] {
 				"com.leancrm.portlet.library.model.AddressBook",
@@ -156,15 +143,28 @@ public class AddressBookContactDataLocalServiceClpInvoker {
 
 		_methodName128 = "getContactData";
 
-		_methodParameterTypes128 = new String[] { "long", "long", "long" };
+		_methodParameterTypes128 = new String[] {
+				"com.leancrm.portlet.library.model.AddressBook"
+			};
 
-		_methodName129 = "getAddressBookContactDatasCount";
+		_methodName129 = "getContactDataGroupByMethod";
 
-		_methodParameterTypes129 = new String[] { "long" };
+		_methodParameterTypes129 = new String[] {
+				"com.leancrm.portlet.library.model.AddressBook",
+				"java.lang.Long"
+			};
 
-		_methodName130 = "hasContactData";
+		_methodName130 = "getContactData";
 
-		_methodParameterTypes130 = new String[] { "long", "long" };
+		_methodParameterTypes130 = new String[] { "long", "long", "long" };
+
+		_methodName131 = "getAddressBookContactDatasCount";
+
+		_methodParameterTypes131 = new String[] { "long" };
+
+		_methodName132 = "hasContactData";
+
+		_methodParameterTypes132 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -256,20 +256,20 @@ public class AddressBookContactDataLocalServiceClpInvoker {
 			return AddressBookContactDataLocalServiceUtil.updateAddressBookContactData((com.leancrm.portlet.library.model.AddressBookContactData)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return AddressBookContactDataLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			AddressBookContactDataLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			AddressBookContactDataLocalServiceUtil.copyContactData(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
@@ -277,52 +277,52 @@ public class AddressBookContactDataLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			AddressBookContactDataLocalServiceUtil.removerContactDatas(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			AddressBookContactDataLocalServiceUtil.removeContactData(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
-			return AddressBookContactDataLocalServiceUtil.getContactData((com.leancrm.portlet.library.model.AddressBook)arguments[0],
-				(java.lang.Long)arguments[1]);
-		}
-
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return AddressBookContactDataLocalServiceUtil.getContactData((com.leancrm.portlet.library.model.AddressBook)arguments[0]);
-		}
-
 		if (_methodName127.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			return AddressBookContactDataLocalServiceUtil.getContactDataGroupByMethod((com.leancrm.portlet.library.model.AddressBook)arguments[0],
+			return AddressBookContactDataLocalServiceUtil.getContactData((com.leancrm.portlet.library.model.AddressBook)arguments[0],
 				(java.lang.Long)arguments[1]);
 		}
 
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+			return AddressBookContactDataLocalServiceUtil.getContactData((com.leancrm.portlet.library.model.AddressBook)arguments[0]);
+		}
+
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+			return AddressBookContactDataLocalServiceUtil.getContactDataGroupByMethod((com.leancrm.portlet.library.model.AddressBook)arguments[0],
+				(java.lang.Long)arguments[1]);
+		}
+
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return AddressBookContactDataLocalServiceUtil.getContactData(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return AddressBookContactDataLocalServiceUtil.getAddressBookContactDatasCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return AddressBookContactDataLocalServiceUtil.hasContactData(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -362,14 +362,10 @@ public class AddressBookContactDataLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
@@ -384,4 +380,8 @@ public class AddressBookContactDataLocalServiceClpInvoker {
 	private String[] _methodParameterTypes129;
 	private String _methodName130;
 	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
 }

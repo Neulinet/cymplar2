@@ -106,53 +106,71 @@ public class ReportLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.Report"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "addReport";
+		_methodName124 = "addReport";
 
-		_methodParameterTypes122 = new String[] {
+		_methodParameterTypes124 = new String[] {
 				"long", "long", "long", "java.lang.String", "long", "long",
 				"long", "double", "java.util.Date", "int", "long", "long"
 			};
 
-		_methodName123 = "addReport";
+		_methodName125 = "addReport";
 
-		_methodParameterTypes123 = new String[] {
+		_methodParameterTypes125 = new String[] {
 				"long", "long", "long", "java.lang.String", "long", "long",
 				"long", "double", "java.util.Date", "int", "long", "long",
 				"java.util.Date"
 			};
 
-		_methodName124 = "updateUserOfReports";
+		_methodName126 = "updateUserOfReports";
 
-		_methodParameterTypes124 = new String[] { "long", "long" };
+		_methodParameterTypes126 = new String[] { "long", "long" };
 
-		_methodName125 = "getReport";
+		_methodName127 = "getReport";
 
-		_methodParameterTypes125 = new String[] { "long", "long", "long" };
+		_methodParameterTypes127 = new String[] { "long", "long", "long" };
 
-		_methodName126 = "getLastReport";
+		_methodName128 = "getLastReport";
 
-		_methodParameterTypes126 = new String[] { "long", "long", "long" };
+		_methodParameterTypes128 = new String[] { "long", "long", "long" };
 
-		_methodName127 = "getLastReport";
+		_methodName129 = "getLastReport";
 
-		_methodParameterTypes127 = new String[] { "long" };
+		_methodParameterTypes129 = new String[] { "long" };
 
-		_methodName128 = "getReportByContract";
+		_methodName130 = "getReportByContract";
 
-		_methodParameterTypes128 = new String[] { "long" };
+		_methodParameterTypes130 = new String[] { "long" };
 
-		_methodName129 = "searchReports";
+		_methodName131 = "searchReports";
 
-		_methodParameterTypes129 = new String[] {
+		_methodParameterTypes131 = new String[] {
 				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
+				"java.lang.Long", "java.lang.Long", "java.lang.Double",
+				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.util.Date"
+			};
+
+		_methodName132 = "searchConsultantReports";
+
+		_methodParameterTypes132 = new String[] {
+				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
+				"java.lang.Long", "java.lang.Long", "java.lang.Double",
+				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.util.Date"
+			};
+
+		_methodName133 = "countConsultantReports";
+
+		_methodParameterTypes133 = new String[] {
+				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
 				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
 				"java.util.Date"
@@ -248,20 +266,20 @@ public class ReportLocalServiceClpInvoker {
 			return ReportLocalServiceUtil.updateReport((com.leancrm.portlet.library.model.Report)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ReportLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			ReportLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return ReportLocalServiceUtil.addReport(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -276,8 +294,8 @@ public class ReportLocalServiceClpInvoker {
 				((Long)arguments[11]).longValue());
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return ReportLocalServiceUtil.addReport(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -292,40 +310,40 @@ public class ReportLocalServiceClpInvoker {
 				((Long)arguments[11]).longValue(), (java.util.Date)arguments[12]);
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			ReportLocalServiceUtil.updateUserOfReports(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return ReportLocalServiceUtil.getReport(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return ReportLocalServiceUtil.getLastReport(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			return ReportLocalServiceUtil.getLastReport(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return ReportLocalServiceUtil.getReportByContract(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return ReportLocalServiceUtil.searchReports(((Integer)arguments[0]).intValue(),
 				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2],
 				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
@@ -333,6 +351,27 @@ public class ReportLocalServiceClpInvoker {
 				(java.lang.Double)arguments[7],
 				(java.lang.Integer[])arguments[8],
 				(java.util.Date)arguments[9], (java.util.Date)arguments[10]);
+		}
+
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+			return ReportLocalServiceUtil.searchConsultantReports(((Integer)arguments[0]).intValue(),
+				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2],
+				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
+				(java.lang.Long)arguments[5], (java.lang.Double)arguments[6],
+				(java.lang.Double)arguments[7],
+				(java.lang.Integer[])arguments[8],
+				(java.util.Date)arguments[9], (java.util.Date)arguments[10]);
+		}
+
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+			return ReportLocalServiceUtil.countConsultantReports((java.lang.Long)arguments[0],
+				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2],
+				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
+				(java.lang.Double)arguments[5], (java.lang.Double)arguments[6],
+				(java.lang.Integer[])arguments[7],
+				(java.util.Date)arguments[8], (java.util.Date)arguments[9]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -370,14 +409,10 @@ public class ReportLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
@@ -390,4 +425,12 @@ public class ReportLocalServiceClpInvoker {
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
 	private String[] _methodParameterTypes129;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

@@ -30,6 +30,7 @@ import com.leancrm.portlet.library.service.persistence.ContactDataPhonePersisten
 import com.leancrm.portlet.library.service.persistence.ContactDataRefPersistence;
 import com.leancrm.portlet.library.service.persistence.ContactDataTextPersistence;
 import com.leancrm.portlet.library.service.persistence.ContactPersistence;
+import com.leancrm.portlet.library.service.persistence.ContractFinder;
 import com.leancrm.portlet.library.service.persistence.ContractPersistence;
 import com.leancrm.portlet.library.service.persistence.EnterprisePersistence;
 import com.leancrm.portlet.library.service.persistence.IndustryPersistence;
@@ -846,6 +847,24 @@ public abstract class ContractLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the contract finder.
+	 *
+	 * @return the contract finder
+	 */
+	public ContractFinder getContractFinder() {
+		return contractFinder;
+	}
+
+	/**
+	 * Sets the contract finder.
+	 *
+	 * @param contractFinder the contract finder
+	 */
+	public void setContractFinder(ContractFinder contractFinder) {
+		this.contractFinder = contractFinder;
+	}
+
+	/**
 	 * Returns the enterprise local service.
 	 *
 	 * @return the enterprise local service
@@ -1362,6 +1381,8 @@ public abstract class ContractLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.leancrm.portlet.library.service.ContractLocalService contractLocalService;
 	@BeanReference(type = ContractPersistence.class)
 	protected ContractPersistence contractPersistence;
+	@BeanReference(type = ContractFinder.class)
+	protected ContractFinder contractFinder;
 	@BeanReference(type = com.leancrm.portlet.library.service.EnterpriseLocalService.class)
 	protected com.leancrm.portlet.library.service.EnterpriseLocalService enterpriseLocalService;
 	@BeanReference(type = EnterprisePersistence.class)

@@ -106,36 +106,36 @@ public class ContactDataPhoneLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.ContactDataPhone"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "addContactDataPhone";
+		_methodName124 = "addContactDataPhone";
 
-		_methodParameterTypes122 = new String[] {
+		_methodParameterTypes124 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName123 = "updateContactDataPhone";
+		_methodName125 = "updateContactDataPhone";
 
-		_methodParameterTypes123 = new String[] {
+		_methodParameterTypes125 = new String[] {
 				"long", "com.leancrm.portlet.library.model.ContactDataMethod",
 				"java.lang.String", "java.lang.String", "long", "long"
 			};
 
-		_methodName124 = "getPhoneNumber";
+		_methodName126 = "getPhoneNumber";
 
-		_methodParameterTypes124 = new String[] {
+		_methodParameterTypes126 = new String[] {
 				"com.leancrm.portlet.library.model.ContactDataPhone"
 			};
 
-		_methodName125 = "removeContactDataPhone";
+		_methodName127 = "removeContactDataPhone";
 
-		_methodParameterTypes125 = new String[] { "long" };
+		_methodParameterTypes127 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -227,26 +227,26 @@ public class ContactDataPhoneLocalServiceClpInvoker {
 			return ContactDataPhoneLocalServiceUtil.updateContactDataPhone((com.leancrm.portlet.library.model.ContactDataPhone)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ContactDataPhoneLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			ContactDataPhoneLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return ContactDataPhoneLocalServiceUtil.addContactDataPhone(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			ContactDataPhoneLocalServiceUtil.updateContactDataPhone(((Long)arguments[0]).longValue(),
 				(com.leancrm.portlet.library.model.ContactDataMethod)arguments[1],
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -256,13 +256,13 @@ public class ContactDataPhoneLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return ContactDataPhoneLocalServiceUtil.getPhoneNumber((com.leancrm.portlet.library.model.ContactDataPhone)arguments[0]);
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			ContactDataPhoneLocalServiceUtil.removeContactDataPhone(((Long)arguments[0]).longValue());
 
 			return null;
@@ -303,16 +303,16 @@ public class ContactDataPhoneLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
 	private String[] _methodParameterTypes125;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
 }

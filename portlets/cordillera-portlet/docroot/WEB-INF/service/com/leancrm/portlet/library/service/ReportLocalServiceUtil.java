@@ -350,6 +350,32 @@ public class ReportLocalServiceUtil {
 			statusCodeList, fromDate, toDate);
 	}
 
+	public static java.util.List<com.leancrm.portlet.library.model.Report> searchConsultantReports(
+		int order, java.lang.Long userId, java.lang.Long enterpriseId,
+		java.lang.Long contactId, java.lang.Long organizationId,
+		java.lang.Long contractId, java.lang.Double fromProgress,
+		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.util.Date fromDate, java.util.Date toDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .searchConsultantReports(order, userId, enterpriseId,
+			contactId, organizationId, contractId, fromProgress, toProgress,
+			statusCodeList, fromDate, toDate);
+	}
+
+	public static long countConsultantReports(java.lang.Long userId,
+		java.lang.Long enterpriseId, java.lang.Long contactId,
+		java.lang.Long organizationId, java.lang.Long contractId,
+		java.lang.Double fromProgress, java.lang.Double toProgress,
+		java.lang.Integer[] statusCodeList, java.util.Date fromDate,
+		java.util.Date toDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .countConsultantReports(userId, enterpriseId, contactId,
+			organizationId, contractId, fromProgress, toProgress,
+			statusCodeList, fromDate, toDate);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

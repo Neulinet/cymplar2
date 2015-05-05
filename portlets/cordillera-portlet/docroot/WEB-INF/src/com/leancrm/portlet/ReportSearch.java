@@ -408,11 +408,6 @@ public class ReportSearch extends MVCPortlet {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 			
 			
-			if (!PermissionChecker.isOrganizationAdmin(themeDisplay.getUser())) {
-				// user is not organziation admin - so, user see only own contacts
-				consultantId = themeDisplay.getUserId();
-			}
-			
 			Long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
 			
 			List<Integer> statusCodeList = new ArrayList<Integer>();
@@ -428,7 +423,17 @@ public class ReportSearch extends MVCPortlet {
 			if (statusCode4 >= 0) {
 				statusCodeList.add(statusCode4);
 			}
-			List<Report> results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+			List<Report> results = null;
+			
+			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser())) {
+				// if user is admin - we just search reports
+				results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+			} else {
+				// user is not organziation admin - so, user see only own contacts and search performed according to user permissions (stored in table cms_usercontract)
+				consultantId = themeDisplay.getUserId();
+				
+				results = ReportLocalServiceUtil.searchConsultantReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+			}
 			 
 			List<ReportResultItem> reportResultList = ReportSearchUtils.getResults(results);
 			
@@ -437,7 +442,7 @@ public class ReportSearch extends MVCPortlet {
 			if (comparator != null) {
 				Collections.sort(reportResultList, comparator);
 			}
-			logger.info("Search Reports. Total Report Founds: " + reportResultList.size());
+			logger.debug("Search Reports. Total Report Founds: " + reportResultList.size());
 			request.setAttribute("searchResultsCount", reportResultList.size());
 			
 			// get required part

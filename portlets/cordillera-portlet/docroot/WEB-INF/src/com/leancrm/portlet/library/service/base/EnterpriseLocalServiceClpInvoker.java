@@ -106,24 +106,24 @@ public class EnterpriseLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.Enterprise"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "addEnterprise";
+		_methodName124 = "addEnterprise";
 
-		_methodParameterTypes122 = new String[] {
+		_methodParameterTypes124 = new String[] {
 				"java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String", "long", "boolean"
 			};
 
-		_methodName123 = "addEnterprise";
+		_methodName125 = "addEnterprise";
 
-		_methodParameterTypes123 = new String[] {
+		_methodParameterTypes125 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -131,9 +131,9 @@ public class EnterpriseLocalServiceClpInvoker {
 				"boolean"
 			};
 
-		_methodName124 = "updateEnterprise";
+		_methodName126 = "updateEnterprise";
 
-		_methodParameterTypes124 = new String[] {
+		_methodParameterTypes126 = new String[] {
 				"long", "long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -141,17 +141,17 @@ public class EnterpriseLocalServiceClpInvoker {
 				"boolean"
 			};
 
-		_methodName125 = "getAll";
+		_methodName127 = "getAll";
 
-		_methodParameterTypes125 = new String[] {  };
+		_methodParameterTypes127 = new String[] {  };
 
-		_methodName126 = "getEnterpriseByTax";
+		_methodName128 = "getEnterpriseByTax";
 
-		_methodParameterTypes126 = new String[] { "java.lang.String" };
+		_methodParameterTypes128 = new String[] { "java.lang.String" };
 
-		_methodName127 = "getEnterpriseByIndustryId";
+		_methodName129 = "getEnterpriseByIndustryId";
 
-		_methodParameterTypes127 = new String[] { "long" };
+		_methodParameterTypes129 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -243,20 +243,20 @@ public class EnterpriseLocalServiceClpInvoker {
 			return EnterpriseLocalServiceUtil.updateEnterprise((com.leancrm.portlet.library.model.Enterprise)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			EnterpriseLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.addEnterprise((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -265,8 +265,8 @@ public class EnterpriseLocalServiceClpInvoker {
 				((Boolean)arguments[6]).booleanValue());
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.addEnterprise(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -279,8 +279,8 @@ public class EnterpriseLocalServiceClpInvoker {
 				((Boolean)arguments[13]).booleanValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.updateEnterprise(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -295,18 +295,18 @@ public class EnterpriseLocalServiceClpInvoker {
 				((Boolean)arguments[14]).booleanValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.getAll();
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.getEnterpriseByTax((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			return EnterpriseLocalServiceUtil.getEnterpriseByIndustryId(((Long)arguments[0]).longValue());
 		}
 
@@ -345,14 +345,10 @@ public class EnterpriseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
@@ -361,4 +357,8 @@ public class EnterpriseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes126;
 	private String _methodName127;
 	private String[] _methodParameterTypes127;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
 }

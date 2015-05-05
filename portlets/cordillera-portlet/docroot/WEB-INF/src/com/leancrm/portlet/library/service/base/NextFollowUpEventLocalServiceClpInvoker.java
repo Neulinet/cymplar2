@@ -106,32 +106,32 @@ public class NextFollowUpEventLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.NextFollowUpEvent"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "addNextFollowUpEvent";
+		_methodName124 = "addNextFollowUpEvent";
 
-		_methodParameterTypes122 = new String[] {
+		_methodParameterTypes124 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.util.Date", "long", "int"
 			};
 
-		_methodName123 = "updateStatus";
-
-		_methodParameterTypes123 = new String[] { "long", "int" };
-
-		_methodName124 = "getByStatus";
-
-		_methodParameterTypes124 = new String[] { "long", "int" };
-
-		_methodName125 = "getLastEventByStatus";
+		_methodName125 = "updateStatus";
 
 		_methodParameterTypes125 = new String[] { "long", "int" };
+
+		_methodName126 = "getByStatus";
+
+		_methodParameterTypes126 = new String[] { "long", "int" };
+
+		_methodName127 = "getLastEventByStatus";
+
+		_methodParameterTypes127 = new String[] { "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -223,20 +223,20 @@ public class NextFollowUpEventLocalServiceClpInvoker {
 			return NextFollowUpEventLocalServiceUtil.updateNextFollowUpEvent((com.leancrm.portlet.library.model.NextFollowUpEvent)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return NextFollowUpEventLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			NextFollowUpEventLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return NextFollowUpEventLocalServiceUtil.addNextFollowUpEvent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -244,20 +244,20 @@ public class NextFollowUpEventLocalServiceClpInvoker {
 				((Integer)arguments[6]).intValue());
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return NextFollowUpEventLocalServiceUtil.updateStatus(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return NextFollowUpEventLocalServiceUtil.getByStatus(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return NextFollowUpEventLocalServiceUtil.getLastEventByStatus(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -297,16 +297,16 @@ public class NextFollowUpEventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
 	private String[] _methodParameterTypes125;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
 }

@@ -157,6 +157,24 @@ public class ReportLocalServiceClp implements ReportLocalService {
 				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
 				"java.util.Date"
 			};
+
+		_methodName27 = "searchConsultantReports";
+
+		_methodParameterTypes27 = new String[] {
+				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
+				"java.lang.Long", "java.lang.Long", "java.lang.Double",
+				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.util.Date"
+			};
+
+		_methodName28 = "countConsultantReports";
+
+		_methodParameterTypes28 = new String[] {
+				"java.lang.Long", "java.lang.Long", "java.lang.Long",
+				"java.lang.Long", "java.lang.Long", "java.lang.Double",
+				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.util.Date"
+			};
 	}
 
 	@Override
@@ -1029,6 +1047,116 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		return (java.util.List<com.leancrm.portlet.library.model.Report>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Report> searchConsultantReports(
+		int order, java.lang.Long userId, java.lang.Long enterpriseId,
+		java.lang.Long contactId, java.lang.Long organizationId,
+		java.lang.Long contractId, java.lang.Double fromProgress,
+		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.util.Date fromDate, java.util.Date toDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] {
+						order,
+						
+					ClpSerializer.translateInput(userId),
+						
+					ClpSerializer.translateInput(enterpriseId),
+						
+					ClpSerializer.translateInput(contactId),
+						
+					ClpSerializer.translateInput(organizationId),
+						
+					ClpSerializer.translateInput(contractId),
+						
+					ClpSerializer.translateInput(fromProgress),
+						
+					ClpSerializer.translateInput(toProgress),
+						
+					ClpSerializer.translateInput(statusCodeList),
+						
+					ClpSerializer.translateInput(fromDate),
+						
+					ClpSerializer.translateInput(toDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.leancrm.portlet.library.model.Report>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long countConsultantReports(java.lang.Long userId,
+		java.lang.Long enterpriseId, java.lang.Long contactId,
+		java.lang.Long organizationId, java.lang.Long contractId,
+		java.lang.Double fromProgress, java.lang.Double toProgress,
+		java.lang.Integer[] statusCodeList, java.util.Date fromDate,
+		java.util.Date toDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
+					new Object[] {
+						ClpSerializer.translateInput(userId),
+						
+					ClpSerializer.translateInput(enterpriseId),
+						
+					ClpSerializer.translateInput(contactId),
+						
+					ClpSerializer.translateInput(organizationId),
+						
+					ClpSerializer.translateInput(contractId),
+						
+					ClpSerializer.translateInput(fromProgress),
+						
+					ClpSerializer.translateInput(toProgress),
+						
+					ClpSerializer.translateInput(statusCodeList),
+						
+					ClpSerializer.translateInput(fromDate),
+						
+					ClpSerializer.translateInput(toDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1082,4 +1210,8 @@ public class ReportLocalServiceClp implements ReportLocalService {
 	private String[] _methodParameterTypes25;
 	private String _methodName26;
 	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

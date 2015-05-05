@@ -31,10 +31,12 @@ import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.model.impl.ContactContractImpl;
 import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
 import com.leancrm.portlet.library.service.base.ReportLocalServiceBaseImpl;
+import com.leancrm.portlet.library.service.persistence.ContractFinderUtil;
 import com.leancrm.portlet.utils.ReportComparator;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -230,9 +232,15 @@ public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
 		
 		return results;
 	}
-
-	private void logger(String string) {
-		// TODO Auto-generated method stub
-		
+	
+	@Override
+	public List<Report> searchConsultantReports(int order, Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, Integer[] statusCodeList, Date fromDate, Date toDate) throws SystemException {
+		return ContractFinderUtil.findConsultantReports(userId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate, order, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
+
+	@Override
+	public long countConsultantReports(Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, Integer[] statusCodeList, Date fromDate, Date toDate) throws SystemException {
+		return ContractFinderUtil.countConsultantReports(userId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate);
+	}
+
 }

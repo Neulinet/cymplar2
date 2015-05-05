@@ -30,6 +30,7 @@
 	<bean id="com.leancrm.portlet.library.service.persistence.ContactDataTextPersistence" class="com.leancrm.portlet.library.service.persistence.ContactDataTextPersistenceImpl" parent="basePersistence" />
 	<bean id="com.leancrm.portlet.library.service.ContractLocalService" class="com.leancrm.portlet.library.service.impl.ContractLocalServiceImpl" />
 	<bean id="com.leancrm.portlet.library.service.persistence.ContractPersistence" class="com.leancrm.portlet.library.service.persistence.ContractPersistenceImpl" parent="basePersistence" />
+	<bean id="com.leancrm.portlet.library.service.persistence.ContractFinder" class="com.leancrm.portlet.library.service.persistence.ContractFinderImpl" parent="basePersistence" />
 	<bean id="com.leancrm.portlet.library.service.EnterpriseLocalService" class="com.leancrm.portlet.library.service.impl.EnterpriseLocalServiceImpl" />
 	<bean id="com.leancrm.portlet.library.service.persistence.EnterprisePersistence" class="com.leancrm.portlet.library.service.persistence.EnterprisePersistenceImpl" parent="basePersistence" />
 	<bean id="com.leancrm.portlet.library.service.IndustryLocalService" class="com.leancrm.portlet.library.service.impl.IndustryLocalServiceImpl" />

@@ -106,58 +106,58 @@ public class ContactDataLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.ContactData"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "getContactData";
+		_methodName124 = "getContactData";
 
-		_methodParameterTypes122 = new String[] { "long" };
+		_methodParameterTypes124 = new String[] { "long" };
 
-		_methodName123 = "addContactData";
+		_methodName125 = "addContactData";
 
-		_methodParameterTypes123 = new String[] {
+		_methodParameterTypes125 = new String[] {
 				"long", "com.leancrm.portlet.library.model.ContactDataMethod",
 				"long", "long"
 			};
 
-		_methodName124 = "getContactDataList";
+		_methodName126 = "getContactDataList";
 
-		_methodParameterTypes124 = new String[] { "long" };
+		_methodParameterTypes126 = new String[] { "long" };
 
-		_methodName125 = "getContactDataList";
+		_methodName127 = "getContactDataList";
 
-		_methodParameterTypes125 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes127 = new String[] { "long", "java.lang.String" };
 
-		_methodName126 = "getContactDataByMethod";
+		_methodName128 = "getContactDataByMethod";
 
-		_methodParameterTypes126 = new String[] { "long", "long" };
+		_methodParameterTypes128 = new String[] { "long", "long" };
 
-		_methodName127 = "removeByContact";
+		_methodName129 = "removeByContact";
 
-		_methodParameterTypes127 = new String[] { "long", "long" };
+		_methodParameterTypes129 = new String[] { "long", "long" };
 
-		_methodName128 = "removeContactData";
+		_methodName130 = "removeContactData";
 
-		_methodParameterTypes128 = new String[] {
+		_methodParameterTypes130 = new String[] {
 				"com.leancrm.portlet.library.model.ContactData"
 			};
 
-		_methodName129 = "getContactDataByMethod";
+		_methodName131 = "getContactDataByMethod";
 
-		_methodParameterTypes129 = new String[] { "long" };
+		_methodParameterTypes131 = new String[] { "long" };
 
-		_methodName130 = "setReadOnly";
+		_methodName132 = "setReadOnly";
 
-		_methodParameterTypes130 = new String[] { "long", "boolean" };
+		_methodParameterTypes132 = new String[] { "long", "boolean" };
 
-		_methodName131 = "updateReadOnly";
+		_methodName133 = "updateReadOnly";
 
-		_methodParameterTypes131 = new String[] {
+		_methodParameterTypes133 = new String[] {
 				"com.leancrm.portlet.library.model.ContactData"
 			};
 	}
@@ -251,76 +251,76 @@ public class ContactDataLocalServiceClpInvoker {
 			return ContactDataLocalServiceUtil.updateContactData((com.leancrm.portlet.library.model.ContactData)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ContactDataLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			ContactDataLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return ContactDataLocalServiceUtil.getContactData(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return ContactDataLocalServiceUtil.addContactData(((Long)arguments[0]).longValue(),
 				(com.leancrm.portlet.library.model.ContactDataMethod)arguments[1],
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
-			return ContactDataLocalServiceUtil.getContactDataList(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
-			return ContactDataLocalServiceUtil.getContactDataList(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
-		}
-
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return ContactDataLocalServiceUtil.getContactDataByMethod(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return ContactDataLocalServiceUtil.getContactDataList(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName127.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+			return ContactDataLocalServiceUtil.getContactDataList(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+			return ContactDataLocalServiceUtil.getContactDataByMethod(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			ContactDataLocalServiceUtil.removeByContact(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			ContactDataLocalServiceUtil.removeContactData((com.leancrm.portlet.library.model.ContactData)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return ContactDataLocalServiceUtil.getContactDataByMethod(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return ContactDataLocalServiceUtil.setReadOnly(((Long)arguments[0]).longValue(),
 				((Boolean)arguments[1]).booleanValue());
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			ContactDataLocalServiceUtil.updateReadOnly((com.leancrm.portlet.library.model.ContactData)arguments[0]);
 
 			return null;
@@ -361,14 +361,10 @@ public class ContactDataLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
@@ -385,4 +381,8 @@ public class ContactDataLocalServiceClpInvoker {
 	private String[] _methodParameterTypes130;
 	private String _methodName131;
 	private String[] _methodParameterTypes131;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

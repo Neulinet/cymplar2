@@ -361,6 +361,32 @@ public class ReportLocalServiceWrapper implements ReportLocalService,
 			statusCodeList, fromDate, toDate);
 	}
 
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Report> searchConsultantReports(
+		int order, java.lang.Long userId, java.lang.Long enterpriseId,
+		java.lang.Long contactId, java.lang.Long organizationId,
+		java.lang.Long contractId, java.lang.Double fromProgress,
+		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.util.Date fromDate, java.util.Date toDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _reportLocalService.searchConsultantReports(order, userId,
+			enterpriseId, contactId, organizationId, contractId, fromProgress,
+			toProgress, statusCodeList, fromDate, toDate);
+	}
+
+	@Override
+	public long countConsultantReports(java.lang.Long userId,
+		java.lang.Long enterpriseId, java.lang.Long contactId,
+		java.lang.Long organizationId, java.lang.Long contractId,
+		java.lang.Double fromProgress, java.lang.Double toProgress,
+		java.lang.Integer[] statusCodeList, java.util.Date fromDate,
+		java.util.Date toDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _reportLocalService.countConsultantReports(userId, enterpriseId,
+			contactId, organizationId, contractId, fromProgress, toProgress,
+			statusCodeList, fromDate, toDate);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

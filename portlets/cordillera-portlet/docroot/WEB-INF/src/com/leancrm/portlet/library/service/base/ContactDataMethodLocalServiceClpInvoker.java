@@ -106,35 +106,35 @@ public class ContactDataMethodLocalServiceClpInvoker {
 				"com.leancrm.portlet.library.model.ContactDataMethod"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName118 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes118 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName119 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName122 = "addContactDataMethod";
+		_methodName124 = "addContactDataMethod";
 
-		_methodParameterTypes122 = new String[] {
+		_methodParameterTypes124 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "int"
 			};
 
-		_methodName123 = "getAll";
+		_methodName125 = "getAll";
 
-		_methodParameterTypes123 = new String[] {  };
+		_methodParameterTypes125 = new String[] {  };
 
-		_methodName124 = "getContactDataMethod";
+		_methodName126 = "getContactDataMethod";
 
-		_methodParameterTypes124 = new String[] { "java.lang.String" };
+		_methodParameterTypes126 = new String[] { "java.lang.String" };
 
-		_methodName125 = "getContactDataMethodByName";
+		_methodName127 = "getContactDataMethodByName";
 
-		_methodParameterTypes125 = new String[] { "java.lang.String" };
+		_methodParameterTypes127 = new String[] { "java.lang.String" };
 
-		_methodName126 = "getContactDataMethodMap";
+		_methodName128 = "getContactDataMethodMap";
 
-		_methodParameterTypes126 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,42 +226,42 @@ public class ContactDataMethodLocalServiceClpInvoker {
 			return ContactDataMethodLocalServiceUtil.updateContactDataMethod((com.leancrm.portlet.library.model.ContactDataMethod)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return ContactDataMethodLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			ContactDataMethodLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return ContactDataMethodLocalServiceUtil.addContactDataMethod(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
-			return ContactDataMethodLocalServiceUtil.getAll();
-		}
-
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
-			return ContactDataMethodLocalServiceUtil.getContactDataMethod((java.lang.String)arguments[0]);
-		}
-
 		if (_methodName125.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
-			return ContactDataMethodLocalServiceUtil.getContactDataMethodByName((java.lang.String)arguments[0]);
+			return ContactDataMethodLocalServiceUtil.getAll();
 		}
 
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+			return ContactDataMethodLocalServiceUtil.getContactDataMethod((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+			return ContactDataMethodLocalServiceUtil.getContactDataMethodByName((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return ContactDataMethodLocalServiceUtil.getContactDataMethodMap();
 		}
 
@@ -300,18 +300,18 @@ public class ContactDataMethodLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
 	private String[] _methodParameterTypes125;
 	private String _methodName126;
 	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
 }
