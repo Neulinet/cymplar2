@@ -35,17 +35,17 @@
 	<div class="form-group">
 		<label>Status</label>
 		<div class="checkbox-group">
-			<label class="checkbox-inline" for="statusCode1">
-				<aui:input label="Cold" type="checkbox" id="statusCode1" name="statusCode" autocomplete="off" value="0" /> 
+			<label class="checkbox-inline" for="statusCodeCOld">
+				<aui:input label="Cold" type="checkbox" id="statusCodeCold" name="statusCodeCold" autocomplete="off" /> 
 			</label>
-			<label class="checkbox-inline" for="statusCode2">
-				<aui:input label="Warm" type="checkbox" id="statusCode2" name="statusCode" autocomplete="off" value="100" /> 
+			<label class="checkbox-inline" for="statusCodeWarm">
+				<aui:input label="Warm" type="checkbox" id="statusCodeWarm" name="statusCodeWarm" autocomplete="off" /> 
 			</label>
-			<label class="checkbox-inline" for="statusCode3">
-				<aui:input label="Hot" type="checkbox" id="statusCode3" name="statusCode" autocomplete="off" value="200" /> 
+			<label class="checkbox-inline" for="statusCodeHot">
+				<aui:input label="Hot" type="checkbox" id="statusCodeHot" name="statusCodeHot" autocomplete="off" /> 
 			</label>
-			<label class="checkbox-inline" for="statusCode4">
-				<aui:input label="Inactive" type="checkbox" id="statusCode4" name="statusCode" autocomplete="off" value="300" /> 
+			<label class="checkbox-inline" for="statusCodeInactive">
+				<aui:input label="Inactive" type="checkbox" id="statusCodeInctive" name="statusCodeInactive" autocomplete="off" /> 
 			</label>
 		</div>
 	</div>

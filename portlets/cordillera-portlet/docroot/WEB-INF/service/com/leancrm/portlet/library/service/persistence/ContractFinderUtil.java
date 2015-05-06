@@ -25,7 +25,8 @@ public class ContractFinderUtil {
 		java.lang.Long userId, java.lang.Long enterpriseId,
 		java.lang.Long contactId, java.lang.Long organizationId,
 		java.lang.Long contractId, java.lang.Double fromProgress,
-		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.lang.Double toProgress,
+		java.util.List<java.lang.Integer> statusCodeList,
 		java.util.Date fromDate, java.util.Date toDate, int order, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
@@ -38,8 +39,8 @@ public class ContractFinderUtil {
 		java.lang.Long enterpriseId, java.lang.Long contactId,
 		java.lang.Long organizationId, java.lang.Long contractId,
 		java.lang.Double fromProgress, java.lang.Double toProgress,
-		java.lang.Integer[] statusCodeList, java.util.Date fromDate,
-		java.util.Date toDate)
+		java.util.List<java.lang.Integer> statusCodeList,
+		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .countConsultantReports(userId, enterpriseId, contactId,

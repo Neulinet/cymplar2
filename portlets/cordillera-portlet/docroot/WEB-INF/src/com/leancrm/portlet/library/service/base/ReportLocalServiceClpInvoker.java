@@ -154,7 +154,7 @@ public class ReportLocalServiceClpInvoker {
 		_methodParameterTypes131 = new String[] {
 				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
-				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.lang.Double", "java.util.List", "java.util.Date",
 				"java.util.Date"
 			};
 
@@ -163,7 +163,7 @@ public class ReportLocalServiceClpInvoker {
 		_methodParameterTypes132 = new String[] {
 				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
-				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.lang.Double", "java.util.List", "java.util.Date",
 				"java.util.Date"
 			};
 
@@ -172,7 +172,7 @@ public class ReportLocalServiceClpInvoker {
 		_methodParameterTypes133 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
-				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.lang.Double", "java.util.List", "java.util.Date",
 				"java.util.Date"
 			};
 	}
@@ -349,7 +349,7 @@ public class ReportLocalServiceClpInvoker {
 				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
 				(java.lang.Long)arguments[5], (java.lang.Double)arguments[6],
 				(java.lang.Double)arguments[7],
-				(java.lang.Integer[])arguments[8],
+				(java.util.List<java.lang.Integer>)arguments[8],
 				(java.util.Date)arguments[9], (java.util.Date)arguments[10]);
 		}
 
@@ -360,7 +360,7 @@ public class ReportLocalServiceClpInvoker {
 				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
 				(java.lang.Long)arguments[5], (java.lang.Double)arguments[6],
 				(java.lang.Double)arguments[7],
-				(java.lang.Integer[])arguments[8],
+				(java.util.List<java.lang.Integer>)arguments[8],
 				(java.util.Date)arguments[9], (java.util.Date)arguments[10]);
 		}
 
@@ -370,7 +370,7 @@ public class ReportLocalServiceClpInvoker {
 				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2],
 				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
 				(java.lang.Double)arguments[5], (java.lang.Double)arguments[6],
-				(java.lang.Integer[])arguments[7],
+				(java.util.List<java.lang.Integer>)arguments[7],
 				(java.util.Date)arguments[8], (java.util.Date)arguments[9]);
 		}
 

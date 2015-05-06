@@ -341,7 +341,8 @@ public class ReportLocalServiceUtil {
 		int order, java.lang.Long userId, java.lang.Long enterpriseId,
 		java.lang.Long contactId, java.lang.Long organizationId,
 		java.lang.Long contractId, java.lang.Double fromProgress,
-		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.lang.Double toProgress,
+		java.util.List<java.lang.Integer> statusCodeList,
 		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -354,7 +355,8 @@ public class ReportLocalServiceUtil {
 		int order, java.lang.Long userId, java.lang.Long enterpriseId,
 		java.lang.Long contactId, java.lang.Long organizationId,
 		java.lang.Long contractId, java.lang.Double fromProgress,
-		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.lang.Double toProgress,
+		java.util.List<java.lang.Integer> statusCodeList,
 		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -367,8 +369,8 @@ public class ReportLocalServiceUtil {
 		java.lang.Long enterpriseId, java.lang.Long contactId,
 		java.lang.Long organizationId, java.lang.Long contractId,
 		java.lang.Double fromProgress, java.lang.Double toProgress,
-		java.lang.Integer[] statusCodeList, java.util.Date fromDate,
-		java.util.Date toDate)
+		java.util.List<java.lang.Integer> statusCodeList,
+		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .countConsultantReports(userId, enterpriseId, contactId,

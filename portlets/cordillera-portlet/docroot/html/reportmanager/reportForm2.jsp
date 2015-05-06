@@ -1,3 +1,4 @@
+<%@page import="com.leancrm.portlet.types.ContractStatus"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ include file="/html/common/init.jsp" %>
@@ -75,10 +76,10 @@
 	 -->
 	
 	<aui:select label="Status" id="status" name="statusCode" class="form-control" >
-		<aui:option value="0">Cold</aui:option>
-		<aui:option value="100">Warm</aui:option>
-		<aui:option value="200">Hot</aui:option>
-		<aui:option value="300">Inactive</aui:option>
+		<aui:option value="<%= ContractStatus.COLD.getPow() %>"><%= ContractStatus.COLD.getLabel() %></aui:option>
+		<aui:option value="<%= ContractStatus.WARM.getPow() %>"><%= ContractStatus.WARM.getLabel() %></aui:option>
+		<aui:option value="<%= ContractStatus.HOT.getPow() %>"><%= ContractStatus.HOT.getLabel() %></aui:option>
+		<aui:option value="<%= ContractStatus.INACTIVE.getPow() %>"><%= ContractStatus.INACTIVE.getLabel() %></aui:option>
 	</aui:select>
 	
 	<!-- 

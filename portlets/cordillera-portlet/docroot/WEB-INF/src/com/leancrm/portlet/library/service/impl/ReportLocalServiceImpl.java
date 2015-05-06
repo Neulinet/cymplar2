@@ -172,7 +172,7 @@ public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Report> searchReports(int order, Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, Integer[] statusCodeList, Date fromDate, Date toDate) throws SystemException {
+	public List<Report> searchReports(int order, Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, List<Integer> statusCodeList, Date fromDate, Date toDate) throws SystemException {
 		logger.debug("- - - - - - - ReportLocalServiceImpl - - - - - - -");
 		logger.debug("Search Report By: ");
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Report.class);
@@ -202,9 +202,9 @@ public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
 			logger.debug("  --  ConsultantId: " + userId);
 		}
 		
-		if (statusCodeList != null && statusCodeList.length > 0) {
+		if (statusCodeList != null && statusCodeList.size() > 0) {
 			query.add(PropertyFactoryUtil.forName("status").in(statusCodeList));
-			logger.debug("  --  Status: " + Arrays.toString(statusCodeList));
+			logger.debug("  --  Status: " + statusCodeList.toString());
 		}
 		
 		query.add(PropertyFactoryUtil.forName("progress").between(fromProgress, toProgress));
@@ -234,12 +234,12 @@ public class ReportLocalServiceImpl extends ReportLocalServiceBaseImpl {
 	}
 	
 	@Override
-	public List<Report> searchConsultantReports(int order, Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, Integer[] statusCodeList, Date fromDate, Date toDate) throws SystemException {
+	public List<Report> searchConsultantReports(int order, Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, List<Integer> statusCodeList, Date fromDate, Date toDate) throws SystemException {
 		return ContractFinderUtil.findConsultantReports(userId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate, order, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public long countConsultantReports(Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, Integer[] statusCodeList, Date fromDate, Date toDate) throws SystemException {
+	public long countConsultantReports(Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, List<Integer> statusCodeList, Date fromDate, Date toDate) throws SystemException {
 		return ContractFinderUtil.countConsultantReports(userId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate);
 	}
 

@@ -11,7 +11,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -20,20 +20,14 @@ import javax.portlet.ResourceResponse;
 
 import org.apache.log4j.Logger;
 
-import com.leancrm.portlet.library.model.AddressBook;
-import com.leancrm.portlet.library.model.ContactData;
-import com.leancrm.portlet.library.model.ContactDataMethod;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
-import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
-import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContractLocalServiceUtil;
 import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
 import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.reportSearch.ReportResultItem;
 import com.leancrm.portlet.sort.LeadOrderByComparator;
-import com.leancrm.portlet.utils.AddressBookUtils;
-import com.leancrm.portlet.utils.ContactDataMethodEnum;
+import com.leancrm.portlet.types.ContractStatus;
 import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.utils.PermissionChecker;
 import com.leancrm.portlet.utils.ReportComparator;
@@ -51,7 +45,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -317,7 +310,7 @@ public class ReportSearch extends MVCPortlet {
 				if (statusCode4 >= 0) {
 					statusCodeList.add(statusCode4);
 				}
-				List<Report> results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+				List<Report> results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate);
 				
 				json.put("searchResultsItems", ReportSearchUtils.getResultsAsJson(results));
 				
@@ -336,7 +329,8 @@ public class ReportSearch extends MVCPortlet {
 	}
 	
 	
-	public void search(ActionRequest request, ActionResponse response) {
+
+	public void search(ActionRequest request, ActionResponse response) {	
 		// just copy action params into render
 		copyRequestParameters(request, response);
 	}
@@ -352,6 +346,7 @@ public class ReportSearch extends MVCPortlet {
 	}
 	
 	public void searchImpl(PortletRequest request, RenderResponse response) {
+		
 		Long enterpriseId = ParamUtil.getLong(request, "enterprise", 0);
 		Long contactId = ParamUtil.getLong(request, "contact", 0);
 		Long contractId = ParamUtil.getLong(request, "contract", 0);
@@ -359,10 +354,10 @@ public class ReportSearch extends MVCPortlet {
 		Double fromProgress = ParamUtil.getDouble(request, "progressFrom", 0);
 		Double toProgress = ParamUtil.getDouble(request, "progressTo", 100);
 		
-		int statusCode1 = ParamUtil.getInteger(request, "statusCode1", -1);
-		int statusCode2 = ParamUtil.getInteger(request, "statusCode2", -1);
-		int statusCode3 = ParamUtil.getInteger(request, "statusCode3", -1);
-		int statusCode4 = ParamUtil.getInteger(request, "statusCode4", -1);
+		boolean statusCodeCold = ParamUtil.getBoolean(request, "statusCodeCold", false);
+		boolean statusCodeWarm = ParamUtil.getBoolean(request, "statusCodeWarm", false);
+		boolean statusCodeHot = ParamUtil.getBoolean(request, "statusCodeHot", false);
+		boolean statusCodeInactive = ParamUtil.getBoolean(request, "statusCodeInactive", false);
 		
 		Date fromDate = null;
 		if (! ValidationsUtil.isEmpty(request.getParameter("fromDate"))) {
@@ -380,10 +375,10 @@ public class ReportSearch extends MVCPortlet {
 		logger.debug("Consultant ID: " + consultantId);
 		logger.debug("Progress From: " + fromProgress);
 		logger.debug("Progress To: " + toProgress);
-		logger.debug("Status Code1: " + statusCode1);
-		logger.debug("Status Code2: " + statusCode2);
-		logger.debug("Status Code3: " + statusCode3);
-		logger.debug("Status Code4: " + statusCode4);
+		logger.debug("Status Code Cold: " + statusCodeCold);
+		logger.debug("Status Code Warm: " + statusCodeWarm);
+		logger.debug("Status Code Hot: " + statusCodeHot);
+		logger.debug("Status Code Inactive: " + statusCodeInactive);
 		logger.debug("From Date: " + fromDate);
 		logger.debug("To Date: " + toDate);
 		
@@ -398,6 +393,9 @@ public class ReportSearch extends MVCPortlet {
 		if (Validator.isNotNull(orderByCol) &&
 			Validator.isNotNull(orderByType)) {
 			comparator = new LeadOrderByComparator(orderByCol, orderByType);
+		} else {
+			// create default comparator
+			comparator = new LeadOrderByComparator("Date", "desc");
 		}
 
 		PortletURL portletURL = response.createRenderURL();
@@ -411,28 +409,28 @@ public class ReportSearch extends MVCPortlet {
 			Long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
 			
 			List<Integer> statusCodeList = new ArrayList<Integer>();
-			if (statusCode1 >= 0) {
-				statusCodeList.add(statusCode1);
+			if (statusCodeCold) {
+				statusCodeList.add(ContractStatus.COLD.getPow());
 			}
-			if (statusCode2 >= 0) {
-				statusCodeList.add(statusCode2);
+			if (statusCodeWarm) {
+				statusCodeList.add(ContractStatus.WARM.getPow());
 			}
-			if (statusCode3 >= 0) {
-				statusCodeList.add(statusCode3);
+			if (statusCodeHot) {
+				statusCodeList.add(ContractStatus.HOT.getPow());
 			}
-			if (statusCode4 >= 0) {
-				statusCodeList.add(statusCode4);
+			if (statusCodeInactive) {
+				statusCodeList.add(ContractStatus.INACTIVE.getPow());
 			}
 			List<Report> results = null;
 			
 			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser())) {
 				// if user is admin - we just search reports
-				results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+				results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate);
 			} else {
 				// user is not organziation admin - so, user see only own contacts and search performed according to user permissions (stored in table cms_usercontract)
 				consultantId = themeDisplay.getUserId();
 				
-				results = ReportLocalServiceUtil.searchConsultantReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList.toArray(new Integer[statusCodeList.size()]), fromDate, toDate);
+				results = ReportLocalServiceUtil.searchConsultantReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, statusCodeList, fromDate, toDate);
 			}
 			 
 			List<ReportResultItem> reportResultList = ReportSearchUtils.getResults(results);

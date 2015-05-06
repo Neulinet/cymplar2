@@ -154,7 +154,7 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		_methodParameterTypes26 = new String[] {
 				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
-				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.lang.Double", "java.util.List", "java.util.Date",
 				"java.util.Date"
 			};
 
@@ -163,7 +163,7 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		_methodParameterTypes27 = new String[] {
 				"int", "java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
-				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.lang.Double", "java.util.List", "java.util.Date",
 				"java.util.Date"
 			};
 
@@ -172,7 +172,7 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		_methodParameterTypes28 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.Double",
-				"java.lang.Double", "java.lang.Integer[][]", "java.util.Date",
+				"java.lang.Double", "java.util.List", "java.util.Date",
 				"java.util.Date"
 			};
 	}
@@ -996,7 +996,8 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		int order, java.lang.Long userId, java.lang.Long enterpriseId,
 		java.lang.Long contactId, java.lang.Long organizationId,
 		java.lang.Long contractId, java.lang.Double fromProgress,
-		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.lang.Double toProgress,
+		java.util.List<java.lang.Integer> statusCodeList,
 		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1052,7 +1053,8 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		int order, java.lang.Long userId, java.lang.Long enterpriseId,
 		java.lang.Long contactId, java.lang.Long organizationId,
 		java.lang.Long contractId, java.lang.Double fromProgress,
-		java.lang.Double toProgress, java.lang.Integer[] statusCodeList,
+		java.lang.Double toProgress,
+		java.util.List<java.lang.Integer> statusCodeList,
 		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1108,8 +1110,8 @@ public class ReportLocalServiceClp implements ReportLocalService {
 		java.lang.Long enterpriseId, java.lang.Long contactId,
 		java.lang.Long organizationId, java.lang.Long contractId,
 		java.lang.Double fromProgress, java.lang.Double toProgress,
-		java.lang.Integer[] statusCodeList, java.util.Date fromDate,
-		java.util.Date toDate)
+		java.util.List<java.lang.Integer> statusCodeList,
+		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 

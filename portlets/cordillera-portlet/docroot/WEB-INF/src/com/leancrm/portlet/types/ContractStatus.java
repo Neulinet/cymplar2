@@ -3,8 +3,8 @@ package com.leancrm.portlet.types;
 public enum ContractStatus {
 
 	COLD(0, "Cold"),
-	HOT(100, "Hot"),
-	WORM(200, "Worm"),
+	WARM(100, "Warm"),
+	HOT(200, "Hot"),
 	INACTIVE(300, "Inactive");
 	
 	private int pow;

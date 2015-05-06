@@ -89,7 +89,8 @@ public class ReportSearchResult extends MVCPortlet {
 			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
 				Long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
 				
-				List<Report> results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, ArrayUtil.toArray(statusCodeList), fromDate, toDate);
+				// !!! Looks like this portlet is not used - so, do not update it yet
+				/* List<Report> results = ReportLocalServiceUtil.searchReports(ReportComparator.DESC, consultantId, enterpriseId, contactId, organizationId, contractId, fromProgress, toProgress, ArrayUtil.toArray(statusCodeList), fromDate, toDate);
 				
 				List<ReportResultItem> resultItemList = new ArrayList<ReportResultItem>();
 				for (Report report : results) {
@@ -97,6 +98,7 @@ public class ReportSearchResult extends MVCPortlet {
 				}
 				
 				actionRequest.setAttribute("searchResultsItems", resultItemList);
+				
 //				HttpServletRequest servletRequest = PortalUtil.getHttpServletRequest(actionRequest);
 //				servletRequest.getSession().setAttribute("searchResultsItems", resultItemList);
 				
@@ -105,6 +107,7 @@ public class ReportSearchResult extends MVCPortlet {
 				
 				actionResponse.setWindowState(LiferayWindowState.EXCLUSIVE);
 				actionResponse.setRenderParameter("jspPage", "/html/reportsearchresult/results.jsp");
+				*/
 			}
 		} catch (Exception e) {
 			logger.error("Unexpected error when search report.", e);
