@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,6 +33,10 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 	private static final String _FINDER_COLUMN_CONTACT_ID = "r.contactId = ?";
 	private static final String _FINDER_COLUMN_CONTRACT_ID = "r.contractId = ?";
 	private static final String _FINDER_COLUMN_STATUSES = "r.status in [$STATUSES$]";
+	private static final String _FINDER_COLUMN_PROGRESS = "(r.progress between ? and ?)";
+	private static final String _FINDER_COLUMN_REPORTDATE_BETWEEN = "(r.reportDate between ? and ?)";
+	private static final String _FINDER_COLUMN_REPORTDATE_FROM = "r.reportDate >= ?";
+	private static final String _FINDER_COLUMN_REPORTDATE_TO = "r.reportDate <= ?";
 	
 	private static Log logger = LogFactoryUtil.getLog(ContractFinderImpl.class);
 	
@@ -64,6 +69,17 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 		
 		if (statusCodeList != null && statusCodeList.size() > 0) {
 			queries.add(_FINDER_COLUMN_STATUSES);
+		}
+		
+		queries.add(_FINDER_COLUMN_PROGRESS);
+		
+		
+		if (fromDate != null && toDate != null) {
+			queries.add(_FINDER_COLUMN_REPORTDATE_BETWEEN);
+		} else if (fromDate != null) {
+			queries.add(_FINDER_COLUMN_REPORTDATE_FROM);
+		} else if (toDate != null) {
+			queries.add(_FINDER_COLUMN_REPORTDATE_TO);
 		}
 		
         StringBundler query = new StringBundler(256);
@@ -110,6 +126,16 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
     			qPos.add(contractId);
     		}
     		
+    		qPos.add(fromProgress);
+    		qPos.add(toProgress);
+    		
+    		if (fromDate != null) {
+    			qPos.add(fromDate);
+    		} 
+    		
+    		if (toDate != null) {
+    			qPos.add(toDate);
+    		}
     		
             list = (List<Report>) QueryUtil.list(q, getDialect(), start, end);
         } catch (Exception e) {

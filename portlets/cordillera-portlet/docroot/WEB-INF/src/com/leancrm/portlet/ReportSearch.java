@@ -105,7 +105,7 @@ public class ReportSearch extends MVCPortlet {
 			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) && consultantId < 0) {
 				reportList = ReportLocalServiceUtil.searchReports(ReportComparator.ASC, null, null, null, organization.getOrganizationId(), null, 0d, 100d, null, null, null);
 			} else if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
-				reportList = ReportLocalServiceUtil.searchReports(ReportComparator.ASC, consultantId, null, null, organization.getOrganizationId(), null, 0d, 100d, null, null, null);
+				reportList = ReportLocalServiceUtil.searchConsultantReports(ReportComparator.ASC, consultantId, null, null, organization.getOrganizationId(), null, 0d, 100d, null, null, null);
 			}
 			
 			json.put("enterprises", ReportSearchUtils.getEnterpriseListAsJson(reportList));
@@ -135,18 +135,24 @@ public class ReportSearch extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			Long consultantId = ParamUtil.getLong(resourceRequest, "consultantId", 0);
-			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
-				Long enterpriseId = ValidationsUtil.existEnterprise(enterpriseIdParam);
-				if (enterpriseId != null) {
-					Organization organization = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId());
-					List<Report> reportList  = ReportLocalServiceUtil.searchReports(ReportComparator.ASC, consultantId, enterpriseId, null, organization.getOrganizationId(), null, 0d, 100d, null, null, null);
-					json.put("contacts", ReportSearchUtils.getContactsAsJson(reportList));
-					json.put("contracts", ReportSearchUtils.getContractsAsJson(reportList));
-					json.put("reportDate", ReportSearchUtils.dateFormatter.format(ReportSearchUtils.getEarlyReportDate(reportList)));
-				} else {
-					json.put("error", "Could not found an enterprise with id : " + enterpriseIdParam);
+			Long enterpriseId = ValidationsUtil.existEnterprise(enterpriseIdParam);
+			Organization organization = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId());
+			List<Report> reportList  = null;
+			if (enterpriseId != null) {
+				if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) &&  consultantId < 0) {
+					reportList  = ReportLocalServiceUtil.searchReports(ReportComparator.ASC, consultantId, enterpriseId, null, organization.getOrganizationId(), null, 0d, 100d, null, null, null);
+				} else if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
+					reportList  = ReportLocalServiceUtil.searchConsultantReports(ReportComparator.ASC, consultantId, enterpriseId, null, organization.getOrganizationId(), null, 0d, 100d, null, null, null);
 				}
+
+				json.put("contacts", ReportSearchUtils.getContactsAsJson(reportList));
+				json.put("contracts", ReportSearchUtils.getContractsAsJson(reportList));
+				json.put("reportDate", ReportSearchUtils.dateFormatter.format(ReportSearchUtils.getEarlyReportDate(reportList)));
+			} else {
+				json.put("error", "Could not found an enterprise with id : " + enterpriseIdParam);
 			}
+
+		
 		} catch (Exception e) {
 			logger.error("Unexpected error when search reports by enterprise. Enterprise Id: " + enterpriseIdParam, e);
 			json.put("error", "Unexpected error when search reports by enterprise. Enterprise Id: " + enterpriseIdParam);
@@ -165,17 +171,23 @@ public class ReportSearch extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			Long consultantId = ParamUtil.getLong(resourceRequest, "consultantId", 0);
-			if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
-				Long contactId = ValidationsUtil.existContact(contactIdParam);
-				if (contactId != null) {
-					long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
-					Long enterpriseId = ParamUtil.getLong(resourceRequest, "enterpriseId", 0);
-					List<Report> reportList = ReportLocalServiceUtil.searchReports(ReportComparator.ASC, consultantId, enterpriseId, contactId, organizationId, null, 0d, 100d, null, null, null);
-					json.put("contracts", ReportSearchUtils.getContractsAsJson(reportList));
-					json.put("reportDate", ReportSearchUtils.dateFormatter.format(ReportSearchUtils.getEarlyReportDate(reportList)));
-				} else {
-					json.put("error", "Could not found an contact with id : " + contactIdParam);
+			Long contactId = ValidationsUtil.existContact(contactIdParam);
+			long organizationId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
+			Long enterpriseId = ParamUtil.getLong(resourceRequest, "enterpriseId", 0);
+			List<Report> reportList = null;
+			
+			if (contactId != null) {
+				if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) &&  consultantId < 0) {
+					reportList = ReportLocalServiceUtil.searchReports(ReportComparator.ASC, consultantId, enterpriseId, contactId, organizationId, null, 0d, 100d, null, null, null);
+				} else if (PermissionChecker.isOrganizationAdmin(themeDisplay.getUser()) || themeDisplay.getUserId() == consultantId) {
+					reportList = ReportLocalServiceUtil.searchConsultantReports(ReportComparator.ASC, consultantId, enterpriseId, contactId, organizationId, null, 0d, 100d, null, null, null);
 				}
+
+				json.put("contracts", ReportSearchUtils.getContractsAsJson(reportList));
+				json.put("reportDate", ReportSearchUtils.dateFormatter.format(ReportSearchUtils.getEarlyReportDate(reportList)));
+			
+			} else {
+				json.put("error", "Could not found an contact with id : " + contactIdParam);
 			}
 		} catch (SystemException e) {
 			logger.error("Unexpected error when search reports by contact. contact Id: " + contactIdParam, e);

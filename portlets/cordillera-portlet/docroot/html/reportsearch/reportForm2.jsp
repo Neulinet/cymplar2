@@ -45,7 +45,7 @@
 				<aui:input label="Hot" type="checkbox" id="statusCodeHot" name="statusCodeHot" autocomplete="off" /> 
 			</label>
 			<label class="checkbox-inline" for="statusCodeInactive">
-				<aui:input label="Inactive" type="checkbox" id="statusCodeInctive" name="statusCodeInactive" autocomplete="off" /> 
+				<aui:input label="Inactive" type="checkbox" id="statusCodeInactive" name="statusCodeInactive" autocomplete="off" /> 
 			</label>
 		</div>
 	</div>
@@ -188,10 +188,11 @@ function cleanSearchContractDetails() {
 	console.log('Init Set To Date');
 	setToDate(new Date());
 	
-	document.getElementById('<portlet:namespace />statusCode1').checked = '';
-	document.getElementById('<portlet:namespace />statusCode2').checked = '';
-	document.getElementById('<portlet:namespace />statusCode3').checked = '';
-	document.getElementById('<portlet:namespace />statusCode4').checked = '';
+	// TODO - do we really need it?
+	document.getElementById('<portlet:namespace />statusCodeColdCheckbox').checked = '';
+	document.getElementById('<portlet:namespace />statusCodeWarmCheckbox').checked = '';
+	document.getElementById('<portlet:namespace />statusCodeHotCheckbox').checked = '';
+	document.getElementById('<portlet:namespace />statusCodeInactiveCheckbox').checked = '';
 	
 	setSliderProgressFrom(0);
 	setSliderProgressTo(100);
