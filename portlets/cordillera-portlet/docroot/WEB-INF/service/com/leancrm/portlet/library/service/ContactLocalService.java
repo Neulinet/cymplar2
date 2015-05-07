@@ -281,4 +281,15 @@ public interface ContactLocalService extends BaseLocalService,
 		long contactId, long addressBookId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Return all contacts specified consultant has access (own contacts or contacts related to shared leads
+	*
+	* @param consultantId
+	* @return
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.leancrm.portlet.library.model.Contact> getConsultantContacts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

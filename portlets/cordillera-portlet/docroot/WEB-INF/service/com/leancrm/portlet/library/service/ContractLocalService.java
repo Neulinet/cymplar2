@@ -326,4 +326,15 @@ public interface ContractLocalService extends BaseLocalService,
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Return all contracts specified consultant has access (own contracts or contracts shared with consultant with CONSTRIBUTE permission)
+	*
+	* @param consultantId
+	* @return
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.leancrm.portlet.library.model.Contract> getConsultantContracts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

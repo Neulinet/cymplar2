@@ -721,7 +721,7 @@ public class UserContractLocalServiceClp implements UserContractLocalService {
 	}
 
 	@Override
-	public com.leancrm.portlet.library.model.Contract getByUserContract(
+	public com.leancrm.portlet.library.model.UserContract getByUserContract(
 		long userId, long contractId) {
 		Object returnObj = null;
 
@@ -741,7 +741,7 @@ public class UserContractLocalServiceClp implements UserContractLocalService {
 			}
 		}
 
-		return (com.leancrm.portlet.library.model.Contract)ClpSerializer.translateOutput(returnObj);
+		return (com.leancrm.portlet.library.model.UserContract)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override

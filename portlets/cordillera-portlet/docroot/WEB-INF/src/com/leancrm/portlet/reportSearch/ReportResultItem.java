@@ -14,6 +14,7 @@ import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.model.UserContract;
 import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
+import com.leancrm.portlet.library.service.AddressBookContactLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataPhoneLocalServiceUtil;
@@ -46,6 +47,7 @@ public class ReportResultItem {
 	private long reportId;
 	private Date reportDate;
 	private Enterprise enterprise;
+	private Long contractId;
 	private Contract contract;
 	private Long contactId;
 	private String contactName;
@@ -80,14 +82,21 @@ public class ReportResultItem {
 		reportId = report.getReportId();
 		reportDate = report.getReportDate();
 		enterprise = EnterpriseLocalServiceUtil.getEnterprise(report.getEnterpriseId());
+		contactId = report.getContactId();
+		contractId = report.getContractId();
+		contract = ContractLocalServiceUtil.getContract(report.getContractId());
+		consultant = UserLocalServiceUtil.getUser(report.getUserId());
+		
 		// List<ContactData> contactData = ContactDataLocalServiceUtil.getContactDataList(report.getContactId(), ContactDataMethodEnum.NAME.getMethodName());
 		AddressBook addressBook = AddressBookUtils.getAddressBook(UserLocalServiceUtil.getUser(report.getUserId()));
 		ContactDataMethod contactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
 		ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), report.getContactId(), contactDataMethod.getContactDataMethodId());
+		if (contactData == null) {
+			addressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contactId);
+			contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), report.getContactId(), contactDataMethod.getContactDataMethodId());
+		}
+		
 		contactName = ContactDataTextLocalServiceUtil.getContactDataText(contactData.getContactDataId()).getValue();
-		contactId = report.getContactId();
-		contract = ContractLocalServiceUtil.getContract(report.getContractId());
-		consultant = UserLocalServiceUtil.getUser(report.getUserId());
 		
 		ContactData contactDataUsed = ContactDataLocalServiceUtil.getContactData(report.getContactDataId());
 		if (contactDataUsed != null) {
@@ -132,6 +141,13 @@ public class ReportResultItem {
 		this.enterprise = enterprise;
 	}
 
+	public Long getContractId() {
+		return contractId;
+	}
+	public void setContractId(Long contractId) {
+		this.contractId = contractId;
+	}
+	
 	public Contract getContract() {
 		return contract;
 	}

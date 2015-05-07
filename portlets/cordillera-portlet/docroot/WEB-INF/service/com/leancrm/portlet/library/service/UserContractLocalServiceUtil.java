@@ -281,7 +281,7 @@ public class UserContractLocalServiceUtil {
 		return getService().addUserContract(userId, contractId, accessLevel);
 	}
 
-	public static com.leancrm.portlet.library.model.Contract getByUserContract(
+	public static com.leancrm.portlet.library.model.UserContract getByUserContract(
 		long userId, long contractId) {
 		return getService().getByUserContract(userId, contractId);
 	}

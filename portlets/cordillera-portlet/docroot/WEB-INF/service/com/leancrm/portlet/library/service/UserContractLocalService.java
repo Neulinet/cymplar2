@@ -254,7 +254,7 @@ public interface UserContractLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.leancrm.portlet.library.model.Contract getByUserContract(
+	public com.leancrm.portlet.library.model.UserContract getByUserContract(
 		long userId, long contractId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -319,6 +319,18 @@ public class ContactLocalServiceUtil {
 		return getService().getContactMethodList(contactId, addressBookId);
 	}
 
+	/**
+	* Return all contacts specified consultant has access (own contacts or contacts related to shared leads
+	*
+	* @param consultantId
+	* @return
+	*/
+	public static java.util.List<com.leancrm.portlet.library.model.Contact> getConsultantContacts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getConsultantContacts(consultantId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

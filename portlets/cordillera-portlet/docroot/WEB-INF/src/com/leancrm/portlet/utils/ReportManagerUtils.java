@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.leancrm.portlet.library.model.AddressBook;
 import com.leancrm.portlet.library.model.Contact;
 import com.leancrm.portlet.library.model.ContactData;
 import com.leancrm.portlet.library.model.ContactDataMethod;
@@ -13,6 +14,7 @@ import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
+import com.leancrm.portlet.library.service.AddressBookContactLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataRefLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataTextLocalServiceUtil;
@@ -41,10 +43,21 @@ public class ReportManagerUtils {
 			ContactDataMethod nameContactMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
 			for (Contact contact : contactList) {
 				ContactData contactDataEnterprise = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), enterpriseContactMethod.getContactDataMethodId());
-				if (enterpriseId == ContactDataRefLocalServiceUtil.getContactDataRef(contactDataEnterprise.getContactDataId()).getRefValue()) {
+				long contactAddressBookId = addressBookId;
+				
+				if (contactDataEnterprise == null) {
+					// there are no information about contact in his addressbook - lets simple get first addressbook there contact meets
+					AddressBook addressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contact.getContactId());
+					if (addressBook != null) {
+						contactAddressBookId = addressBook.getAddressBookId();
+						contactDataEnterprise = AddressBookContactDataLocalServiceUtil.getContactData(contactAddressBookId, contact.getContactId(), enterpriseContactMethod.getContactDataMethodId());
+					}
+				}
+				
+				if (contactDataEnterprise != null && enterpriseId == ContactDataRefLocalServiceUtil.getContactDataRef(contactDataEnterprise.getContactDataId()).getRefValue()) {
 					JSONObject object = JSONFactoryUtil.createJSONObject();
 					object.put("id", contact.getContactId());
-					ContactData contactDataName = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), nameContactMethod.getContactDataMethodId());
+					ContactData contactDataName = AddressBookContactDataLocalServiceUtil.getContactData(contactAddressBookId, contact.getContactId(), nameContactMethod.getContactDataMethodId());
 					ContactDataText contactDataText = ContactDataTextLocalServiceUtil.getContactDataText(contactDataName.getContactDataId());
 					object.put("name", contactDataText.getValue());
 					contacts.put(object);

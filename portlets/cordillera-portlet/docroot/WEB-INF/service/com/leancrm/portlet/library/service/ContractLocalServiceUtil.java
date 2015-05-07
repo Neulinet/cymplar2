@@ -371,6 +371,18 @@ public class ContractLocalServiceUtil {
 		return getService().getContractsByUser(userId);
 	}
 
+	/**
+	* Return all contracts specified consultant has access (own contracts or contracts shared with consultant with CONSTRIBUTE permission)
+	*
+	* @param consultantId
+	* @return
+	*/
+	public static java.util.List<com.leancrm.portlet.library.model.Contract> getConsultantContracts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getConsultantContracts(consultantId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

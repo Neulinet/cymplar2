@@ -111,16 +111,18 @@ public class UserContractLocalServiceImpl
 		return userContractLocalService.addUserContract(userContract);
 	}
 	
-	public Contract getByUserContract(long userId, long contractId) {
+	@Override
+	public UserContract getByUserContract(long userId, long contractId) {
 		try {
 			UserContract userContract = userContractPersistence.findByUserContract(userId, contractId);
-			return contractLocalService.getContract(userContract.getContractId());
+			return userContract;
 		} catch (Exception e) {
 			logger.error("getContractByUser method: " + e.getMessage());
 		}
 		return null;
 	}
 	
+	@Override
 	public User getContractOwner(long contractId) {
 		try {
 			List<UserContract> userContracts = userContractPersistence.findByContractAccess(contractId, ContractConstants.ACCESS_OWNER);

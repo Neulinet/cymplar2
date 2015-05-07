@@ -296,7 +296,7 @@ public class UserContractLocalServiceWrapper implements UserContractLocalService
 	}
 
 	@Override
-	public com.leancrm.portlet.library.model.Contract getByUserContract(
+	public com.leancrm.portlet.library.model.UserContract getByUserContract(
 		long userId, long contractId) {
 		return _userContractLocalService.getByUserContract(userId, contractId);
 	}

@@ -159,6 +159,10 @@ public class AddressBookContactLocalServiceClp
 		_methodName27 = "hasContact";
 
 		_methodParameterTypes27 = new String[] { "long", "long" };
+
+		_methodName28 = "getFirstAddressBook";
+
+		_methodParameterTypes28 = new String[] { "long" };
 	}
 
 	@Override
@@ -996,6 +1000,40 @@ public class AddressBookContactLocalServiceClp
 		return ((Boolean)returnObj).booleanValue();
 	}
 
+	@Override
+	public com.leancrm.portlet.library.model.AddressBook getFirstAddressBook(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { contactId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.leancrm.portlet.library.model.AddressBook)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1051,4 +1089,6 @@ public class AddressBookContactLocalServiceClp
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

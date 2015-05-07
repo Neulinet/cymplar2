@@ -34,4 +34,12 @@ public interface ContractFinder {
 		java.util.List<java.lang.Integer> statusCodeList,
 		java.util.Date fromDate, java.util.Date toDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.leancrm.portlet.library.model.Contact> findConsultantContacts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.leancrm.portlet.library.model.Contract> findConsultantContracts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

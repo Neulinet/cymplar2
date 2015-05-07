@@ -26,6 +26,7 @@ import com.leancrm.portlet.library.model.impl.ContactContractImpl;
 import com.leancrm.portlet.library.service.ContactContractLocalServiceUtil;
 import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
 import com.leancrm.portlet.library.service.base.ContractLocalServiceBaseImpl;
+import com.leancrm.portlet.library.service.persistence.ContractFinderUtil;
 import com.leancrm.portlet.validator.ValidationsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -189,6 +190,16 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 			contractList.add(getContract(uc.getContractId()));
 		}
 		return contractList;
+	}
+	
+	/** Return all contracts specified consultant has access (own contracts or contracts shared with consultant with CONSTRIBUTE permission)
+	 * 
+	 * @param consultantId
+	 * @return
+	 */
+	@Override
+	public List<Contract> getConsultantContracts(long consultantId) throws SystemException {
+		return ContractFinderUtil.findConsultantContracts(consultantId);
 	}
 
 }

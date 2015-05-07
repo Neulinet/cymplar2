@@ -137,6 +137,10 @@ public class ContactLocalServiceClpInvoker {
 		_methodName129 = "getContactMethodList";
 
 		_methodParameterTypes129 = new String[] { "long", "long" };
+
+		_methodName130 = "getConsultantContacts";
+
+		_methodParameterTypes130 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -278,6 +282,11 @@ public class ContactLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue());
 		}
 
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+			return ContactLocalServiceUtil.getConsultantContacts(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -329,4 +338,6 @@ public class ContactLocalServiceClpInvoker {
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
 	private String[] _methodParameterTypes129;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
 }

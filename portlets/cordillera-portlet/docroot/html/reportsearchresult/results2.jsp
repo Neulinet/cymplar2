@@ -112,11 +112,12 @@
 		name="Actions"
 		cssClass='<%= "leads-actions "%>'
 	>
-			<%
-				String reportInfoUrl = "javascript:addReportInfo(" + aItem.getReportId() + ")";
-			%>
-			<liferay-ui:icon image="edit" message="New Comment" url="<%=reportInfoUrl %>"/>		
-		
+			<c:if test="<%= PermissionChecker.canCommentContract(aItem.getContractId(), themeDisplay.getUser()) %>">
+				<%
+					String reportInfoUrl = "javascript:addReportInfo(" + aItem.getReportId() + ")";
+				%>
+				<liferay-ui:icon image="edit" message="New Comment" url="<%=reportInfoUrl %>"/>		
+			</c:if>		
 		
 			<%-- Share action displayed only for admins and lead owner --%>
 			<%

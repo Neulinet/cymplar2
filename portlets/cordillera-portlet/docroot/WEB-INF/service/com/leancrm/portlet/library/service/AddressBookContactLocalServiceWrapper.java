@@ -361,6 +361,22 @@ public class AddressBookContactLocalServiceWrapper
 	}
 
 	/**
+	* Return first address book there contact appears
+	*
+	* @param contactId
+	* @return
+	* @throws SystemException
+	* @throws PortalException
+	*/
+	@Override
+	public com.leancrm.portlet.library.model.AddressBook getFirstAddressBook(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _addressBookContactLocalService.getFirstAddressBook(contactId);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AddressBookContactLocalService getWrappedAddressBookContactLocalService() {

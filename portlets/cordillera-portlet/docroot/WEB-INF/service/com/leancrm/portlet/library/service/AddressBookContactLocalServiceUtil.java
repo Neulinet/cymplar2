@@ -335,6 +335,21 @@ public class AddressBookContactLocalServiceUtil {
 		return getService().hasContact(addressBookId, contactId);
 	}
 
+	/**
+	* Return first address book there contact appears
+	*
+	* @param contactId
+	* @return
+	* @throws SystemException
+	* @throws PortalException
+	*/
+	public static com.leancrm.portlet.library.model.AddressBook getFirstAddressBook(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFirstAddressBook(contactId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.leancrm.portlet.library.model.AddressBook;
 import com.leancrm.portlet.library.model.AddressBookContact;
 import com.leancrm.portlet.library.model.Contact;
 import com.leancrm.portlet.library.model.ContactData;
@@ -165,6 +166,24 @@ public class AddressBookContactLocalServiceImpl
 			return !ValidationsUtil.isEmpty(addressBookContactList);
 		} catch (Exception e) {
 			return false;
+		}
+	}
+	
+	/** Return first address book there contact appears
+	 * 
+	 * @param contactId
+	 * @return
+	 * @throws SystemException
+	 * @throws PortalException
+	 */
+	@Override
+	public AddressBook getFirstAddressBook(long contactId) throws SystemException, PortalException {
+		List<AddressBookContact> abcList = addressBookContactPersistence.findByContact(contactId);
+		
+		if (abcList != null && abcList.size() > 0) {
+			return addressBookPersistence.findByPrimaryKey(abcList.get(0).getAddressBookId());
+		} else {
+			return null;
 		}
 	}
 }

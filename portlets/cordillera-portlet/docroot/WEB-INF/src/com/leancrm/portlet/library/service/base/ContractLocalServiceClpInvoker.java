@@ -151,6 +151,10 @@ public class ContractLocalServiceClpInvoker {
 		_methodName132 = "getContractsByUser";
 
 		_methodParameterTypes132 = new String[] { "long" };
+
+		_methodName133 = "getConsultantContracts";
+
+		_methodParameterTypes133 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -315,6 +319,11 @@ public class ContractLocalServiceClpInvoker {
 			return ContractLocalServiceUtil.getContractsByUser(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+			return ContractLocalServiceUtil.getConsultantContracts(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -372,4 +381,6 @@ public class ContractLocalServiceClpInvoker {
 	private String[] _methodParameterTypes131;
 	private String _methodName132;
 	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

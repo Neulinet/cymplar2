@@ -157,6 +157,10 @@ public class AddressBookContactLocalServiceClpInvoker {
 		_methodName132 = "hasContact";
 
 		_methodParameterTypes132 = new String[] { "long", "long" };
+
+		_methodName133 = "getFirstAddressBook";
+
+		_methodParameterTypes133 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -312,6 +316,11 @@ public class AddressBookContactLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue());
 		}
 
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+			return AddressBookContactLocalServiceUtil.getFirstAddressBook(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -369,4 +378,6 @@ public class AddressBookContactLocalServiceClpInvoker {
 	private String[] _methodParameterTypes131;
 	private String _methodName132;
 	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

@@ -334,6 +334,19 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	}
 
 	/**
+	* Return all contacts specified consultant has access (own contacts or contacts related to shared leads
+	*
+	* @param consultantId
+	* @return
+	*/
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Contact> getConsultantContacts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contactLocalService.getConsultantContacts(consultantId);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ContactLocalService getWrappedContactLocalService() {

@@ -48,6 +48,18 @@ public class ContractFinderUtil {
 			statusCodeList, fromDate, toDate);
 	}
 
+	public static java.util.List<com.leancrm.portlet.library.model.Contact> findConsultantContacts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findConsultantContacts(consultantId);
+	}
+
+	public static java.util.List<com.leancrm.portlet.library.model.Contract> findConsultantContracts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findConsultantContracts(consultantId);
+	}
+
 	public static ContractFinder getFinder() {
 		if (_finder == null) {
 			_finder = (ContractFinder)PortletBeanLocatorUtil.locate(com.leancrm.portlet.library.service.ClpSerializer.getServletContextName(),

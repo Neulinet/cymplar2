@@ -14,6 +14,7 @@ import com.leancrm.portlet.library.model.ContactDataMethod;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
+import com.leancrm.portlet.library.service.AddressBookContactLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookOrganizationLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookUserLocalServiceUtil;
@@ -68,12 +69,36 @@ public class AddressBookUtils {
 	}
 	
 	public static List<Enterprise> getEnterprisesFromAddressBook(long addressBookId) throws PortalException, SystemException {
-		Map<Long, Enterprise> enterpriseMap = new HashMap<Long, Enterprise>();
 		List<Contact> contactList = AddressBookLocalServiceUtil.getContacts(addressBookId);
+		
+		return getEnterprisesFromContacts(addressBookId, contactList);
+	}
+
+	/** Get enterprises from contacts
+	 * 
+	 * @param addressBookId
+	 * @param contactList
+	 * @return
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	public static List<Enterprise> getEnterprisesFromContacts(long addressBookId, List<Contact> contactList)  throws PortalException, SystemException {
+		Map<Long, Enterprise> enterpriseMap = new HashMap<Long, Enterprise>();
+		ContactDataMethod contactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.ENTERPRISE.getMethodName());
+		
 		if (contactList != null) {
 			for (Contact contact : contactList) {
-				ContactDataMethod contactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.ENTERPRISE.getMethodName());
 				ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), contactDataMethod.getContactDataMethodId());
+				
+				if (contactData == null) {
+					// there are no information about this contact in user addressbook - lets get it from original
+					// there are no information about contact in his addressbook - lets simple get first addressbook there contact meets
+					AddressBook addressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contact.getContactId());
+					if (addressBook != null) {
+						contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), contact.getContactId(), contactDataMethod.getContactDataMethodId());
+					}
+				}
+				
 				if (contactData != null) {
 					long enterpriseId = ContactDataRefLocalServiceUtil.getContactDataRef(contactData.getContactDataId()).getRefValue();
 					if (!enterpriseMap.containsKey(enterpriseId)) {
@@ -85,6 +110,7 @@ public class AddressBookUtils {
 		
 		return new ArrayList<Enterprise>(enterpriseMap.values());
 	}
+	
 	
 	public static List<Enterprise> getEnterprisesFromAddressBook(AddressBookUser addressBookUser) throws PortalException, SystemException {
 		Map<Long, Enterprise> enterpriseMap = new HashMap<Long, Enterprise>();

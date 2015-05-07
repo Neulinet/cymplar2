@@ -391,6 +391,19 @@ public class ContractLocalServiceWrapper implements ContractLocalService,
 	}
 
 	/**
+	* Return all contracts specified consultant has access (own contracts or contracts shared with consultant with CONSTRIBUTE permission)
+	*
+	* @param consultantId
+	* @return
+	*/
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Contract> getConsultantContracts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contractLocalService.getConsultantContracts(consultantId);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ContractLocalService getWrappedContractLocalService() {

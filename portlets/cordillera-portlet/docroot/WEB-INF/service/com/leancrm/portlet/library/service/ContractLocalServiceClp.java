@@ -151,6 +151,10 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		_methodName27 = "getContractsByUser";
 
 		_methodParameterTypes27 = new String[] { "long" };
+
+		_methodName28 = "getConsultantContracts";
+
+		_methodParameterTypes28 = new String[] { "long" };
 	}
 
 	@Override
@@ -997,6 +1001,35 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		return (java.util.List<com.leancrm.portlet.library.model.Contract>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Contract> getConsultantContracts(
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { consultantId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.leancrm.portlet.library.model.Contract>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1052,4 +1085,6 @@ public class ContractLocalServiceClp implements ContractLocalService {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

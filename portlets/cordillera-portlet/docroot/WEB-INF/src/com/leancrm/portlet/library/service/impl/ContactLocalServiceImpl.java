@@ -33,6 +33,7 @@ import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataRefLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataTextLocalServiceUtil;
 import com.leancrm.portlet.library.service.base.ContactLocalServiceBaseImpl;
+import com.leancrm.portlet.library.service.persistence.ContractFinderUtil;
 import com.leancrm.portlet.utils.ContactDataMethodEnum;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -148,4 +149,13 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return contactDataMethodList;
 	}
 	
+	/** Return all contacts specified consultant has access (own contacts or contacts related to shared leads
+	 * 
+	 * @param consultantId
+	 * @return
+	 */
+	@Override
+	public List<Contact> getConsultantContacts(long consultantId) throws SystemException {
+		return ContractFinderUtil.findConsultantContacts(consultantId);
+	}
 }

@@ -296,4 +296,18 @@ public interface AddressBookContactLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasContact(long addressBookId, long contactId);
+
+	/**
+	* Return first address book there contact appears
+	*
+	* @param contactId
+	* @return
+	* @throws SystemException
+	* @throws PortalException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.leancrm.portlet.library.model.AddressBook getFirstAddressBook(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

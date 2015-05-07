@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.leancrm.portlet.library.model.Contact;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.leancrm.portlet.library.model.impl.ContactImpl;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +39,15 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 	private static final String _FINDER_COLUMN_REPORTDATE_BETWEEN = "(r.reportDate between ? and ?)";
 	private static final String _FINDER_COLUMN_REPORTDATE_FROM = "r.reportDate >= ?";
 	private static final String _FINDER_COLUMN_REPORTDATE_TO = "r.reportDate <= ?";
+	
+	
+	/** Search for all contacts, linked with user via UserContract with permission OWNER or COMMITER or contacts in user address book
+	 * 
+	 */
+	private static final String _SQL_SELECT_CONTACTS = "SELECT c.* from crm_contact c, crm_contract cntr, crm_usercontract uc where uc.userId = ? and uc.accessLevel in (0,2) and uc.contractId = cntr.contractId and cntr.contactId = c.contactId " +
+													   " UNION " + 
+													   "SELECT c.* from crm_contact c, crm_addressbookcontact ac, crm_addressbookuser au where au.userId = ? and au.addressBookId = ac.addressBookId and ac.contactId = c.contactId";
+	
 	
 	private static Log logger = LogFactoryUtil.getLog(ContractFinderImpl.class);
 	
@@ -152,4 +163,40 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 		return 0;
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contact> findConsultantContacts(long consultantId)  throws SystemException {
+		String sql = _SQL_SELECT_CONTACTS;
+		List<Contact> list = null;
+		
+		Session session = null;
+
+        try {
+            session = openSession();
+
+            SQLQuery q = session.createSQLQuery(sql);
+            q.addEntity("crm_contact", ContactImpl.class);
+            
+            QueryPos qPos = QueryPos.getInstance(q);
+            qPos.add(consultantId);
+            qPos.add(consultantId);
+    		
+            list = (List<Contact>) QueryUtil.list(q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+
+        return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contract> findConsultantContracts(long consultantId)  throws SystemException {
+		return null;
+	}
+	
+	
 }
