@@ -145,13 +145,6 @@ public class ReportManager extends MVCPortlet {
 			
 			List<ContactData> contactData = AddressBookContactDataLocalServiceUtil.getContactData(currentAddressBook, contactId);
 			
-			if (contactData == null || contactData.size() == 0) {
-				// methods not found in users addressbook - lets try to get them from original
-				AddressBook contactAddressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contactId);
-				if (contactAddressBook != null) {
-					contactData = AddressBookContactDataLocalServiceUtil.getContactData(contactAddressBook, contactId);
-				}
-			}
 			json.put("methods", ReportManagerUtils.getContactDataAsJson(contactData) );
 			
 		} catch (Exception e) {
@@ -351,14 +344,6 @@ public class ReportManager extends MVCPortlet {
 					long contactId = Long.parseLong(contactIdParam);
 					
 					ContactDataText contactName = ContactLocalServiceUtil.getName(contactId, addressBookUser.getAddressBookId());
-					if (contactName == null) {
-						// not found in users address book - lets get from first
-						AddressBook contactAddressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contactId);
-						if (contactAddressBook != null) {
-							contactName = ContactLocalServiceUtil.getName(contactId, contactAddressBook.getAddressBookId());
-						}
-					}
-					
 					
 					Report report = ReportLocalServiceUtil.addReport(
 							themeDisplay.getCompanyId(), 

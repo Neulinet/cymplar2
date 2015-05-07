@@ -90,15 +90,6 @@ public class AddressBookUtils {
 			for (Contact contact : contactList) {
 				ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), contactDataMethod.getContactDataMethodId());
 				
-				if (contactData == null) {
-					// there are no information about this contact in user addressbook - lets get it from original
-					// there are no information about contact in his addressbook - lets simple get first addressbook there contact meets
-					AddressBook addressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contact.getContactId());
-					if (addressBook != null) {
-						contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), contact.getContactId(), contactDataMethod.getContactDataMethodId());
-					}
-				}
-				
 				if (contactData != null) {
 					long enterpriseId = ContactDataRefLocalServiceUtil.getContactDataRef(contactData.getContactDataId()).getRefValue();
 					if (!enterpriseMap.containsKey(enterpriseId)) {

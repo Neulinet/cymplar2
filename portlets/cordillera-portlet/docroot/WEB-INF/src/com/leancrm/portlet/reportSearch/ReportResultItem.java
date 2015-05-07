@@ -91,10 +91,6 @@ public class ReportResultItem {
 		AddressBook addressBook = AddressBookUtils.getAddressBook(UserLocalServiceUtil.getUser(report.getUserId()));
 		ContactDataMethod contactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
 		ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), report.getContactId(), contactDataMethod.getContactDataMethodId());
-		if (contactData == null) {
-			addressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contactId);
-			contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), report.getContactId(), contactDataMethod.getContactDataMethodId());
-		}
 		
 		contactName = ContactDataTextLocalServiceUtil.getContactDataText(contactData.getContactDataId()).getValue();
 		

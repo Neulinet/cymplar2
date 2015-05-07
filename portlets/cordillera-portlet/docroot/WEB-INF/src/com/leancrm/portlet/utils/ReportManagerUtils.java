@@ -43,21 +43,12 @@ public class ReportManagerUtils {
 			ContactDataMethod nameContactMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
 			for (Contact contact : contactList) {
 				ContactData contactDataEnterprise = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), enterpriseContactMethod.getContactDataMethodId());
-				long contactAddressBookId = addressBookId;
 				
-				if (contactDataEnterprise == null) {
-					// there are no information about contact in his addressbook - lets simple get first addressbook there contact meets
-					AddressBook addressBook = AddressBookContactLocalServiceUtil.getFirstAddressBook(contact.getContactId());
-					if (addressBook != null) {
-						contactAddressBookId = addressBook.getAddressBookId();
-						contactDataEnterprise = AddressBookContactDataLocalServiceUtil.getContactData(contactAddressBookId, contact.getContactId(), enterpriseContactMethod.getContactDataMethodId());
-					}
-				}
 				
 				if (contactDataEnterprise != null && enterpriseId == ContactDataRefLocalServiceUtil.getContactDataRef(contactDataEnterprise.getContactDataId()).getRefValue()) {
 					JSONObject object = JSONFactoryUtil.createJSONObject();
 					object.put("id", contact.getContactId());
-					ContactData contactDataName = AddressBookContactDataLocalServiceUtil.getContactData(contactAddressBookId, contact.getContactId(), nameContactMethod.getContactDataMethodId());
+					ContactData contactDataName = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), nameContactMethod.getContactDataMethodId());
 					ContactDataText contactDataText = ContactDataTextLocalServiceUtil.getContactDataText(contactDataName.getContactDataId());
 					object.put("name", contactDataText.getValue());
 					contacts.put(object);

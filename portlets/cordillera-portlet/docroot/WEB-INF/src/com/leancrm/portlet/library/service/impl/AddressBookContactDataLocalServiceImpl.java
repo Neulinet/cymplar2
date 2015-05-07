@@ -108,6 +108,19 @@ public class AddressBookContactDataLocalServiceImpl
 	}
 	
 	public List<ContactData> getContactData(AddressBook addressBook, Long contactId) throws PortalException, SystemException {
+		List<ContactData> contactDataList = getContactDataImpl(addressBook, contactId);
+		
+		if (contactDataList == null || contactDataList.isEmpty()) {
+			AddressBook firstAddressBook = addressBookContactLocalService.getFirstAddressBook(contactId);
+			if (firstAddressBook != null) {
+				contactDataList = getContactDataImpl(firstAddressBook, contactId);
+			}
+		}
+	
+		return contactDataList;
+	}
+
+	public List<ContactData> getContactDataImpl(AddressBook addressBook, Long contactId) throws PortalException, SystemException {
 		List<ContactData> contactDataList = new ArrayList<ContactData>();
 	
 		List<AddressBookContactData> addressBookContactDataList = addressBookContactDataPersistence.findByAddressBook(addressBook.getAddressBookId());
@@ -123,7 +136,7 @@ public class AddressBookContactDataLocalServiceImpl
 		
 		return contactDataList;
 	}
-
+	
 	public List<ContactData> getContactData(AddressBook addressBook) throws SystemException, PortalException {
 		List<ContactData> contactDataList = new ArrayList<ContactData>();
 		
@@ -173,6 +186,19 @@ public class AddressBookContactDataLocalServiceImpl
 	 * @throws PortalException 
 	 */
 	public ContactData getContactData(long addressBookId, long contactId, long methodId) throws SystemException, PortalException {
+		ContactData contactData = getContactDataImpl(addressBookId, contactId, methodId);
+		if (contactData == null) {
+			// try to get it from original address book
+			AddressBook firstAddressBook = addressBookContactLocalService.getFirstAddressBook(contactId);
+			if (firstAddressBook != null) {
+				contactData = getContactDataImpl(firstAddressBook.getAddressBookId(), contactId, methodId);
+			}
+		}
+		
+		return contactData;
+	}
+	
+	protected ContactData getContactDataImpl(long addressBookId, long contactId, long methodId) throws SystemException, PortalException {
 
 		List<AddressBookContactData> addressBookContactDataList = addressBookContactDataPersistence.findByAddressBook(addressBookId);
 		if (addressBookContactDataList != null && !addressBookContactDataList.isEmpty()) {
