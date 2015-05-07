@@ -386,12 +386,15 @@ public class ReportManager extends MVCPortlet {
 					}
 					// Contact Data Used
 					ContactDataLocalServiceUtil.setReadOnly(report.getContactDataId(), true);
+					
+					/*
 					if (AddressBookLocalServiceUtil.hasContactData(addressBookOrganization.getAddressBookId(), report.getContactDataId())) {
 						
 					} else {
 //-						AddressBookLocalServiceUtil.addContactData(addressBookOrganization.getAddressBookId(), report.getContactDataId(), addressBookOrganization.getCompanyId());
 					}
-					
+					*/
+			        
 					// Contact Name
 					ContactDataLocalServiceUtil.setReadOnly(contactName.getContactDataId(), true);
 					
