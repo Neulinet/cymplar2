@@ -19,6 +19,7 @@ import javax.portlet.ResourceResponse;
 
 import org.apache.log4j.Logger;
 
+import com.leancrm.portlet.library.ContractConstants;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.service.ContractLocalServiceUtil;
@@ -27,6 +28,7 @@ import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.reportSearch.ReportResultItem;
 import com.leancrm.portlet.sort.LeadOrderByComparator;
 import com.leancrm.portlet.types.ContractStatus;
+import com.leancrm.portlet.utils.MailUtils;
 import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.utils.PermissionChecker;
 import com.leancrm.portlet.utils.ReportComparator;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -525,9 +528,24 @@ public class ReportSearch extends MVCPortlet {
 		// TODO - check permissions
 		try {
 			Report report = ReportLocalServiceUtil.getReport(reportId);
+			// get current contract owner
+			User contractOwner = UserContractLocalServiceUtil.getContractOwner(report.getContractId());
+			User sharedWith = UserLocalServiceUtil.getUser(consultantId);
+			
+			Contract contract = ContractLocalServiceUtil.getContract(report.getContractId());
 			
 			// add new user <-> contract relation
 			UserContractLocalServiceUtil.addUserContract(consultantId, report.getContractId(), leadAccess);
+			
+			
+			if (leadAccess == ContractConstants.ACCESS_OWNER && contractOwner != null && contractOwner.getUserId() != themeDisplay.getUserId()) {
+				// send notification to owner that contract is moved
+				MailUtils.ownershipMoved(contractOwner, themeDisplay.getUser(), contract);
+			}
+			
+			if (themeDisplay.getUserId() != consultantId) {
+				MailUtils.leadShared(sharedWith, themeDisplay.getUser(), contract, leadAccess);
+			}
 		} catch (Exception ex) {
 			logger.error("Cannot reassign report", ex);
 		}

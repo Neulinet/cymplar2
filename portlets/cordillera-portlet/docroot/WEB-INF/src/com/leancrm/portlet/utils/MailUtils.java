@@ -164,11 +164,63 @@ public class MailUtils {
 		}
 	}
 	
-	public void leadShared(User userReceiver, User whoShared, Contract lead, int leadAccess) {
-        
+	public static void leadShared(User userReceiver, User whoShared, Contract lead, int leadAccess) {
+		try {
+			InternetAddress from = new InternetAddress("support@cymplar.com", "cymplar.com");
+			InternetAddress to = getRecipient(userReceiver.getEmailAddress(), userReceiver.getFullName());
+			
+			String title = "New lead shared with you";
+			
+			String body = getEmailTemplate("templateLeadShared");
+			
+			body = body.replace(USER_NAME, userReceiver.getFirstName());
+			body = body.replace(MEMBER_FULL_NAME, whoShared.getFullName());
+			body = body.replace(CONTRACT_NAME, lead.getDescription());
+			// get lead access level name
+			String accessLevel = "";
+			
+			switch (leadAccess) {
+				case ContractConstants.ACCESS_OWNER: {
+					accessLevel = "Owner";
+					break;
+				}
+				case ContractConstants.ACCESS_CONTRIBUTE: {
+					accessLevel = "Contribute";
+					break;
+				}
+				case ContractConstants.ACCESS_READ: {
+					accessLevel = "Read";
+					break;
+				}
+			}
+			body = body.replace(LEAD_ACCESS_LEVEL, accessLevel);
+			
+			sendHtmlEmail(from, to, title, body);
+			
+			logger.info("Email with lead sharing information was sent to " + userReceiver.getUserId());
+		} catch (Exception e) {
+			logger.error("Error when tried to send an email to request to leaad.", e);
+		}
 	}
 	
-	public void ownershipTransfered(User userReceiver, User whoDid, Contract lead) {
-		
+	public static void ownershipMoved(User userReceiver, User whoDid, Contract lead) {
+		try {
+			InternetAddress from = new InternetAddress("support@cymplar.com", "cymplar.com");
+			InternetAddress to = getRecipient(userReceiver.getEmailAddress(), userReceiver.getFullName());
+			
+			String title = "Lead moved";          
+			
+			String body = getEmailTemplate("templateLeadOwnershipMoved");
+			
+			body = body.replace(USER_NAME, userReceiver.getFirstName());
+			body = body.replace(MEMBER_FULL_NAME, whoDid.getFullName());
+			body = body.replace(CONTRACT_NAME, lead.getDescription());
+			
+			sendHtmlEmail(from, to, title, body);
+			
+			logger.info("Email with lead ownership trasfer information was sent to " + userReceiver.getUserId());
+		} catch (Exception e) {
+			logger.error("Error when tried to send an email to request to leaad.", e);
+		}
 	}
 }

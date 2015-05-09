@@ -74,31 +74,32 @@ public class UserContractLocalServiceImpl
 			if (sameUserContract != null) {
 				return sameUserContract;
 			}
-		} else {
-			// check - do we already have record for this pair user <-> contract?
-			UserContract userContractToCheck = null;
-			try {
-				userContractToCheck = userContractPersistence.findByUserContract(userId, contractId);
-			} catch (Exception ex) {
-				logger.warn("Cannot get user contract", ex);
-			}
-			
-			if (userContractToCheck != null) {
-				// exists - check should we update or ignore
-				if (userContractToCheck.getAccessLevel() == ContractConstants.ACCESS_OWNER) {
-					logger.warn("Cannot reduce owner access level - first need reassign contract to some other user");
-					return null;
-				} else if (userContractToCheck.getAccessLevel() == accessLevel) {
-					// change to same level - do not do anything
-					return userContractToCheck;
-				} else {
-					userContractToCheck.setAccessLevel(accessLevel);
-					userContractPersistence.update(userContractToCheck);
-					
-					return userContractToCheck;
-				}
+		} 
+		
+		// check - do we already have record for this pair user <-> contract?
+		UserContract userContractToCheck = null;
+		try {
+			userContractToCheck = userContractPersistence.findByUserContract(userId, contractId);
+		} catch (Exception ex) {
+			logger.warn("Cannot get user contract", ex);
+		}
+		
+		if (userContractToCheck != null) {
+			// exists - check should we update or ignore
+			if (userContractToCheck.getAccessLevel() == ContractConstants.ACCESS_OWNER) {
+				logger.warn("Cannot reduce owner access level - first need reassign contract to some other user");
+				return null;
+			} else if (userContractToCheck.getAccessLevel() == accessLevel) {
+				// change to same level - do not do anything
+				return userContractToCheck;
+			} else {
+				userContractToCheck.setAccessLevel(accessLevel);
+				userContractPersistence.update(userContractToCheck);
+				
+				return userContractToCheck;
 			}
 		}
+		
 
 		/// add new user <-> contract relation
 		UserContract userContract = new UserContractImpl();
