@@ -1,6 +1,6 @@
 package com.leancrm.portlet.utils;
 
-public enum ContactSatusEnum {
+public enum ContactStatusEnum {
 
 	COLD(0),
 	WARM(100),
@@ -9,7 +9,7 @@ public enum ContactSatusEnum {
 	
 	private int statusCode;
 	
-	private ContactSatusEnum(int statusCode) {
+	private ContactStatusEnum(int statusCode) {
 		this.statusCode = statusCode;
 	}
 	
@@ -17,7 +17,7 @@ public enum ContactSatusEnum {
 		return statusCode;
 	}
 	
-	public static ContactSatusEnum getStatus(int code) {
+	public static ContactStatusEnum getStatus(int code) {
 		switch (code) {
 		case 0: return COLD;
 		case 100: return WARM;

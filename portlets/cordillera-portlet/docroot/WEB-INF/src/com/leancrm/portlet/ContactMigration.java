@@ -51,7 +51,7 @@ import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.types.ContractStatus;
 import com.leancrm.portlet.utils.AddressBookUtils;
 import com.leancrm.portlet.utils.ContactDataMethodEnum;
-import com.leancrm.portlet.utils.ContactSatusEnum;
+import com.leancrm.portlet.utils.ContactStatusEnum;
 import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.utils.ReportManagerUtils;
 import com.leancrm.portlet.validator.ContractValidator;
@@ -132,7 +132,7 @@ public class ContactMigration extends MVCPortlet {
 //		logger.info("RealPath" + realPath + " UploadFolder :" + folder);
 		
 		int row = 0;
-		
+	    
 		List<String> errorList;
 		try {
 			UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
@@ -782,7 +782,7 @@ public class ContactMigration extends MVCPortlet {
 						String contractAmountParam = getCleanedCsvValue(a[2], "0");
 						String contactDataIdParam = getCleanedCsvValue(a[3], "0");
 						String statusCode = getCleanedCsvValue(a[4], "COLD").toUpperCase();
-						ContactSatusEnum status = ContactSatusEnum.valueOf(statusCode);
+						ContactStatusEnum status = ContactStatusEnum.valueOf(statusCode);
 						statusCode = String.valueOf(status.getStatusCode());
 						String progressParam = getCleanedCsvValue(a[5], "0");
 						String reportDateParam = getCleanedCsvValue(a[6], "01/01/1900");

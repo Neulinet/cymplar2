@@ -331,6 +331,16 @@ public class AddressBookContactDataLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.leancrm.portlet.library.model.ContactData> getContactDataImpl(
+		com.leancrm.portlet.library.model.AddressBook addressBook,
+		java.lang.Long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _addressBookContactDataLocalService.getContactDataImpl(addressBook,
+			contactId);
+	}
+
+	@Override
 	public java.util.List<com.leancrm.portlet.library.model.ContactData> getContactData(
 		com.leancrm.portlet.library.model.AddressBook addressBook)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -8,7 +8,7 @@
 <%@page import="com.leancrm.portlet.library.model.AddressBookUser"%>
 <%@page import="com.leancrm.portlet.library.service.ContractLocalServiceUtil"%>
 <%@page import="com.leancrm.portlet.library.model.Contract"%>
-<%@page import="com.leancrm.portlet.utils.ContactSatusEnum"%>
+<%@page import="com.leancrm.portlet.utils.ContactStatusEnum"%>
 <%@page import="com.leancrm.portlet.library.service.ReportLocalServiceUtil"%>
 <%@page import="com.leancrm.portlet.library.model.Report"%>
 <%@page import="com.leancrm.portlet.utils.AddressBookType"%>
@@ -126,7 +126,7 @@
 					Contract contract = ContractLocalServiceUtil.getContract(contactContract.getContractId());
 					Report lastReport = ReportLocalServiceUtil.getLastReport(contactContract.getContractId());
 					String progress = lastReport != null ? lastReport.getProgress() + "%" : "0.0%";
-					String status = lastReport != null ? ContactSatusEnum.getStatus(lastReport.getStatus()).name() : "Not contacted yet";
+					String status = lastReport != null ? ContactStatusEnum.getStatus(lastReport.getStatus()).name() : "Not contacted yet";
 					%>
 					<tr>
 						<td class="text-center">

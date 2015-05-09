@@ -119,7 +119,7 @@ public class AddressBookContactDataLocalServiceImpl
 	
 		return contactDataList;
 	}
-
+	
 	public List<ContactData> getContactDataImpl(AddressBook addressBook, Long contactId) throws PortalException, SystemException {
 		List<ContactData> contactDataList = new ArrayList<ContactData>();
 	

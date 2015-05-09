@@ -25,7 +25,7 @@ import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.utils.AddressBookUtils;
 import com.leancrm.portlet.utils.ContactDataMethodEnum;
 import com.leancrm.portlet.utils.ContactDataType;
-import com.leancrm.portlet.utils.ContactSatusEnum;
+import com.leancrm.portlet.utils.ContactStatusEnum;
 import com.leancrm.portlet.utils.ReportSearchUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -55,12 +55,12 @@ public class ReportResultItem {
 	private String methodUsedValue;
 	private String methodUsedName;
 	private double progress;
-	private ContactSatusEnum status;
+	private ContactStatusEnum status;
 	private String comments;
 	private User leadOwner;
 	
 	private void printReport(Report report) {
-		logger.info("Report: " +
+		logger.debug("Report: " +
 		"Comments: " + report.getComments() +
 		"Contact data id: " + report.getContactDataId() +
 		"Contact Id: " + report.getContactId() +
@@ -110,7 +110,7 @@ public class ReportResultItem {
 			methodUsedValue = "";
 		}
 		progress = report.getProgress();
-		status = ContactSatusEnum.getStatus(report.getStatus());
+		status = ContactStatusEnum.getStatus(report.getStatus());
 		comments = report.getComments();
 		
 		// get lead owner
@@ -184,11 +184,11 @@ public class ReportResultItem {
 		this.progress = progress;
 	}
 
-	public ContactSatusEnum getStatus() {
+	public ContactStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(ContactSatusEnum status) {
+	public void setStatus(ContactStatusEnum status) {
 		this.status = status;
 	}
 

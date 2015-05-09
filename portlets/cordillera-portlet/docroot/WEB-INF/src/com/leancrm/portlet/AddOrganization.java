@@ -1,6 +1,7 @@
 package com.leancrm.portlet;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -76,7 +77,7 @@ public class AddOrganization extends MVCPortlet {
 					}
 					
 					// SEND AN EMAIL TO THE ADMINS OF THE ORGANIZATION ABOUT A MEMBER REQUEST
-					List<User> adminList = OrganizationUtils.getOrganizationAdmin(organizationId);
+					Collection<User> adminList = OrganizationUtils.getOrganizationAdmin(organizationId);
 					for (User admin : adminList) {
 						MailUtils.sendRequestToBeMember(admin, themeDisplay.getUser(), OrganizationLocalServiceUtil.getOrganization(organizationId));
 					}

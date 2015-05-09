@@ -151,7 +151,7 @@ public class ContactManager extends MVCPortlet {
 	public void getEnterprises(ActionRequest actionRequest, ActionResponse actionResponse) {
 		StringBuilder json = new StringBuilder();
 		try {
-			
+		    
 			json.append(CRMJsonFormat.getEnterpriseListAsJson(EnterpriseLocalServiceUtil.getAll()));
 			
 		} catch (Exception e) {
@@ -187,7 +187,7 @@ public class ContactManager extends MVCPortlet {
 							break;
 						}
 					}
-					
+				     
 					Enterprise enterprise = EnterpriseLocalServiceUtil.getEnterprise(enterpriseId);
 					
 					json.append("{");
@@ -247,7 +247,7 @@ public class ContactManager extends MVCPortlet {
 				}
 				
 				SessionMessages.add(actionRequest, CRMSuccessKey.ENTERPRISE_SAVED_SUCCESS);
-				
+			    
 				return enterprise;
 			} else {
 				addErrors(actionRequest, errorList);

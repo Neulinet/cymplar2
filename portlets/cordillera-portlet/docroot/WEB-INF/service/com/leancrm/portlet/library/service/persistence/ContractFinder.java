@@ -27,7 +27,7 @@ public interface ContractFinder {
 		java.util.Date fromDate, java.util.Date toDate, int order, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
-	public long countConsultantReports(java.lang.Long userId,
+	public int countConsultantReports(java.lang.Long userId,
 		java.lang.Long enterpriseId, java.lang.Long contactId,
 		java.lang.Long organizationId, java.lang.Long contractId,
 		java.lang.Double fromProgress, java.lang.Double toProgress,
@@ -41,5 +41,12 @@ public interface ContractFinder {
 
 	public java.util.List<com.leancrm.portlet.library.model.Contract> findConsultantContracts(
 		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.leancrm.portlet.library.model.Contract> findCompanyContracts(
+		long organizationId, long consultantId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int countCompanyContracts(long organizationId, long consultantId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

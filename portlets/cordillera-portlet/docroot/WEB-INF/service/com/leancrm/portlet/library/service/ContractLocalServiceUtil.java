@@ -383,6 +383,19 @@ public class ContractLocalServiceUtil {
 		return getService().getConsultantContracts(consultantId);
 	}
 
+	public static java.util.List<com.leancrm.portlet.library.model.Contract> getCompanyContracts(
+		long organizationId, long consultantId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getCompanyContracts(organizationId, consultantId, start, end);
+	}
+
+	public static int coundCompanyContracts(long organizationId,
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().coundCompanyContracts(organizationId, consultantId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

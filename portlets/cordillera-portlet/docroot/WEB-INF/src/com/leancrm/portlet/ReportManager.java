@@ -69,7 +69,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
  */
 public class ReportManager extends MVCPortlet {
 	
-	private static Logger logger = Logger.getLogger(ContactManagerUtils.class);
+	private static Logger logger = Logger.getLogger(ReportManager.class);
 
 	public void getEnterprises(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 		JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -174,20 +174,20 @@ public class ReportManager extends MVCPortlet {
 			json.put("error", "Unexpected error when try to get contract detail from report manager. " + e.getMessage());
 			logger.error("Unexpected error when try to get contract detail from report manager. ", e);
 		}
-		
+ 
 		try {
 			writeJSON(resourceRequest, resourceResponse, json);
 		} catch (IOException e) {
 			logger.error("Unexpected error when try to get enterprises from report manager.", e);
 		}
 	}
-	
+	 
 	public void addEvent(long userId, int startDateDay, int startMonth, int startDateYear, int startDateHour, int startDateMinute, 
 			int endDay, int endMonth, int endYear, int endHour, int endMinute, ServiceContext serviceContext,
 			String title, String description) throws PortalException, SystemException {
 		TZSRecurrence recurrence =new TZSRecurrence();
 		recurrence.setFrequency(1);
-		
+  
 		String location = "";
 		int startDateMonth = startMonth - 1;
 		int durationHour = 1;
@@ -316,8 +316,8 @@ public class ReportManager extends MVCPortlet {
 				} else {
 					Report lastReport = ReportManagerUtils.getLastReport(contractId);
 					ReportValidator.validateReport(contactDataIdParam, progressParam, lastReport.getProgress(), reportDateParam, lastReport.getReportDate(), commentsParam, statusCode, errorList);
-				}
-				
+				} 
+ 
 				if (errorList.isEmpty()) {
 					
 					if (contractId == null) {

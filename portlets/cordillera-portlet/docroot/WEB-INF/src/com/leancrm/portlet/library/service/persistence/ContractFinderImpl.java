@@ -48,6 +48,7 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 													   " UNION " + 
 													   "SELECT c.* from crm_contact c, crm_addressbookcontact ac, crm_addressbookuser au where au.userId = ? and au.addressBookId = ac.addressBookId and ac.contactId = c.contactId";
 	
+	private static final String _SQL_SELECT_COMPANY_CONTRACTS = " SELECT c FROM Contract c WHERE c.organizationId = ? AND c.contractId NOT IN (SELECT uc.id.contractId FROM UserContract uc WHERE uc.id.userId = ?)";
 	
 	private static Log logger = LogFactoryUtil.getLog(ContractFinderImpl.class);
 	
@@ -159,7 +160,7 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 	}
 	
 	@Override
-	public long countConsultantReports(Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, List<Integer> statusCodeList, Date fromDate, Date toDate) throws SystemException {
+	public int countConsultantReports(Long userId, Long enterpriseId, Long contactId, Long organizationId, Long contractId, Double fromProgress, Double toProgress, List<Integer> statusCodeList, Date fromDate, Date toDate) throws SystemException {
 		return 0;
 	}
 
@@ -198,5 +199,38 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 		return null;
 	}
 	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contract> findCompanyContracts(long organizationId, long consultantId, int start, int end)  throws SystemException {
+		String sql = _SQL_SELECT_COMPANY_CONTRACTS;
+		List<Contract> list = null;
+		
+		Session session = null;
+
+        try {
+            session = openSession();
+
+            Query q = session.createQuery(sql);
+            
+            QueryPos qPos = QueryPos.getInstance(q);
+            qPos.add(organizationId);
+            qPos.add(consultantId);
+    		
+            list = (List<Contract>) QueryUtil.list(q, getDialect(), start, end);
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+
+        return list;
+	}
+	
+	@Override
+	public int countCompanyContracts(long organizationId, long consultantId)   throws SystemException {
+		// TODO need to be implemented
+		return 0;
+	}
 	
 }

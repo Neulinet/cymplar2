@@ -2,7 +2,7 @@
 <%@page import="com.liferay.portal.service.RoleServiceUtil"%>
 <%@page import="com.leancrm.portlet.library.model.ContactDataMethod"%>
 <%@page import="com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil"%>
-<%@page import="com.leancrm.portlet.utils.ContactSatusEnum"%>
+<%@page import="com.leancrm.portlet.utils.ContactStatusEnum"%>
 <%@page import="com.leancrm.portlet.library.model.Contract"%>
 <%@page import="com.leancrm.portlet.library.service.ContractLocalServiceUtil"%>
 <%@page import="com.leancrm.portlet.library.service.ContactContractLocalServiceUtil"%>
@@ -96,7 +96,7 @@ $(document).ready(function() {
 							
 								Report lastReport = ReportLocalServiceUtil.getLastReport(contactContract.getContractId());
 								String progress = lastReport != null ? lastReport.getProgress() + "%" : "0.0%";
-								String status = lastReport != null ? ContactSatusEnum.getStatus(lastReport.getStatus()).name() : "Not contacted yet";
+								String status = lastReport != null ? ContactStatusEnum.getStatus(lastReport.getStatus()).name() : "Not contacted yet";
 								%>
 								<tr>
 									<td><%=enterprise.getName() %></td>

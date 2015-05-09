@@ -8,5 +8,5 @@
 </h3>
 <p>
 	<liferay-ui:error key="unexpected-error-key" message="unexpected-error-message" />
-	<%@ include file="/html/organizationcontactmanager/contactList.jsp" %>
+	<%@ include file="/html/organizationcontactmanager/orgContracts.jsp" %>
 </p>

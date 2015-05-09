@@ -143,30 +143,37 @@ public class AddressBookContactDataLocalServiceClp
 				"java.lang.Long"
 			};
 
-		_methodName23 = "getContactData";
+		_methodName23 = "getContactDataImpl";
 
 		_methodParameterTypes23 = new String[] {
-				"com.leancrm.portlet.library.model.AddressBook"
-			};
-
-		_methodName24 = "getContactDataGroupByMethod";
-
-		_methodParameterTypes24 = new String[] {
 				"com.leancrm.portlet.library.model.AddressBook",
 				"java.lang.Long"
 			};
 
-		_methodName25 = "getContactData";
+		_methodName24 = "getContactData";
 
-		_methodParameterTypes25 = new String[] { "long", "long", "long" };
+		_methodParameterTypes24 = new String[] {
+				"com.leancrm.portlet.library.model.AddressBook"
+			};
 
-		_methodName26 = "getAddressBookContactDatasCount";
+		_methodName25 = "getContactDataGroupByMethod";
 
-		_methodParameterTypes26 = new String[] { "long" };
+		_methodParameterTypes25 = new String[] {
+				"com.leancrm.portlet.library.model.AddressBook",
+				"java.lang.Long"
+			};
 
-		_methodName27 = "hasContactData";
+		_methodName26 = "getContactData";
 
-		_methodParameterTypes27 = new String[] { "long", "long" };
+		_methodParameterTypes26 = new String[] { "long", "long", "long" };
+
+		_methodName27 = "getAddressBookContactDatasCount";
+
+		_methodParameterTypes27 = new String[] { "long" };
+
+		_methodName28 = "hasContactData";
+
+		_methodParameterTypes28 = new String[] { "long", "long" };
 	}
 
 	@Override
@@ -858,8 +865,9 @@ public class AddressBookContactDataLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<com.leancrm.portlet.library.model.ContactData> getContactData(
-		com.leancrm.portlet.library.model.AddressBook addressBook)
+	public java.util.List<com.leancrm.portlet.library.model.ContactData> getContactDataImpl(
+		com.leancrm.portlet.library.model.AddressBook addressBook,
+		java.lang.Long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -867,6 +875,45 @@ public class AddressBookContactDataLocalServiceClp
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
 					_methodParameterTypes23,
+					new Object[] {
+						ClpSerializer.translateInput(addressBook),
+						
+					ClpSerializer.translateInput(contactId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.leancrm.portlet.library.model.ContactData>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.ContactData> getContactData(
+		com.leancrm.portlet.library.model.AddressBook addressBook)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] { ClpSerializer.translateInput(addressBook) });
 		}
 		catch (Throwable t) {
@@ -901,8 +948,8 @@ public class AddressBookContactDataLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(addressBook),
 						
@@ -940,8 +987,8 @@ public class AddressBookContactDataLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { addressBookId, contactId, methodId });
 		}
 		catch (Throwable t) {
@@ -972,8 +1019,8 @@ public class AddressBookContactDataLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { contactDataId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { contactDataId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -995,8 +1042,8 @@ public class AddressBookContactDataLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { addressBookId, contactDataId });
 		}
 		catch (Throwable t) {
@@ -1069,4 +1116,6 @@ public class AddressBookContactDataLocalServiceClp
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

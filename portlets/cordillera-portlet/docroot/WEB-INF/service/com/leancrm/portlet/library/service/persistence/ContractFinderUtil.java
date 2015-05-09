@@ -35,7 +35,7 @@ public class ContractFinderUtil {
 			statusCodeList, fromDate, toDate, order, start, end);
 	}
 
-	public static long countConsultantReports(java.lang.Long userId,
+	public static int countConsultantReports(java.lang.Long userId,
 		java.lang.Long enterpriseId, java.lang.Long contactId,
 		java.lang.Long organizationId, java.lang.Long contractId,
 		java.lang.Double fromProgress, java.lang.Double toProgress,
@@ -58,6 +58,20 @@ public class ContractFinderUtil {
 		long consultantId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findConsultantContracts(consultantId);
+	}
+
+	public static java.util.List<com.leancrm.portlet.library.model.Contract> findCompanyContracts(
+		long organizationId, long consultantId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findCompanyContracts(organizationId, consultantId, start,
+			end);
+	}
+
+	public static int countCompanyContracts(long organizationId,
+		long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countCompanyContracts(organizationId, consultantId);
 	}
 
 	public static ContractFinder getFinder() {

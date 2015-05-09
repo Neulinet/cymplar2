@@ -1,24 +1,42 @@
 package com.leancrm.portlet.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 import com.leancrm.portlet.library.model.AddressBookUser;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.service.AddressBookUserLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 public class OrganizationUtils {
-
+	private static Logger logger = Logger.getLogger(OrganizationUtils.class);
+	
+	/** Get organization for user. Currently we expect that user is related to only one organization
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public static Organization getOrganizationByUser(long userId) {
 		try {
 			List<Organization> organizationList = OrganizationLocalServiceUtil.getUserOrganizations(userId);
@@ -26,27 +44,33 @@ public class OrganizationUtils {
 				return organizationList.get(0);
 			}
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Canot get user organization for user " + userId, e);
 		}
 		
 		return null;
 	}
 	
-	public static List<User> getOrganizationAdmin(long organizationId) throws PortalException, SystemException {
-		List<User> adminList = new ArrayList<User>();
-		List<User> userList = UserLocalServiceUtil.getOrganizationUsers(organizationId);
-		for (User user : userList) {
-			long[] rolesId = user.getRoleIds();
-			for (long roleId : rolesId) {
-				if (roleId == 11855) {
-					adminList.add(user);
-					break;
-				}
-			}
+	/* Get Organization Admins - users with ORGANIZATION_ADMIN and ORGANIZATION_OWNER roles
+	 * 
+	 */
+	public static Collection<User> getOrganizationAdmin(long organizationId) throws PortalException, SystemException {
+		Organization organization = OrganizationLocalServiceUtil.getOrganization(organizationId);
+		Role orgOwner = RoleLocalServiceUtil.getRole(organization.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
+		Role orgAdmin = RoleLocalServiceUtil.getRole(organization.getCompanyId(), RoleConstants.ORGANIZATION_ADMINISTRATOR);
+		
+		Set<User> adminUsers = new HashSet<User>();
+
+		// add all org owners
+		for (UserGroupRole ugr : UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(organization.getGroupId(), orgOwner.getRoleId())) {
+			adminUsers.add(ugr.getUser());
 		}
 		
-		return adminList;
+		// and add all org admins
+		for (UserGroupRole ugr : UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(organization.getGroupId(), orgAdmin.getRoleId())) {
+			adminUsers.add(ugr.getUser());
+		}
+		
+		return adminUsers;
 	}
 	
 	public static List<User> getConsultants(long organizationId) {

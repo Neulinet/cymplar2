@@ -337,4 +337,12 @@ public interface ContractLocalService extends BaseLocalService,
 	public java.util.List<com.leancrm.portlet.library.model.Contract> getConsultantContracts(
 		long consultantId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.leancrm.portlet.library.model.Contract> getCompanyContracts(
+		long organizationId, long consultantId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int coundCompanyContracts(long organizationId, long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

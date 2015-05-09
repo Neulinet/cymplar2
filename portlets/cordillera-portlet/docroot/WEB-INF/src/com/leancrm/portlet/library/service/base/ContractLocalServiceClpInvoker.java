@@ -155,6 +155,14 @@ public class ContractLocalServiceClpInvoker {
 		_methodName133 = "getConsultantContracts";
 
 		_methodParameterTypes133 = new String[] { "long" };
+
+		_methodName134 = "getCompanyContracts";
+
+		_methodParameterTypes134 = new String[] { "long", "long", "int", "int" };
+
+		_methodName135 = "coundCompanyContracts";
+
+		_methodParameterTypes135 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -324,6 +332,20 @@ public class ContractLocalServiceClpInvoker {
 			return ContractLocalServiceUtil.getConsultantContracts(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+			return ContractLocalServiceUtil.getCompanyContracts(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Integer)arguments[2]).intValue(),
+				((Integer)arguments[3]).intValue());
+		}
+
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+			return ContractLocalServiceUtil.coundCompanyContracts(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -383,4 +405,8 @@ public class ContractLocalServiceClpInvoker {
 	private String[] _methodParameterTypes132;
 	private String _methodName133;
 	private String[] _methodParameterTypes133;
+	private String _methodName134;
+	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
 }

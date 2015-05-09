@@ -155,6 +155,14 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		_methodName28 = "getConsultantContracts";
 
 		_methodParameterTypes28 = new String[] { "long" };
+
+		_methodName29 = "getCompanyContracts";
+
+		_methodParameterTypes29 = new String[] { "long", "long", "int", "int" };
+
+		_methodName30 = "coundCompanyContracts";
+
+		_methodParameterTypes30 = new String[] { "long", "long" };
 	}
 
 	@Override
@@ -1030,6 +1038,65 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		return (java.util.List<com.leancrm.portlet.library.model.Contract>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Contract> getCompanyContracts(
+		long organizationId, long consultantId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] { organizationId, consultantId, start, end });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.leancrm.portlet.library.model.Contract>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int coundCompanyContracts(long organizationId, long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
+					new Object[] { organizationId, consultantId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1087,4 +1154,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
 }

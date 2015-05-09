@@ -28,6 +28,10 @@ import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
 import com.leancrm.portlet.library.service.base.ContractLocalServiceBaseImpl;
 import com.leancrm.portlet.library.service.persistence.ContractFinderUtil;
 import com.leancrm.portlet.validator.ValidationsUtil;
+import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -67,7 +71,8 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 		contactContract.setContractId(contract.getContractId());
 		
 		contactContractLocalService.addContactContract(contactContract);
-		
+
+	 
 		return contractPersistence.update(contract);
 	}
 	
@@ -167,7 +172,7 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 		return contractPersistence.findByOrganizationAndEnterprise(organizationId, enterpriseId);
 	}
 	
-	// TODO: CREATE CUTOM QUERY
+	// TODO: CREATE CUSTOM QUERY
 	public List<Contract> getContractList(long organizationId, long enterpriseId, long userId) throws SystemException {
 		List<Contract> result = new ArrayList<Contract>();
 		List<Contract> allContractList = contractPersistence.findByOrganizationAndEnterprise(organizationId, enterpriseId);
@@ -175,7 +180,7 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 			if (userContractLocalService.getByUserContract(userId, contract.getContractId()) != null) {
 				result.add(contract);
 			}
-		}
+		}  
 		return result;
 	}
 	
@@ -199,7 +204,17 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Contract> getConsultantContracts(long consultantId) throws SystemException {
-		return ContractFinderUtil.findConsultantContracts(consultantId);
+		return contractFinder.findConsultantContracts(consultantId);
+	}
+	
+	@Override
+	public List<Contract> getCompanyContracts(long organizationId, long consultantId, int start, int end)  throws SystemException {
+		return contractFinder.findCompanyContracts(organizationId, consultantId, start, end);
+	}
+	
+	@Override
+	public int coundCompanyContracts(long organizationId, long consultantId)   throws SystemException {
+		return contractFinder.countCompanyContracts(organizationId, consultantId);
 	}
 
 }

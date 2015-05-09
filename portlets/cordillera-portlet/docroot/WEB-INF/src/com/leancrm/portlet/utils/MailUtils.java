@@ -14,6 +14,8 @@ import javax.mail.internet.InternetAddress;
 
 import org.apache.log4j.Logger;
 
+import com.leancrm.portlet.library.ContractConstants;
+import com.leancrm.portlet.library.model.Contract;
 import com.liferay.mail.service.MailService;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -30,6 +32,8 @@ public class MailUtils {
 	private static final String USER_NAME = "${USER_NAME}";
 	private static final String MEMBER_FULL_NAME = "${MEMBER_FULL_NAME}";
 	private static final String ORGANIZATION_NAME = "${ORGANIZATION_NAME}";
+	private static final String CONTRACT_NAME = "${CONTRACT_NAME}";
+	private static final String LEAD_ACCESS_LEVEL = "${LEAD_ACCESS_LEVEL}";
 
 	public static final boolean USE_EMAIL_TEST = false;
 	public static final String TEST_EMAIL = "dgmonzon@gmail.com";
@@ -110,6 +114,7 @@ public class MailUtils {
 			body = body.replace(USER_NAME, admin.getFirstName());
 			body = body.replace(MEMBER_FULL_NAME, member.getFullName());
 			body = body.replace(ORGANIZATION_NAME, organization.getName());
+			// get lead access level name
 			
 			sendHtmlEmail(from, to, title, body);
 			
@@ -118,5 +123,52 @@ public class MailUtils {
 			logger.error("Error when tried to send an email to request be member.", e);
 		}
 	}
+
 	
+	public static void sendRequestToLead(User leadOwner, User member, Contract contract, int leadAccess) {
+		try {
+			InternetAddress from = new InternetAddress("support@cymplar.com", "cymplar.com");
+			InternetAddress to = getRecipient(leadOwner.getEmailAddress(), leadOwner.getFullName());
+			
+			String title = "Request to Lead";
+			
+			String body = getEmailTemplate("templateRequestToLead");
+			
+			body = body.replace(USER_NAME, leadOwner.getFirstName());
+			body = body.replace(MEMBER_FULL_NAME, member.getFullName());
+			body = body.replace(CONTRACT_NAME, contract.getDescription());
+			// get lead access level name
+			String accessLevel = "";
+			
+			switch (leadAccess) {
+				case ContractConstants.ACCESS_OWNER: {
+					accessLevel = "Owner";
+					break;
+				}
+				case ContractConstants.ACCESS_CONTRIBUTE: {
+					accessLevel = "Contribute";
+					break;
+				}
+				case ContractConstants.ACCESS_READ: {
+					accessLevel = "Read";
+					break;
+				}
+			}
+			body = body.replace(LEAD_ACCESS_LEVEL, accessLevel);
+			
+			sendHtmlEmail(from, to, title, body);
+			
+			logger.info("Email with request to lead was sent to " + leadOwner.getUserId());
+		} catch (Exception e) {
+			logger.error("Error when tried to send an email to request to leaad.", e);
+		}
+	}
+	
+	public void leadShared(User userReceiver, User whoShared, Contract lead, int leadAccess) {
+        
+	}
+	
+	public void ownershipTransfered(User userReceiver, User whoDid, Contract lead) {
+		
+	}
 }

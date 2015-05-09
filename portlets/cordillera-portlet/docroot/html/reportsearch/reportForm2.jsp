@@ -82,7 +82,8 @@
 <liferay-portlet:resourceURL id="getContracts" var="getContractsURL"/>
 <liferay-portlet:resourceURL id="getContractDetail" var="getContractDetailURL"/>
 <liferay-portlet:resourceURL id="search" var="searchURL" />
-
+ 
+ 
 <script>
 
 function rs_loadingSelect(select) {

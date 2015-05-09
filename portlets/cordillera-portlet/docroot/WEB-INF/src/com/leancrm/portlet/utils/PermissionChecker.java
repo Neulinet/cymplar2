@@ -5,16 +5,28 @@ import com.leancrm.portlet.library.model.UserContract;
 import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+
 
 public class PermissionChecker {
-
+	
+	/** Check - is user is administrator of Organization
+	 * 
+	 * @param consultant
+	 * @return
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	public static boolean isOrganizationAdmin(User consultant) throws PortalException, SystemException {
-		return RoleServiceUtil.hasUserRole(consultant.getUserId(), consultant.getCompanyId(), "Company Administrator", true);
+		Organization org = OrganizationUtils.getOrganizationByUser(consultant.getUserId());
+		
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(consultant.getUserId(), org.getGroupId(), RoleConstants.ORGANIZATION_OWNER) || UserGroupRoleLocalServiceUtil.hasUserGroupRole(consultant.getUserId(), org.getGroupId(), RoleConstants.ORGANIZATION_ADMINISTRATOR); 
 	}
 	
-	/** Checks, does soecified user may leave new actions on the contract or not
+	/** Checks, does specified user may leave new actions on the contract or not
 	 * 
 	 * @param contractId
 	 * @param consultant

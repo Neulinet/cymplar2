@@ -403,6 +403,21 @@ public class ContractLocalServiceWrapper implements ContractLocalService,
 		return _contractLocalService.getConsultantContracts(consultantId);
 	}
 
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Contract> getCompanyContracts(
+		long organizationId, long consultantId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contractLocalService.getCompanyContracts(organizationId,
+			consultantId, start, end);
+	}
+
+	@Override
+	public int coundCompanyContracts(long organizationId, long consultantId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contractLocalService.coundCompanyContracts(organizationId,
+			consultantId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
