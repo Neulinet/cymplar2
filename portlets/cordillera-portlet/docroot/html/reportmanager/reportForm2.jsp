@@ -348,9 +348,10 @@ YUI().use(
         	<portlet:namespace />comments: {
         		maxlength: 200
         	},
-        	<portlet:namespace />nextFollowUpDate: {
-        		date: true
-        	},
+        	// AKA: same os for reportDate - looks like this validation does not like format 'dd/MM/yyyy'
+        	//<portlet:namespace />nextFollowUpDate: {
+        	//	date: true
+        	//},
         	<portlet:namespace />nextFollowUpTime: {
                 time: true
         	}
