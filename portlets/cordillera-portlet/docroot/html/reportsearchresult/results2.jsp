@@ -88,9 +88,19 @@
 	/>
 	<liferay-ui:search-container-column-text
 		name="Method"
-		value="<%=aItem.getMethodUsedValue() %>"
 		cssClass='<%= "leads-method " + rowStyle %>'
-	/>
+	>
+		<c:choose>
+			<c:when test='<%= aItem.getMethodUsedName().equals("email") %>'>
+				<a href='<%="mailto:" + aItem.getMethodUsedValue() %>'>email</a>
+			</c:when>
+			<c:otherwise>
+				<%=aItem.getMethodUsedValue() %>
+			</c:otherwise>
+		</c:choose>
+		
+		
+	</liferay-ui:search-container-column-text>
 	<liferay-ui:search-container-column-text
 		name="Progress"
 		value="<%=String.valueOf(aItem.getProgress()) %>"
