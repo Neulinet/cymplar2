@@ -30,7 +30,6 @@ import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
-import com.leancrm.portlet.library.service.AddressBookContactLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookUserLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataLocalServiceUtil;
@@ -43,7 +42,7 @@ import com.leancrm.portlet.library.service.UserContractLocalServiceUtil;
 import com.leancrm.portlet.types.FollowUpEventStatus;
 import com.leancrm.portlet.utils.AddressBookUtils;
 import com.leancrm.portlet.utils.CRMParamUtils;
-import com.leancrm.portlet.utils.ContactManagerUtils;
+import com.leancrm.portlet.utils.MailUtils;
 import com.leancrm.portlet.utils.OrganizationUtils;
 import com.leancrm.portlet.utils.ReportManagerUtils;
 import com.leancrm.portlet.validator.ContractValidator;
@@ -58,6 +57,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -319,9 +319,10 @@ public class ReportManager extends MVCPortlet {
 				} 
  
 				if (errorList.isEmpty()) {
+					Contract contract = null;
 					
 					if (contractId == null) {
-						Contract contract = ContractLocalServiceUtil.addContract(
+						contract = ContractLocalServiceUtil.addContract(
 								themeDisplay.getCompanyId(), 
 								Long.parseLong(contactIdParam), 
 								Long.parseLong(enterpriseIdParam),
@@ -334,6 +335,7 @@ public class ReportManager extends MVCPortlet {
 						
 					} else {
 						ContractLocalServiceUtil.updateAmount(contractId, Double.parseDouble(contractAmountParam));
+						contract = ContractLocalServiceUtil.getContract(contractId);
 					}
 					
 					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -408,6 +410,14 @@ public class ReportManager extends MVCPortlet {
 //-						AddressBookLocalServiceUtil.addContactData(addressBookOrganization.getAddressBookId(), contactName.getContactDataId(), addressBookOrganization.getCompanyId());
 //-						AddressBookLocalServiceUtil.addContactData(addressBookOrganization.getAddressBookId(), contactEnterprise.getContactDataId(), addressBookOrganization.getCompanyId());
 //-					}
+					
+					
+					// if reporter is not owner of contract (lead) - owner should be notified
+					User leadOwner = UserContractLocalServiceUtil.getContractOwner(contractId);
+					if (leadOwner.getUserId() != themeDisplay.getUserId()) {
+						
+						MailUtils.leadChanged(leadOwner, themeDisplay.getUser(),  contract, report);
+					}
 					
 				} else {
 					result = "error";

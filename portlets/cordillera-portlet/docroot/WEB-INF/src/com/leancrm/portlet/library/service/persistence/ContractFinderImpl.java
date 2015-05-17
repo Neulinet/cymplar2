@@ -207,7 +207,7 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
 		List<Contract> list = null;
 		
 		Session session = null;
-
+     
         try {
             session = openSession();
 

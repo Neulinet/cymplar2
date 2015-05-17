@@ -254,4 +254,30 @@ public class MailUtils {
 			logger.error("Error when tried to send an email to request to leaad.", e);
 		}
 	}
+	
+	public static void leadChanged(User userReceiver, User whoChanged, Contract lead, Report report) {
+		try {
+			ContactStatusEnum status = ContactStatusEnum.getStatus(report.getStatus());
+
+			InternetAddress from = new InternetAddress("support@cymplar.com", "cymplar.com");
+			InternetAddress to = getRecipient(userReceiver.getEmailAddress(), userReceiver.getFullName());
+			
+			String title = "Lead changed";          
+			
+			String body = getEmailTemplate("templateLeadChanged");
+			
+			body = body.replace(USER_NAME, userReceiver.getFirstName());
+			body = body.replace(MEMBER_FULL_NAME, whoChanged.getFullName());
+
+			body = body.replace(CONTRACT_NAME, lead.getDescription());
+			body = body.replace(CONTRACT_PROGRESS, report.getProgress() + "%");
+			body = body.replace(CONTRACT_STATUS, status.name());
+			
+			sendHtmlEmail(from, to, title, body);
+			
+			logger.info("Email with lead ownership trasfer information was sent to " + userReceiver.getUserId());
+		} catch (Exception e) {
+			logger.error("Error when tried to send an email to request to leaad.", e);
+		}
+	}
 }
