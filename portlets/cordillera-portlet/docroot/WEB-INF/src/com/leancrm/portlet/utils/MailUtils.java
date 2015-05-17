@@ -15,12 +15,23 @@ import javax.mail.internet.InternetAddress;
 import org.apache.log4j.Logger;
 
 import com.leancrm.portlet.library.ContractConstants;
+import com.leancrm.portlet.library.model.AddressBook;
+import com.leancrm.portlet.library.model.ContactData;
+import com.leancrm.portlet.library.model.ContactDataMethod;
 import com.leancrm.portlet.library.model.Contract;
+import com.leancrm.portlet.library.model.Enterprise;
+import com.leancrm.portlet.library.model.Report;
+import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
+import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
+import com.leancrm.portlet.library.service.ContactDataTextLocalServiceUtil;
+import com.leancrm.portlet.library.service.EnterpriseLocalServiceUtil;
+import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
 import com.liferay.mail.service.MailService;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 public class MailUtils {
 
@@ -32,7 +43,12 @@ public class MailUtils {
 	private static final String USER_NAME = "${USER_NAME}";
 	private static final String MEMBER_FULL_NAME = "${MEMBER_FULL_NAME}";
 	private static final String ORGANIZATION_NAME = "${ORGANIZATION_NAME}";
+	
+	private static final String COMPANY_NAME = "${COMPANY_NAME}";
+	private static final String CONTACT_NAME = "${CONTACT_NAME}";
 	private static final String CONTRACT_NAME = "${CONTRACT_NAME}";
+	private static final String CONTRACT_PROGRESS = "${CONTRACT_PROGRESS}";
+	private static final String CONTRACT_STATUS = "${CONTRACT_STATUS}";
 	private static final String LEAD_ACCESS_LEVEL = "${LEAD_ACCESS_LEVEL}";
 
 	public static final boolean USE_EMAIL_TEST = false;
@@ -166,6 +182,15 @@ public class MailUtils {
 	
 	public static void leadShared(User userReceiver, User whoShared, Contract lead, int leadAccess) {
 		try {
+			Report report = ReportLocalServiceUtil.getLastReport(lead.getContractId());
+			Enterprise enterprise = EnterpriseLocalServiceUtil.getEnterprise(lead.getEnterpriseId());
+			ContactStatusEnum status = ContactStatusEnum.getStatus(report.getStatus());
+			
+			AddressBook addressBook = AddressBookUtils.getAddressBook(UserLocalServiceUtil.getUser(report.getUserId()));
+			ContactDataMethod contactDataName = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
+			ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBook.getAddressBookId(), lead.getContactId(), contactDataName.getContactDataMethodId());
+			String contactName = ContactDataTextLocalServiceUtil.getContactDataText(contactData.getContactDataId()).getValue();
+			
 			InternetAddress from = new InternetAddress("support@cymplar.com", "cymplar.com");
 			InternetAddress to = getRecipient(userReceiver.getEmailAddress(), userReceiver.getFullName());
 			
@@ -175,7 +200,13 @@ public class MailUtils {
 			
 			body = body.replace(USER_NAME, userReceiver.getFirstName());
 			body = body.replace(MEMBER_FULL_NAME, whoShared.getFullName());
+			
+			body = body.replace(COMPANY_NAME, enterprise.getName());
+			body = body.replace(CONTACT_NAME, contactName);
 			body = body.replace(CONTRACT_NAME, lead.getDescription());
+			body = body.replace(CONTRACT_PROGRESS, report.getProgress() + "%");
+			body = body.replace(CONTRACT_STATUS, status.name());
+			
 			// get lead access level name
 			String accessLevel = "";
 			
