@@ -108,7 +108,7 @@ public class ContractFinderImpl extends BasePersistenceImpl<Contract> implements
             sql = StringUtil.replace(sql, "[$STATUSES$]", statuses);		
         }
 
-        logger.info("SQL: " + sql);
+        logger.debug("SQL: " + sql);
         
         
         Session session = null;
