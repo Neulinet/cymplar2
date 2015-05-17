@@ -91,8 +91,8 @@
 		cssClass='<%= "leads-method " + rowStyle %>'
 	>
 		<c:choose>
-			<c:when test='<%= aItem.getMethodUsedName().equals("email") %>'>
-				<a href='<%="mailto:" + aItem.getMethodUsedValue() %>'>email</a>
+			<c:when test='<%= aItem.getMethodUsedName().equals("email") || aItem.getMethodUsedName().equals("personal_email")%>'>
+				<a href='<%="mailto:" + aItem.getMethodUsedValue() %>'><%= aItem.getMethodUsedName() %></a>
 			</c:when>
 			<c:otherwise>
 				<%=aItem.getMethodUsedValue() %>
