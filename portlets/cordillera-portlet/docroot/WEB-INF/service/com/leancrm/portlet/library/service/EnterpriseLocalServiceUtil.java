@@ -339,6 +339,15 @@ public class EnterpriseLocalServiceUtil {
 		return getService().getEnterpriseByIndustryId(industryId);
 	}
 
+	/**
+	* Get Enterprise by Name
+	*/
+	public static java.util.List<com.leancrm.portlet.library.model.Enterprise> findByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByName(name);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

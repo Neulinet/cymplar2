@@ -365,7 +365,8 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet -->
-	<!-- portlet>
+	
+	<portlet>
 		<portlet-name>contact-migration</portlet-name>
 		<display-name>Leancrm Inport/Export</display-name>
 		<portlet-class>
@@ -397,7 +398,8 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
-	</portlet -->
+	</portlet>
+	
 	<portlet>
 		<portlet-name>calendar</portlet-name>
 		<display-name>Calendar</display-name>

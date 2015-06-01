@@ -295,4 +295,11 @@ public interface EnterpriseLocalService extends BaseLocalService,
 	public java.util.List<com.leancrm.portlet.library.model.Enterprise> getEnterpriseByIndustryId(
 		long industryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Get Enterprise by Name
+	*/
+	public java.util.List<com.leancrm.portlet.library.model.Enterprise> findByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

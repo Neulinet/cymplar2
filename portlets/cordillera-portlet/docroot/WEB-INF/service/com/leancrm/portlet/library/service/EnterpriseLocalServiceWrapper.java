@@ -355,6 +355,16 @@ public class EnterpriseLocalServiceWrapper implements EnterpriseLocalService,
 	}
 
 	/**
+	* Get Enterprise by Name
+	*/
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Enterprise> findByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _enterpriseLocalService.findByName(name);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public EnterpriseLocalService getWrappedEnterpriseLocalService() {

@@ -341,7 +341,6 @@ public class ReportManager extends MVCPortlet {
 					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 					AddressBook addressBookUser = AddressBookUtils.getAddressBook(themeDisplay.getUser());
-					AddressBook addressBookOrganization = AddressBookUtils.getAddressBook(organization);
 					
 					long contactId = Long.parseLong(contactIdParam);
 					

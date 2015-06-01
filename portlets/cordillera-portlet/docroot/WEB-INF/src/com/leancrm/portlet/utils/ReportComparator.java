@@ -2,7 +2,10 @@ package com.leancrm.portlet.utils;
 
 import java.util.Comparator;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import com.leancrm.portlet.library.model.Report;
+import com.liferay.portal.kernel.util.DateUtil;
 
 public class ReportComparator implements Comparator<Report> {
 	public static final int ASC = 1;
@@ -16,6 +19,6 @@ public class ReportComparator implements Comparator<Report> {
 	
 	@Override
 	public int compare(Report r1, Report r2) {
-		return r1.getReportDate().compareTo(r2.getReportDate()) * order;
+		return DateUtil.compareTo(r1.getReportDate(),r2.getReportDate()) * order;
 	}
 }

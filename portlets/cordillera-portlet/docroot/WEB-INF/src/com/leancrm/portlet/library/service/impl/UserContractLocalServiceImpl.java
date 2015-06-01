@@ -80,9 +80,7 @@ public class UserContractLocalServiceImpl
 		UserContract userContractToCheck = null;
 		try {
 			userContractToCheck = userContractPersistence.findByUserContract(userId, contractId);
-		} catch (Exception ex) {
-			logger.warn("Cannot get user contract", ex);
-		}
+		} catch (Exception ex) {} // just ignore error here
 		
 		if (userContractToCheck != null) {
 			// exists - check should we update or ignore

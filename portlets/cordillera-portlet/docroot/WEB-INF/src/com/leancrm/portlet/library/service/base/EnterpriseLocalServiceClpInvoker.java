@@ -152,6 +152,10 @@ public class EnterpriseLocalServiceClpInvoker {
 		_methodName129 = "getEnterpriseByIndustryId";
 
 		_methodParameterTypes129 = new String[] { "long" };
+
+		_methodName130 = "findByName";
+
+		_methodParameterTypes130 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -310,6 +314,11 @@ public class EnterpriseLocalServiceClpInvoker {
 			return EnterpriseLocalServiceUtil.getEnterpriseByIndustryId(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+			return EnterpriseLocalServiceUtil.findByName((java.lang.String)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -361,4 +370,6 @@ public class EnterpriseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
 	private String[] _methodParameterTypes129;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
 }

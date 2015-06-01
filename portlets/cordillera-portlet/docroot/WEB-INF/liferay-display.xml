@@ -8,14 +8,14 @@
 		<portlet id="colleague"></portlet>
 		<portlet id="invitationcolleagues"></portlet>
 		<portlet id="contactmanager"></portlet>
-		<portlet id="admincrm"></portlet>
+		<!-- portlet id="admincrm"></portlet -->
 		<portlet id="organizationcontactmanager"></portlet>
 		<portlet id="reportmanager"></portlet>
 		<portlet id="reportsearch"></portlet>
 		<portlet id="contact-display"></portlet>
-		<portlet id="reportSearchResult"></portlet>
-		<portlet id="contact-migration"></portlet>
+		<!-- portlet id="reportSearchResult"></portlet -->
 		<portlet id="calendar"></portlet>
 		<portlet id="next-follow-up-event"></portlet>
+		<portlet id="contact-migration"></portlet>
 	</category>
 </display>

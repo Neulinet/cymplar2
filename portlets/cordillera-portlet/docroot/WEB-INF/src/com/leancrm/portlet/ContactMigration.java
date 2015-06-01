@@ -1,10 +1,13 @@
 package com.leancrm.portlet;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletException;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.leancrm.portlet.entity.ConsultantEntity;
@@ -28,6 +33,7 @@ import com.leancrm.portlet.library.model.AddressBook;
 import com.leancrm.portlet.library.model.AddressBookContact;
 import com.leancrm.portlet.library.model.AddressBookUser;
 import com.leancrm.portlet.library.model.Contact;
+import com.leancrm.portlet.library.model.ContactData;
 import com.leancrm.portlet.library.model.ContactDataMethod;
 import com.leancrm.portlet.library.model.ContactDataRef;
 import com.leancrm.portlet.library.model.ContactDataText;
@@ -35,7 +41,9 @@ import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.model.Report;
 import com.leancrm.portlet.library.model.impl.AddressBookContactImpl;
+import com.leancrm.portlet.library.service.AddressBookContactDataLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookContactLocalServiceUtil;
+import com.leancrm.portlet.library.service.AddressBookLocalServiceUtil;
 import com.leancrm.portlet.library.service.AddressBookUserLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
@@ -57,6 +65,8 @@ import com.leancrm.portlet.utils.ReportManagerUtils;
 import com.leancrm.portlet.validator.ContractValidator;
 import com.leancrm.portlet.validator.ReportValidator;
 import com.leancrm.portlet.validator.ValidationsUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -67,20 +77,21 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.opencsv.CSVReader;
 
 /**
  * Portlet implementation class ContactMigration
  */
 public class ContactMigration extends MVCPortlet {
- 
 	private Logger logger = Logger.getLogger(this.getClass());
 	
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
+
 	public void selectOrganization(ActionRequest actionRequest, ActionResponse actionResponse) {
 		String folder = getInitParameter("uploadFolder");
 		String realPath = getPortletContext().getRealPath("/");
@@ -145,7 +156,7 @@ public class ContactMigration extends MVCPortlet {
 			logger.info("Nome file:" + uploadRequest.getFileName("fileName"));
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(uploadRequest.getFileAsStream("fileName")));
-			
+			  
 			String line = reader.readLine(); // READ HEADER
 			int columns = line.split(";" ,-1).length;
 			while ((line = reader.readLine()) != null) {
@@ -178,7 +189,7 @@ public class ContactMigration extends MVCPortlet {
 							logger.error("ERROR: " + error);
 						}
 						logger.error(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-					}
+					}   
 				} else {
 					logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 					logger.error("Incorrect columns for the row: [" + row + "] " + line);
@@ -197,7 +208,7 @@ public class ContactMigration extends MVCPortlet {
 
 		StringBuilder csvText = new StringBuilder();
 		try {
-			csvText.append("COMPANY ID");
+			csvText.append("COMPANY ID");   
 			csvText.append(",");
 			csvText.append("COMPANY NAME");
 			csvText.append(",");
@@ -228,7 +239,7 @@ public class ContactMigration extends MVCPortlet {
 			for (Enterprise enterprise : enterprises) {
 				csvText.append(enterprise.getEnterpriseId());
 				csvText.append(",");
-				csvText.append(enterprise.getName());
+				csvText.append(enterprise.getName());  
 				csvText.append(",");
 				csvText.append(enterprise.getIsPrivate());
 				csvText.append(",");
@@ -247,7 +258,7 @@ public class ContactMigration extends MVCPortlet {
 				csvText.append(addressList.get(0).getStreet1());
 				csvText.append(",");
 				csvText.append(addressList.get(0).getStreet2());
-				csvText.append(",");
+				csvText.append(","); 
 				csvText.append(addressList.get(0).getStreet3());
 				csvText.append(",");
 				csvText.append(addressList.get(0).getCountryId());
@@ -303,7 +314,7 @@ public class ContactMigration extends MVCPortlet {
 					String homePhoneExt = "";
 					String cellPhone = a[5];  // MOBILE
 					String cellPhoneExt = "";
-					String skype = a[6]; // SKYPE
+					String skype = a[6]; // SKYPE 
 					String workEmail = a[7].replace(" ", "").replace("'", ""); // EMAIL
 					String personalEmail = "";
 					if (a.length == columns) {
@@ -333,7 +344,7 @@ public class ContactMigration extends MVCPortlet {
 								
 								Contact contact = ContactLocalServiceUtil.addContact(consultant.getCompanyId());
 								long contactId = contact.getContactId();
-								
+							 
 								AddressBookContact addressBookContact = new AddressBookContactImpl();
 								addressBookContact.setCompanyId(consultant.getCompanyId());
 								addressBookContact.setContactId(contact.getContactId());
@@ -907,4 +918,298 @@ public class ContactMigration extends MVCPortlet {
 		}
 	}
 	
+	/** New Implementation of importing reports
+	 * 
+	 * @param actionRequest
+	 * @param actionResponse
+	 */
+	public void newImportReports(ActionRequest actionRequest, ActionResponse actionResponse) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		int row = 1;
+		totalErrors = 0;
+		
+		List<String> cutLines = new ArrayList<String>();
+		
+		try {
+			final String[] EXPECTED_HEADERS = {"ID","ClientFinder","Organization","Private","IndustryType","Company Field Description","Source","ContactName","Position","Email","Phone","Mobile","Address","StreetName","Town","State","ContractValue","Method, leave blank","Status","LeadIntensity","Status Leave blank ","DateCreated","Comments","DateNextFollowUp","Time of next follow up (leave Blank)","Detail"};
+			final long DEFAULT_COUNTRY_ID = CountryServiceUtil.getCountryByA3("AUS").getCountryId();
+			final String DEFAULT_LEAD_NAME = "Imported Lead";
+			final DateFormat reportDateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+			final DateFormat reportDateFormat2 = new SimpleDateFormat("dd/MM/yy");
+			final DateFormat reportDateFormat3 = new SimpleDateFormat("dd/M/yy");
+			final DateFormat createDateFormat1 = new  SimpleDateFormat("MM/dd/yyyy");
+			
+			ContactDataMethod cellPhoneContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.CELL_PHONE.getMethodName());
+			ContactDataMethod emailContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.EMAIL.getMethodName());
+			
+		    long orgId = OrganizationUtils.getOrganizationByUser(themeDisplay.getUserId()).getOrganizationId();
+			
+		    List<AddressBookUser> aBookUserList = AddressBookUserLocalServiceUtil.getAddressBookUserList(themeDisplay.getUserId());
+		    if (aBookUserList == null || aBookUserList.size() == 0) {
+		    	logger.error("User has no address book to import");
+				SessionErrors.add(actionRequest, "User has no address book to import");
+				return;
+		    }
+		    AddressBookUser aBookUser = aBookUserList.get(0);
+		    
+			UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
+			logger.info("Uploading new reports with file size: " + uploadRequest.getSize("fileName"));
+			
+			if (uploadRequest.getSize("fileName") == 0) {
+				SessionErrors.add(actionRequest, "error");
+				return;
+			}
+			
+			logger.info("Upload file name:" + uploadRequest.getFileName("fileName"));
+			
+			File file = uploadRequest.getFile("fileName");
+			
+			Reader r = new FileReader(file);
+			CSVReader csvReader = new CSVReader(r, ',');
+			
+			// read header and compare it with expected headers
+			String[] headers = csvReader.readNext();
+			
+			if (!ArrayUtils.isEquals(EXPECTED_HEADERS,headers)) {
+				logger.error("Headers not match");
+				logger.error("Expected " + ArrayUtils.toString(EXPECTED_HEADERS));
+				logger.error("Loaded   " + ArrayUtils.toString(headers));
+				
+				SessionErrors.add(actionRequest, "Headers does not match required headers");
+				return;
+			}
+			
+			String [] nextLine;
+			while ((nextLine = csvReader.readNext()) != null) {
+				row++;
+				try {
+				    String iD = StringUtils.trim(nextLine[0]);
+				    String clientFinder = StringUtils.trim(nextLine[1]);
+				    String organization = StringUtils.trim(nextLine[2]);
+				    String privateFlag = StringUtils.trim(nextLine[3]);
+				    String industryType = StringUtils.trim(nextLine[4]);
+				    String companyFieldDescription  = StringUtils.trim(nextLine[5]);
+				    String source = StringUtils.trim(nextLine[6]);
+				    String contactName = StringUtils.trim(nextLine[7]);
+				    String position = StringUtils.trim(nextLine[8]);
+				    String email = StringUtils.trim(nextLine[9]);
+				    String phone = StringUtils.trim(nextLine[10]);
+				    String mobile = StringUtils.trim(nextLine[11]);
+				    String address = StringUtils.trim(nextLine[12]);
+				    String streetName = StringUtils.trim(nextLine[13]);
+				    String town = StringUtils.trim(nextLine[14]);
+				    String state = StringUtils.trim(nextLine[15]);
+				    String contractValue = StringUtils.trim(nextLine[16]);
+				    String method = StringUtils.trim(nextLine[17]);
+				    String status = StringUtils.trim(nextLine[18]);
+				    String leadIntensity = StringUtils.trim(nextLine[19]);
+				    String statusLeaveBlank = StringUtils.trim(nextLine[20]);
+				    String dateCreated = StringUtils.trim(nextLine[21]);
+				    String comments = StringUtils.trim(nextLine[22]);
+				    String dateNextFollowUp = StringUtils.trim(nextLine[23]);
+				    String timeNextFollowUp = StringUtils.trim(nextLine[24]);
+				    String detail = StringUtils.trim(nextLine[25]);
+				    
+				    logger.info("======================================");
+				    logger.info("Importing report " + contactName + " from " + organization + " on " + dateCreated);
+				    
+				    // create enterprise (if required)
+				    // try to find enterprise
+				    Enterprise enterprise = null;
+				    List<Enterprise> enterprises = EnterpriseLocalServiceUtil.findByName(organization);
+				    if (enterprises.size() > 1) {
+				    	logger.warn("Found several enterprises with name " + organization + " . First will be used");
+				    }
+				    if (enterprises.size() > 0) {
+				    	enterprise = enterprises.get(0);
+				    	logger.info("Found Enterprise " + organization + " + , Enterprise ID: " + enterprise.getEnterpriseId());
+				    }
+				    
+				    if (enterprise == null) {
+				    	logger.info("Enterprise " + organization + " not found -> create");
+					    // create enterprise ( it is not exists)
+				    	// TODO - industry - check codes mapping
+				    	// TODO - test for private
+				    	// TODO - zip
+					    enterprise = EnterpriseLocalServiceUtil.addEnterprise(themeDisplay.getCompanyId(), themeDisplay.getUserId(), organization, (String)null /*taxId*/, String.valueOf(DEFAULT_COUNTRY_ID), companyFieldDescription, email, "0" /* industry */, streetName, address, (String)null /*street3*/, "000" /*zipCode*/, town, false);
+				    	logger.info("Created Enterprise " + organization + " + , Enterprise ID: " + enterprise.getEnterpriseId());
+				    }				    
+				    
+				    // create contact (if required)
+				    // try to find contact by name
+				    Contact contact = ContactLocalServiceUtil.findByName(themeDisplay.getUserId(), aBookUser.getAddressBookId(), enterprise.getEnterpriseId(), contactName);
+				    
+				    if (contact == null) {
+				    	// contact not found - create new
+				    	logger.info("Contact for " + contactName + " not found, create new");
+				    	List<String> errorList = new ArrayList<String>();
+				    	
+				    	contact = createContact(themeDisplay.getCompanyId(), themeDisplay.getUserId(), enterprise.getEnterpriseId(), aBookUser.getAddressBookId(), errorList, row, contactName, mobile, null, email, null, position, null /*homePhone*/, null /*homePhoneExt*/, null /*personalEmail*/);
+				    	logger.info("Created contact " + contactName + ", ID " + contact.getContactId()); 
+				    } else {
+				    	logger.info("Found contact " + contactName + ", ID " + contact.getContactId());
+				    }
+				    
+				    double amount = 0.0;
+				    try {
+				    	amount = Double.valueOf(contractValue);
+				    } catch (Exception ex) {}
+				    
+				    // create contract (if not exist yet)
+				    Contract contract = ContractLocalServiceUtil.findByName(themeDisplay.getUserId(), contact.getContactId(), orgId, enterprise.getEnterpriseId(), DEFAULT_LEAD_NAME);
+				    if (contract == null) {
+				    	logger.info("Contract not found - create new");
+				    	contract = ContractLocalServiceUtil.addContract(themeDisplay.getCompanyId(), contact.getContactId(), enterprise.getEnterpriseId(), orgId, DEFAULT_LEAD_NAME, amount);
+				    	
+				    	long contractId = contract.getContractId();
+						UserContractLocalServiceUtil.addUserContract(themeDisplay.getUserId(), contractId, ContractConstants.ACCESS_OWNER);
+				    } else {
+				    	logger.info("Contract Exists");
+				    }
+				    
+				    
+				    // finally - add report!!!
+				    
+				    // get createDate
+				    Date createDate = null;
+				    // try to parse create date
+				    try {
+				    	createDate = createDateFormat1.parse(dateCreated); 
+				    } catch (Exception ex) {} // ignore date parsing error
+				    
+				    if (createDate == null) {
+				    	// use current date if not parsed
+				    	createDate = new Date();
+				    }
+				    
+				    // try to parse comments to extract date
+				    String reportComment = comments;
+				    Date reportDate = null;
+				    
+				    String[] commentParts = comments.split("-");
+				    if (commentParts.length > 1) {
+				    	// get first part and try to parse it
+				    	try {
+				    		reportDate = reportDateFormat1.parse(StringUtils.trim(commentParts[0]));
+				    	} catch (Exception ex) {} // just ignore it here
+				    	
+				    	if (reportDate == null) {
+				    		// try second format
+					    	try {
+					    		reportDate = reportDateFormat2.parse(StringUtils.trim(commentParts[0]));
+					    	} catch (Exception ex) {} // just ignore it here
+				    	}
+				    	if (reportDate == null) {
+				    		// try third format
+					    	try {
+					    		reportDate = reportDateFormat3.parse(StringUtils.trim(commentParts[0]));
+					    	} catch (Exception ex) {} // just ignore it here
+				    	}
+				    	
+				    	if (reportDate != null) {
+				    		// merge rest parts back into comments
+				    		reportComment = StringUtils.join(ArrayUtils.subarray(commentParts, 1, commentParts.length),"-");
+				    	}
+				    }
+				    
+				    if (reportDate == null) {
+				    	reportDate = createDate;
+				    }
+				    
+				    ContactDataText contactNameData = ContactLocalServiceUtil.getName(contact.getContactId(), aBookUser.getAddressBookId());
+				    
+				    long contactDataId = 0l;
+				    if (StringUtils.isNotBlank(mobile)) {
+				    	ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(aBookUser.getAddressBookId(), contact.getContactId(), cellPhoneContactDataMethod.getContactDataMethodId());
+				    	if (contactData != null) {
+				    		contactDataId = contactData.getContactDataId();
+				    	}
+				    } else {
+				    	// use email
+				    	ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(aBookUser.getAddressBookId(), contact.getContactId(), emailContactDataMethod.getContactDataMethodId());
+				    	if (contactData != null) {
+				    		contactDataId = contactData.getContactDataId();
+				    	}
+				    }
+				    
+				    // parse status
+				    ContractStatus contractStatus = ContractStatus.getContractStatus(leadIntensity);
+				    
+				    
+				    ReportLocalServiceUtil.addReport(themeDisplay.getCompanyId(), contract.getContractId(), contact.getContactId(), StringUtils.substring(reportComment, 0, 500), contactDataId, enterprise.getEnterpriseId(), orgId, 0.0, reportDate, contractStatus.getPow(), themeDisplay.getUserId(), contactNameData.getContactDataId(), createDate);
+				} catch (Exception ex) {
+					logger.error("Cannot process row " + row, ex);
+					totalErrors++;
+				}
+			}
+		} catch (Exception ex) {
+			logger.error("Error during importing reports", ex);
+			return;
+		}
+		
+		logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		logger.info("Rows processed: " + row);
+		logger.info("Total Errors:  " + totalErrors);
+		logger.info("Cut Lines: " + cutLines.size());
+		for (String l : cutLines) {
+			logger.info("\t" + l);
+		}
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		
+	}
+	
+	
+	private Contact createContact(long companyId, long userId, long enterpriseId,long addressBookId, List<String> errorList, int row, 
+		String fullName, String cellPhone, String cellPhoneExt, String workEmail, String skype, String position, String homePhone, String homePhoneExt, String personalEmail) throws SystemException, PortalException {
+	
+		if (ValidationsUtil.validateAditionalInfo(userId, -1, enterpriseId, 
+			fullName, cellPhone, cellPhoneExt, workEmail, skype, position, homePhone, homePhoneExt, personalEmail, errorList)) {
+			
+			Contact contact = ContactLocalServiceUtil.addContact(companyId);
+			long contactId = contact.getContactId();
+		 
+			AddressBookContact addressBookContact = new AddressBookContactImpl();
+			addressBookContact.setCompanyId(companyId);
+			addressBookContact.setContactId(contact.getContactId());
+			addressBookContact.setAddressBookId(addressBookId);
+			AddressBookContactLocalServiceUtil.addAddressBookContact(addressBookContact);
+			
+			ContactDataMethod enterpriseContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.ENTERPRISE.getMethodName());
+			ContactDataRefLocalServiceUtil.updateContactDataRef(contactId, enterpriseContactDataMethod, String.valueOf(enterpriseId), addressBookId, companyId);
+			
+			ContactDataMethod nameContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.NAME.getMethodName());
+			ContactDataTextLocalServiceUtil.updateContactDataText(contactId, nameContactDataMethod, fullName, addressBookId, companyId);
+		
+			ContactDataMethod cellPhoneContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.CELL_PHONE.getMethodName());
+			ContactDataPhoneLocalServiceUtil.updateContactDataPhone(contactId, cellPhoneContactDataMethod, cellPhone, cellPhoneExt, addressBookId, companyId);
+			
+			ContactDataMethod phoneContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.PHONE.getMethodName());
+			ContactDataPhoneLocalServiceUtil.updateContactDataPhone(contactId, phoneContactDataMethod, homePhone, homePhoneExt, addressBookId, companyId);
+			
+			ContactDataMethod skypeContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.SKYPE.getMethodName());
+			ContactDataTextLocalServiceUtil.updateContactDataText(contactId, skypeContactDataMethod, skype, addressBookId, companyId);
+			
+			ContactDataMethod emailContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.EMAIL.getMethodName());
+			ContactDataTextLocalServiceUtil.updateContactDataText(contactId, emailContactDataMethod, workEmail, addressBookId, companyId);
+			
+			ContactDataMethod personalEmailContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.PERSONAL_EMAIL.getMethodName());
+			ContactDataTextLocalServiceUtil.updateContactDataText(contactId, personalEmailContactDataMethod, personalEmail, addressBookId, companyId);
+			
+			ContactDataMethod positionContactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.POSITION.getMethodName());
+			ContactDataTextLocalServiceUtil.updateContactDataText(contactId, positionContactDataMethod, position, addressBookId, companyId);
+			
+			return contact;
+		} else {
+			String errorMessage = "";
+			for (String error : errorList) {
+				errorMessage += "|";
+				errorMessage += error;
+			}
+			logger.error("[" + row + "] Errors (" + errorMessage + ").");
+		}
+
+		
+		return null;
+	}
 }

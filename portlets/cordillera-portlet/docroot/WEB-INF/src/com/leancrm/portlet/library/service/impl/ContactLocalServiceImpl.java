@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.leancrm.portlet.library.model.AddressBook;
 import com.leancrm.portlet.library.model.AddressBookContact;
 import com.leancrm.portlet.library.model.Contact;
@@ -32,6 +34,7 @@ import com.leancrm.portlet.library.service.ContactDataLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataMethodLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataRefLocalServiceUtil;
 import com.leancrm.portlet.library.service.ContactDataTextLocalServiceUtil;
+import com.leancrm.portlet.library.service.ContactLocalServiceUtil;
 import com.leancrm.portlet.library.service.base.ContactLocalServiceBaseImpl;
 import com.leancrm.portlet.library.service.persistence.ContractFinderUtil;
 import com.leancrm.portlet.utils.ContactDataMethodEnum;
@@ -103,6 +106,40 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return null;
 	}
 
+	/** Find contact for specified enterprise by name
+	 * If several contacts found - first will be returned
+	 * 
+	 * TODO Replace to database select
+	 * 
+	 * @param userId
+	 * @param addressBookId
+	 * @param enterpriseId
+	 * @param name
+	 * @return
+	 * @throws PortalException 
+	 * @throws SystemException 
+	 */
+	@Override
+	public Contact findByName(long userId, long addressBookId, long enterpriseId, String name) throws SystemException, PortalException {
+		ContactDataMethod enterpriseContactMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.ENTERPRISE.getMethodName());
+		
+		for (Contact contact : ContactLocalServiceUtil.getConsultantContacts(userId)) {
+			ContactData contactDataEnterprise = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contact.getContactId(), enterpriseContactMethod.getContactDataMethodId());
+			
+			// compare enterprises
+			if (contactDataEnterprise != null && enterpriseId == ContactDataRefLocalServiceUtil.getContactDataRef(contactDataEnterprise.getContactDataId()).getRefValue()) {
+				String contactName = getName(contact.getContactId(), addressBookId).getValue();
+				
+				// compare names
+				if (StringUtils.equals(contactName, name)) {
+					return contact;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public ContactDataRef getEnterprise(long contactId, long addressBookId) throws PortalException, SystemException {
 		ContactDataMethod contactDataMethod = ContactDataMethodLocalServiceUtil.getContactDataMethodByName(ContactDataMethodEnum.ENTERPRISE.getMethodName());
 		ContactData contactData = AddressBookContactDataLocalServiceUtil.getContactData(addressBookId, contactId, contactDataMethod.getContactDataMethodId());

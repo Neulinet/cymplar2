@@ -261,6 +261,25 @@ public interface ContactLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Find contact for specified enterprise by name
+	* If several contacts found - first will be returned
+	*
+	* TODO Replace to database select
+	*
+	* @param userId
+	* @param addressBookId
+	* @param enterpriseId
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public com.leancrm.portlet.library.model.Contact findByName(long userId,
+		long addressBookId, long enterpriseId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.leancrm.portlet.library.model.ContactDataRef getEnterprise(
 		long contactId, long addressBookId)

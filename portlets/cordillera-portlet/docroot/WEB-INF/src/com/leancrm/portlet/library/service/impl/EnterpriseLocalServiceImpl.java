@@ -139,4 +139,10 @@ public class EnterpriseLocalServiceImpl extends EnterpriseLocalServiceBaseImpl {
 	public List<Enterprise> getEnterpriseByIndustryId(long industryId) throws SystemException {
 		return enterprisePersistence.findByIndustry(industryId);
 	}
+	
+	/** Get Enterprise by Name */
+	@Override
+	public List<Enterprise> findByName(String name) throws SystemException {
+		return enterprisePersistence.findByName(name);
+	}
 }

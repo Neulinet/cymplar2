@@ -126,21 +126,27 @@ public class ContactLocalServiceClpInvoker {
 
 		_methodParameterTypes126 = new String[] { "long", "long" };
 
-		_methodName127 = "getEnterprise";
+		_methodName127 = "findByName";
 
-		_methodParameterTypes127 = new String[] { "long", "long" };
+		_methodParameterTypes127 = new String[] {
+				"long", "long", "long", "java.lang.String"
+			};
 
-		_methodName128 = "cleanContacs";
+		_methodName128 = "getEnterprise";
 
-		_methodParameterTypes128 = new String[] {  };
+		_methodParameterTypes128 = new String[] { "long", "long" };
 
-		_methodName129 = "getContactMethodList";
+		_methodName129 = "cleanContacs";
 
-		_methodParameterTypes129 = new String[] { "long", "long" };
+		_methodParameterTypes129 = new String[] {  };
 
-		_methodName130 = "getConsultantContacts";
+		_methodName130 = "getContactMethodList";
 
-		_methodParameterTypes130 = new String[] { "long" };
+		_methodParameterTypes130 = new String[] { "long", "long" };
+
+		_methodName131 = "getConsultantContacts";
+
+		_methodParameterTypes131 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -265,25 +271,32 @@ public class ContactLocalServiceClpInvoker {
 
 		if (_methodName127.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			return ContactLocalServiceUtil.getEnterprise(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return ContactLocalServiceUtil.findByName(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+			return ContactLocalServiceUtil.getEnterprise(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			ContactLocalServiceUtil.cleanContacs();
 
 			return null;
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return ContactLocalServiceUtil.getContactMethodList(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return ContactLocalServiceUtil.getConsultantContacts(((Long)arguments[0]).longValue());
 		}
 
@@ -340,4 +353,6 @@ public class ContactLocalServiceClpInvoker {
 	private String[] _methodParameterTypes129;
 	private String _methodName130;
 	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
 }

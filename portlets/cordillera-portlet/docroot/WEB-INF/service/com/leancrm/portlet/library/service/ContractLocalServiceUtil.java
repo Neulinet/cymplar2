@@ -346,6 +346,29 @@ public class ContractLocalServiceUtil {
 			enterpriseId);
 	}
 
+	/**
+	* Find contract by Name
+	* TODO Reimplement with using SQL queries
+	*
+	* @param userId
+	* @param contactId
+	* @param organizationId
+	* @param enterpriseId
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public static com.leancrm.portlet.library.model.Contract findByName(
+		long userId, long contactId, long organizationId, long enterpriseId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByName(userId, contactId, organizationId, enterpriseId,
+			name);
+	}
+
 	public static java.util.List<com.leancrm.portlet.library.model.Contract> getContractList(
 		long organizationId, long enterpriseId)
 		throws com.liferay.portal.kernel.exception.SystemException {

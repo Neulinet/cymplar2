@@ -67,7 +67,7 @@
 		%>
 	<liferay-ui:search-container-column-text
 		name="Date"
-		value="<%=dateFormat.format(aItem.getReportDate()) %>"
+		value='<%=aItem.getReportDate() != null ? dateFormat.format(aItem.getReportDate()) : "" %>'
 		cssClass='<%= "leads-date " + rowStyle %>'
 		orderable="<%= true %>" 
 	/>

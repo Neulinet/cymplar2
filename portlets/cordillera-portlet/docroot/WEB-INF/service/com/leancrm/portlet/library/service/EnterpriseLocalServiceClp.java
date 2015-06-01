@@ -153,6 +153,10 @@ public class EnterpriseLocalServiceClp implements EnterpriseLocalService {
 		_methodName24 = "getEnterpriseByIndustryId";
 
 		_methodParameterTypes24 = new String[] { "long" };
+
+		_methodName25 = "findByName";
+
+		_methodParameterTypes25 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -976,6 +980,36 @@ public class EnterpriseLocalServiceClp implements EnterpriseLocalService {
 		return (java.util.List<com.leancrm.portlet.library.model.Enterprise>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<com.leancrm.portlet.library.model.Enterprise> findByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] { ClpSerializer.translateInput(name) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.leancrm.portlet.library.model.Enterprise>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1025,4 +1059,6 @@ public class EnterpriseLocalServiceClp implements EnterpriseLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

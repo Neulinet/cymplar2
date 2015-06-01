@@ -136,33 +136,39 @@ public class ContractLocalServiceClp implements ContractLocalService {
 
 		_methodParameterTypes23 = new String[] { "long", "long", "long", "long" };
 
-		_methodName24 = "getContractList";
+		_methodName24 = "findByName";
 
-		_methodParameterTypes24 = new String[] { "long", "long" };
+		_methodParameterTypes24 = new String[] {
+				"long", "long", "long", "long", "java.lang.String"
+			};
 
 		_methodName25 = "getContractList";
 
-		_methodParameterTypes25 = new String[] { "long", "long", "long" };
+		_methodParameterTypes25 = new String[] { "long", "long" };
 
-		_methodName26 = "getContractsByOrganization";
+		_methodName26 = "getContractList";
 
-		_methodParameterTypes26 = new String[] { "long" };
+		_methodParameterTypes26 = new String[] { "long", "long", "long" };
 
-		_methodName27 = "getContractsByUser";
+		_methodName27 = "getContractsByOrganization";
 
 		_methodParameterTypes27 = new String[] { "long" };
 
-		_methodName28 = "getConsultantContracts";
+		_methodName28 = "getContractsByUser";
 
 		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName29 = "getCompanyContracts";
+		_methodName29 = "getConsultantContracts";
 
-		_methodParameterTypes29 = new String[] { "long", "long", "int", "int" };
+		_methodParameterTypes29 = new String[] { "long" };
 
-		_methodName30 = "coundCompanyContracts";
+		_methodName30 = "getCompanyContracts";
 
-		_methodParameterTypes30 = new String[] { "long", "long" };
+		_methodParameterTypes30 = new String[] { "long", "long", "int", "int" };
+
+		_methodName31 = "coundCompanyContracts";
+
+		_methodParameterTypes31 = new String[] { "long", "long" };
 	}
 
 	@Override
@@ -887,14 +893,60 @@ public class ContractLocalServiceClp implements ContractLocalService {
 	}
 
 	@Override
+	public com.leancrm.portlet.library.model.Contract findByName(long userId,
+		long contactId, long organizationId, long enterpriseId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] {
+						userId,
+						
+					contactId,
+						
+					organizationId,
+						
+					enterpriseId,
+						
+					ClpSerializer.translateInput(name)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.leancrm.portlet.library.model.Contract)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.leancrm.portlet.library.model.Contract> getContractList(
 		long organizationId, long enterpriseId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] { organizationId, enterpriseId });
 		}
 		catch (Throwable t) {
@@ -923,8 +975,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { organizationId, enterpriseId, userId });
 		}
 		catch (Throwable t) {
@@ -953,8 +1005,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { organizationId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { organizationId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -983,8 +1035,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { userId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1016,8 +1068,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] { consultantId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { consultantId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1045,8 +1097,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] { organizationId, consultantId, start, end });
 		}
 		catch (Throwable t) {
@@ -1074,8 +1126,8 @@ public class ContractLocalServiceClp implements ContractLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] { organizationId, consultantId });
 		}
 		catch (Throwable t) {
@@ -1158,4 +1210,6 @@ public class ContractLocalServiceClp implements ContractLocalService {
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
 }

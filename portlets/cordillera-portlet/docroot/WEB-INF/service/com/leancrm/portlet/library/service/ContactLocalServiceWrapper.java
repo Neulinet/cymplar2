@@ -304,6 +304,29 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.getName(contactId, addressBookId);
 	}
 
+	/**
+	* Find contact for specified enterprise by name
+	* If several contacts found - first will be returned
+	*
+	* TODO Replace to database select
+	*
+	* @param userId
+	* @param addressBookId
+	* @param enterpriseId
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	@Override
+	public com.leancrm.portlet.library.model.Contact findByName(long userId,
+		long addressBookId, long enterpriseId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _contactLocalService.findByName(userId, addressBookId,
+			enterpriseId, name);
+	}
+
 	@Override
 	public com.leancrm.portlet.library.model.ContactDataRef getEnterprise(
 		long contactId, long addressBookId)

@@ -32,4 +32,15 @@ public enum ContractStatus {
 		
 		return null;
 	}
+	
+	public static ContractStatus getContractStatus(String name) {
+		for (ContractStatus status : values()) {
+			if (status.getLabel().equals(name)) {
+				return status;
+			}
+		}
+		
+		return null;
+	}
+	
 }

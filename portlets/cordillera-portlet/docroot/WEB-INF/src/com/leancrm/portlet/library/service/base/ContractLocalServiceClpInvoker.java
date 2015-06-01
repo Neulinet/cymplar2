@@ -136,33 +136,39 @@ public class ContractLocalServiceClpInvoker {
 
 		_methodParameterTypes128 = new String[] { "long", "long", "long", "long" };
 
-		_methodName129 = "getContractList";
+		_methodName129 = "findByName";
 
-		_methodParameterTypes129 = new String[] { "long", "long" };
+		_methodParameterTypes129 = new String[] {
+				"long", "long", "long", "long", "java.lang.String"
+			};
 
 		_methodName130 = "getContractList";
 
-		_methodParameterTypes130 = new String[] { "long", "long", "long" };
+		_methodParameterTypes130 = new String[] { "long", "long" };
 
-		_methodName131 = "getContractsByOrganization";
+		_methodName131 = "getContractList";
 
-		_methodParameterTypes131 = new String[] { "long" };
+		_methodParameterTypes131 = new String[] { "long", "long", "long" };
 
-		_methodName132 = "getContractsByUser";
+		_methodName132 = "getContractsByOrganization";
 
 		_methodParameterTypes132 = new String[] { "long" };
 
-		_methodName133 = "getConsultantContracts";
+		_methodName133 = "getContractsByUser";
 
 		_methodParameterTypes133 = new String[] { "long" };
 
-		_methodName134 = "getCompanyContracts";
+		_methodName134 = "getConsultantContracts";
 
-		_methodParameterTypes134 = new String[] { "long", "long", "int", "int" };
+		_methodParameterTypes134 = new String[] { "long" };
 
-		_methodName135 = "coundCompanyContracts";
+		_methodName135 = "getCompanyContracts";
 
-		_methodParameterTypes135 = new String[] { "long", "long" };
+		_methodParameterTypes135 = new String[] { "long", "long", "int", "int" };
+
+		_methodName136 = "coundCompanyContracts";
+
+		_methodParameterTypes136 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -306,42 +312,50 @@ public class ContractLocalServiceClpInvoker {
 
 		if (_methodName129.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
-			return ContractLocalServiceUtil.getContractList(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return ContractLocalServiceUtil.findByName(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
 		}
 
 		if (_methodName130.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return ContractLocalServiceUtil.getContractList(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue());
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
-			return ContractLocalServiceUtil.getContractsByOrganization(((Long)arguments[0]).longValue());
+			return ContractLocalServiceUtil.getContractList(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return ContractLocalServiceUtil.getContractsByUser(((Long)arguments[0]).longValue());
+			return ContractLocalServiceUtil.getContractsByOrganization(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName133.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return ContractLocalServiceUtil.getConsultantContracts(((Long)arguments[0]).longValue());
+			return ContractLocalServiceUtil.getContractsByUser(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName134.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+			return ContractLocalServiceUtil.getConsultantContracts(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			return ContractLocalServiceUtil.getCompanyContracts(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return ContractLocalServiceUtil.coundCompanyContracts(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -409,4 +423,6 @@ public class ContractLocalServiceClpInvoker {
 	private String[] _methodParameterTypes134;
 	private String _methodName135;
 	private String[] _methodParameterTypes135;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
 }

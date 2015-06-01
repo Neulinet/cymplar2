@@ -306,6 +306,25 @@ public interface ContractLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Find contract by Name
+	* TODO Reimplement with using SQL queries
+	*
+	* @param userId
+	* @param contactId
+	* @param organizationId
+	* @param enterpriseId
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
+	public com.leancrm.portlet.library.model.Contract findByName(long userId,
+		long contactId, long organizationId, long enterpriseId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.leancrm.portlet.library.model.Contract> getContractList(
 		long organizationId, long enterpriseId)

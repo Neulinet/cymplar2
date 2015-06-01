@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.leancrm.portlet.library.model.ContactContract;
 import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.Report;
@@ -26,12 +28,6 @@ import com.leancrm.portlet.library.model.impl.ContactContractImpl;
 import com.leancrm.portlet.library.service.ContactContractLocalServiceUtil;
 import com.leancrm.portlet.library.service.ReportLocalServiceUtil;
 import com.leancrm.portlet.library.service.base.ContractLocalServiceBaseImpl;
-import com.leancrm.portlet.library.service.persistence.ContractFinderUtil;
-import com.leancrm.portlet.validator.ValidationsUtil;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -166,6 +162,29 @@ public class ContractLocalServiceImpl extends ContractLocalServiceBaseImpl {
 		}
 		
 		return contractList;
+	}
+	
+	/** Find contract by Name
+	 * TODO Reimplement with using SQL queries
+	 * @param userId
+	 * @param contactId
+	 * @param organizationId
+	 * @param enterpriseId
+	 * @param name
+	 * @return
+	 * @throws PortalException 
+	 * @throws SystemException 
+	 */
+	@Override
+	public Contract findByName(long userId, long contactId, long organizationId, long enterpriseId, String name) throws SystemException, PortalException {
+		for (Contract contract : getContractList(userId, contactId, organizationId, enterpriseId)) {
+			if (StringUtils.equals(name, contract.getDescription())) {
+				// found!
+				return contract;
+			}
+		}
+		
+		return null;
 	}
 	
 	public List<Contract> getContractList(long organizationId, long enterpriseId) throws SystemException {

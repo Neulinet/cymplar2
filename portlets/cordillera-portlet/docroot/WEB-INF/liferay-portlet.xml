@@ -109,7 +109,7 @@
 			reportsearchresult-portlet
 		</css-class-wrapper>
 	</portlet -->
-	<!-- portlet>
+	<portlet>
 		<portlet-name>contact-migration</portlet-name>
 		<icon>/icon.png</icon>
 		<control-panel-entry-category>portal</control-panel-entry-category>
@@ -120,7 +120,7 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>contact-migration-portlet</css-class-wrapper>
-	</portlet -->
+	</portlet>
 	<portlet>
 		<portlet-name>calendar</portlet-name>
 		<icon>/icon.png</icon>

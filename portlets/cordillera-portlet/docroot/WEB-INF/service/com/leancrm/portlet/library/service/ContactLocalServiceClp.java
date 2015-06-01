@@ -126,21 +126,27 @@ public class ContactLocalServiceClp implements ContactLocalService {
 
 		_methodParameterTypes21 = new String[] { "long", "long" };
 
-		_methodName22 = "getEnterprise";
+		_methodName22 = "findByName";
 
-		_methodParameterTypes22 = new String[] { "long", "long" };
+		_methodParameterTypes22 = new String[] {
+				"long", "long", "long", "java.lang.String"
+			};
 
-		_methodName23 = "cleanContacs";
+		_methodName23 = "getEnterprise";
 
-		_methodParameterTypes23 = new String[] {  };
+		_methodParameterTypes23 = new String[] { "long", "long" };
 
-		_methodName24 = "getContactMethodList";
+		_methodName24 = "cleanContacs";
 
-		_methodParameterTypes24 = new String[] { "long", "long" };
+		_methodParameterTypes24 = new String[] {  };
 
-		_methodName25 = "getConsultantContacts";
+		_methodName25 = "getContactMethodList";
 
-		_methodParameterTypes25 = new String[] { "long" };
+		_methodParameterTypes25 = new String[] { "long", "long" };
+
+		_methodName26 = "getConsultantContacts";
+
+		_methodParameterTypes26 = new String[] { "long" };
 	}
 
 	@Override
@@ -786,8 +792,8 @@ public class ContactLocalServiceClp implements ContactLocalService {
 	}
 
 	@Override
-	public com.leancrm.portlet.library.model.ContactDataRef getEnterprise(
-		long contactId, long addressBookId)
+	public com.leancrm.portlet.library.model.Contact findByName(long userId,
+		long addressBookId, long enterpriseId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -795,6 +801,49 @@ public class ContactLocalServiceClp implements ContactLocalService {
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
 					_methodParameterTypes22,
+					new Object[] {
+						userId,
+						
+					addressBookId,
+						
+					enterpriseId,
+						
+					ClpSerializer.translateInput(name)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.leancrm.portlet.library.model.Contact)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.leancrm.portlet.library.model.ContactDataRef getEnterprise(
+		long contactId, long addressBookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { contactId, addressBookId });
 		}
 		catch (Throwable t) {
@@ -824,8 +873,8 @@ public class ContactLocalServiceClp implements ContactLocalService {
 	public void cleanContacs()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName23,
-				_methodParameterTypes23, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName24,
+				_methodParameterTypes24, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -852,8 +901,8 @@ public class ContactLocalServiceClp implements ContactLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] { contactId, addressBookId });
 		}
 		catch (Throwable t) {
@@ -886,8 +935,8 @@ public class ContactLocalServiceClp implements ContactLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { consultantId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { consultantId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -959,4 +1008,6 @@ public class ContactLocalServiceClp implements ContactLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }
