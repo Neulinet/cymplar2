@@ -1,3 +1,5 @@
+<%@page import="com.liferay.portal.model.User"%>
+<%@page import="com.leancrm.portlet.library.service.UserContractLocalServiceUtil"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
@@ -67,6 +69,7 @@
 			ContactStatusEnum status = ContactStatusEnum.getStatus(report.getStatus());
 
 			String rowStyle = "leads-status-" + status.name().toLowerCase();
+			User owner = UserContractLocalServiceUtil.getContractOwner(contract.getContractId());
 		%>
 		<liferay-ui:search-container-column-text
 			name="Company Name"
@@ -94,6 +97,12 @@
 			value='<%=status == null ? "" : status.name() %>'
 			cssClass='<%= rowStyle %>'
 			orderable="<%= true %>"
+		/>
+		<liferay-ui:search-container-column-text
+			name="Owner"
+			value='<%= owner.getFullName() %>'
+			cssClass='<%= rowStyle %>'
+			orderable="<%= false  %>"
 		/>
 		<liferay-ui:search-container-column-text
 			name="Actions"
