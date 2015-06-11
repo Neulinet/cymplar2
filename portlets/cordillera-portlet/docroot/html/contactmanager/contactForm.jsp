@@ -267,34 +267,9 @@ function cleanEnterpriseDetail() {
 }
 
 function fillEnterpriseDetail(enterprise) {
-	console.log("Fill Enterprise Detail");
-	console.log("enterpriseId: " + enterprise.enterpriseId);
-	document.getElementById("<portlet:namespace />enterpriseId").value = enterprise.enterpriseId;
-	console.log("isPrivate: " + enterprise.isPrivate);
-	document.getElementById("<portlet:namespace />isPrivateCheckbox").checked = enterprise.isPrivate == 'on';
-	console.log("enterpriseName: " + enterprise.enterpriseName);
+	// according to https://github.com/Neulinet/cymplar/issues/5 - populate only name - but not other data
 	document.getElementById("<portlet:namespace />enterpriseName").value = enterprise.enterpriseName;
-	console.log("description: " + enterprise.description);
-	document.getElementById("<portlet:namespace />description").value = enterprise.description;
-	console.log("enterpriseEmail: " + enterprise.email);
-	document.getElementById("<portlet:namespace />enterpriseEmail").value = enterprise.email;
-	console.log("taxid: " + enterprise.taxid);
-	document.getElementById("<portlet:namespace />taxid").value = enterprise.taxid;
-	console.log("industryId: " + enterprise.industryId);
-	document.getElementById("<portlet:namespace />industryId").value = enterprise.industryId; // Multi Select
-	console.log("street1: " + enterprise.street1);
-	document.getElementById("<portlet:namespace />street1").value = enterprise.street1;
-	console.log("street2: " + enterprise.street2);
-	document.getElementById("<portlet:namespace />street2").value = enterprise.street2;
-	console.log("street3: " + enterprise.street3);
-	document.getElementById("<portlet:namespace />street3").value = enterprise.street3;
-	console.log("countryId: " + enterprise.countryId);
-	document.getElementById("<portlet:namespace />countryId").value = enterprise.countryId;
-	console.log("zip: " + enterprise.zip);
-	document.getElementById("<portlet:namespace />zip").value = enterprise.zip;
-	console.log("city: " + enterprise.city);
-	document.getElementById("<portlet:namespace />city").value = enterprise.city;
-}
+}    
 
 function fixEnterpriseSelected() {
 	var enterpriseId = document.getElementById("<portlet:namespace />enterpriseId").value;
