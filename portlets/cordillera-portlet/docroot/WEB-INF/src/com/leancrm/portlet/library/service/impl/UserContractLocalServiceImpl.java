@@ -14,17 +14,15 @@
 
 package com.leancrm.portlet.library.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.leancrm.portlet.library.ContractConstants;
-import com.leancrm.portlet.library.model.Contact;
-import com.leancrm.portlet.library.model.Contract;
 import com.leancrm.portlet.library.model.UserContract;
 import com.leancrm.portlet.library.model.impl.UserContractImpl;
 import com.leancrm.portlet.library.service.base.UserContractLocalServiceBaseImpl;
-import com.leancrm.portlet.reportSearch.ReportResultItem;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -92,6 +90,7 @@ public class UserContractLocalServiceImpl
 				return userContractToCheck;
 			} else {
 				userContractToCheck.setAccessLevel(accessLevel);
+				userContractToCheck.setModifiedDate(new Date());
 				userContractPersistence.update(userContractToCheck);
 				
 				return userContractToCheck;
@@ -107,7 +106,11 @@ public class UserContractLocalServiceImpl
 		userContract.setActive(true);
 		userContract.setAccessLevel(accessLevel);
 		
-		return userContractLocalService.addUserContract(userContract);
+		Date now = new Date();
+		userContract.setCreateDate(now);
+		userContract.setModifiedDate(now);
+		
+		return userContractPersistence.update(userContract);
 	}
 	
 	@Override

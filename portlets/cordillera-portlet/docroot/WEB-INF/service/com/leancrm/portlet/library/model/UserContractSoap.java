@@ -19,6 +19,7 @@ import com.leancrm.portlet.library.service.persistence.UserContractPK;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,8 @@ public class UserContractSoap implements Serializable {
 		soapModel.setContractId(model.getContractId());
 		soapModel.setActive(model.getActive());
 		soapModel.setAccessLevel(model.getAccessLevel());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 
 		return soapModel;
 	}
@@ -124,8 +127,26 @@ public class UserContractSoap implements Serializable {
 		_accessLevel = accessLevel;
 	}
 
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	private long _userId;
 	private long _contractId;
 	private boolean _active;
 	private int _accessLevel;
+	private Date _createDate;
+	private Date _modifiedDate;
 }

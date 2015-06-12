@@ -6,6 +6,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.ResourceBundle" %>
 <%@page import="com.liferay.portal.kernel.util.ListUtil"%>
@@ -23,6 +24,20 @@
 <%@page import="com.liferay.portal.kernel.dao.search.ResultRow" %> 
 <%@page import="com.leancrm.portlet.utils.CRMErrorKey"%>
 <%@page import="com.leancrm.portlet.utils.CRMSuccessKey"%>
+<%@page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil"%>
+<%@page import="java.text.Format"%>
+<%@page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil"%>
+<%@page import="java.text.DateFormat"%>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<%--
+DateFormat dateFormatDate = DateFormat.getDateInstance(DateFormat.LONG, locale);
+dateFormatDate.setTimeZone(timeZone);
+DateFormat dateFormatDateTime = DateFormatFactoryUtil.getDateTime(locale, timeZone);
+DateFormat dateFormatTime = DateFormatFactoryUtil.getTime(locale, timeZone);
+
+
+Format timeFormatDate = FastDateFormatFactoryUtil.getTime(locale, timeZone);
+ --%>

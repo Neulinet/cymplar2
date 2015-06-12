@@ -228,6 +228,9 @@
 		<column name="active" type="boolean"></column>
 		<!--  Access Level for specific contract: 0 - owner, 1 - read, 2 - contributor -->
 		<column name="accessLevel" type="int"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		
 		
 		<!-- Finders -->
 		<finder name="UserContract" return-type="UserContract">

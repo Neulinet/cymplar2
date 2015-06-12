@@ -30,6 +30,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,6 +81,8 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		attributes.put("contractId", getContractId());
 		attributes.put("active", getActive());
 		attributes.put("accessLevel", getAccessLevel());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -108,6 +111,18 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 
 		if (accessLevel != null) {
 			setAccessLevel(accessLevel);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 	}
 
@@ -218,6 +233,52 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		}
 	}
 
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+
+		if (_userContractRemoteModel != null) {
+			try {
+				Class<?> clazz = _userContractRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCreateDate", Date.class);
+
+				method.invoke(_userContractRemoteModel, createDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+
+		if (_userContractRemoteModel != null) {
+			try {
+				Class<?> clazz = _userContractRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setModifiedDate", Date.class);
+
+				method.invoke(_userContractRemoteModel, modifiedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getUserContractRemoteModel() {
 		return _userContractRemoteModel;
 	}
@@ -291,6 +352,8 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		clone.setContractId(getContractId());
 		clone.setActive(getActive());
 		clone.setAccessLevel(getAccessLevel());
+		clone.setCreateDate(getCreateDate());
+		clone.setModifiedDate(getModifiedDate());
 
 		return clone;
 	}
@@ -331,7 +394,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{userId=");
 		sb.append(getUserId());
@@ -341,6 +404,10 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 		sb.append(getActive());
 		sb.append(", accessLevel=");
 		sb.append(getAccessLevel());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -348,7 +415,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.leancrm.portlet.library.model.UserContract");
@@ -370,6 +437,14 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 			"<column><column-name>accessLevel</column-name><column-value><![CDATA[");
 		sb.append(getAccessLevel());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -381,5 +456,7 @@ public class UserContractClp extends BaseModelImpl<UserContract>
 	private long _contractId;
 	private boolean _active;
 	private int _accessLevel;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private BaseModel<?> _userContractRemoteModel;
 }

@@ -25,6 +25,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the UserContract service. Represents a row in the &quot;crm_UserContract&quot; database table, with each column mapped to a property of this class.
  *
@@ -136,6 +138,34 @@ public interface UserContractModel extends BaseModel<UserContract> {
 	 * @param accessLevel the access level of this user contract
 	 */
 	public void setAccessLevel(int accessLevel);
+
+	/**
+	 * Returns the create date of this user contract.
+	 *
+	 * @return the create date of this user contract
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this user contract.
+	 *
+	 * @param createDate the create date of this user contract
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this user contract.
+	 *
+	 * @return the modified date of this user contract
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this user contract.
+	 *
+	 * @param modifiedDate the modified date of this user contract
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	@Override
 	public boolean isNew();

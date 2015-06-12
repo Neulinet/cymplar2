@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing UserContract in entity cache.
  *
@@ -35,7 +37,7 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{userId=");
 		sb.append(userId);
@@ -45,6 +47,10 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		sb.append(active);
 		sb.append(", accessLevel=");
 		sb.append(accessLevel);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -59,6 +65,20 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		userContractImpl.setActive(active);
 		userContractImpl.setAccessLevel(accessLevel);
 
+		if (createDate == Long.MIN_VALUE) {
+			userContractImpl.setCreateDate(null);
+		}
+		else {
+			userContractImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			userContractImpl.setModifiedDate(null);
+		}
+		else {
+			userContractImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		userContractImpl.resetOriginalValues();
 
 		return userContractImpl;
@@ -70,6 +90,8 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		contractId = objectInput.readLong();
 		active = objectInput.readBoolean();
 		accessLevel = objectInput.readInt();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 	}
 
 	@Override
@@ -79,10 +101,14 @@ public class UserContractCacheModel implements CacheModel<UserContract>,
 		objectOutput.writeLong(contractId);
 		objectOutput.writeBoolean(active);
 		objectOutput.writeInt(accessLevel);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 	}
 
 	public long userId;
 	public long contractId;
 	public boolean active;
 	public int accessLevel;
+	public long createDate;
+	public long modifiedDate;
 }

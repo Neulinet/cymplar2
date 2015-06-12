@@ -36,41 +36,43 @@
 	<liferay-ui:error key="<%=CRMErrorKey.NON_EXIXTENT_ADDRESS_BOOK %>" message="non-existent-address-book-msg"/>
 	
 	<!-- Company Fields -->
-	<aui:input type="checkbox" id="isPrivate" name="isPrivate" label="Private" autocomplete="off"  />
+	<aui:input type="checkbox" id="isPrivate" name="isPrivate" label="Private" autocomplete="off"/>
 
-	<!-- Typeahead -->
-	<aui:input type="hidden" name="enterpriseId" label="Enterprise ID" id="enterpriseId" value="" autocomplete="off" />
-	<aui:input onblur="javascript:fixEnterpriseSelected()" type="text" id="enterpriseName" name="enterpriseName" placeholder="search.." autocomplete="off" label="Name" />
-	<!-- END Typeahead -->
+	<div id="enterpriseInfo">
+		<!-- Typeahead -->
+		<aui:input type="hidden" name="enterpriseId" label="Enterprise ID" id="enterpriseId" value="" autocomplete="off" />
+		<aui:input onblur="javascript:fixEnterpriseSelected()" type="text" id="enterpriseName" name="enterpriseName" placeholder="search.." autocomplete="off" label="Name" />
+		<!-- END Typeahead -->
+		
+		<aui:input type="text" id="description" name="description" autocomplete="off" label="Description"/>
 	
-	<aui:input type="text" id="description" name="description" autocomplete="off" label="Description"/>
-
-	<aui:input type="text" id="enterpriseEmail" name="enterpriseEmail" autocomplete="off" label="Email"/>
-
-	<aui:input type="text" id="taxid" name="taxid" autocomplete="off" label="ABN" />
-	<!-- <span class="help-block">99-9999999</span> -->
-
-	<aui:select id="industryId" name="industryId" label="Industry" autocomplete="off" multiple="multiple" >
-		<c:forEach items="<%=IndustryLocalServiceUtil.getAllOrdered() %>" var="industry">
-			<aui:option value="${industry.industryId}">${industry.name}</aui:option>
-		</c:forEach>
-	</aui:select>
-
-	<aui:input type="text" id="street1" name="street1" label="Street 1" autocomplete="off" />
-
-	<aui:input type="text" id="street2" name="street2" autocomplete="off" label="Street 2" />
-
-	<aui:input type="text" id="street3" name="street3" autocomplete="off" label="Suburb" />
-
-	<aui:select id="countryId" name="countryId" label="Country" autocomplete="off">
-		<c:forEach items="<%=CountryServiceUtil.getCountries() %>" var="country">
-			<aui:option value="${country.countryId}">${country.name}</aui:option>
-		</c:forEach>
-	</aui:select>
-
-	<aui:input type="text" id="zip" name="zip" autocomplete="off" label="Postal Code" />
-
-	<aui:input type="text" id="city" name="city" autocomplete="off" label="City" />
+		<aui:input type="text" id="enterpriseEmail" name="enterpriseEmail" autocomplete="off" label="Email"/>
+	
+		<aui:input type="text" id="taxid" name="taxid" autocomplete="off" label="ABN" />
+		<!-- <span class="help-block">99-9999999</span> -->
+	
+		<aui:select id="industryId" name="industryId" label="Industry" autocomplete="off" multiple="multiple" >
+			<c:forEach items="<%=IndustryLocalServiceUtil.getAllOrdered() %>" var="industry">
+				<aui:option value="${industry.industryId}">${industry.name}</aui:option>
+			</c:forEach>
+		</aui:select>
+	
+		<aui:input type="text" id="street1" name="street1" label="Street 1" autocomplete="off" />
+	
+		<aui:input type="text" id="street2" name="street2" autocomplete="off" label="Street 2" />
+	
+		<aui:input type="text" id="street3" name="street3" autocomplete="off" label="Suburb" />
+	
+		<aui:select id="countryId" name="countryId" label="Country" autocomplete="off">
+			<c:forEach items="<%=CountryServiceUtil.getCountries() %>" var="country">
+				<aui:option value="${country.countryId}">${country.name}</aui:option>
+			</c:forEach>
+		</aui:select>
+	
+		<aui:input type="text" id="zip" name="zip" autocomplete="off" label="Postal Code" />
+	
+		<aui:input type="text" id="city" name="city" autocomplete="off" label="City" />
+	</div>
 </div>
 </div>
 
@@ -112,6 +114,7 @@
 	<!-- End Contact Fields -->
 </form>
 
+ 
 <liferay-portlet:actionURL var="getEnterprisesURL" name="getEnterprises" />
 <liferay-portlet:actionURL var="showEnterpriseDetailURL" name="showEnterpriseDetail" />
 
@@ -245,6 +248,18 @@ YUI().use(
 			rules: rules,
 			showAllMessages: true
 		});
+		
+		
+		// process clicking on private checkbox
+		Y.one('#<portlet:namespace/>isPrivateCheckbox').on('click', function(){
+			var isPrivate = document.getElementById("<portlet:namespace />isPrivateCheckbox").checked;
+			if (isPrivate) {
+				Y.one('#enterpriseInfo').hide();	
+			} else {
+				Y.one('#enterpriseInfo').show();
+			}
+			
+		});
 	}
 );
 </aui:script>
@@ -305,5 +320,4 @@ function fillContactForm(data) {
 	document.getElementById('<portlet:namespace />email').value = data.email;
 	document.getElementById('<portlet:namespace />personalEmail').value = data.personalEmail;
 }
-
 </script>

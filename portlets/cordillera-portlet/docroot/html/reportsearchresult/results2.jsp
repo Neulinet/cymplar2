@@ -1,3 +1,5 @@
+<%@page import="com.leancrm.portlet.library.model.UserContract"%>
+<%@page import="com.leancrm.portlet.library.service.UserContractLocalServiceUtil"%>
 <%@page import="com.leancrm.portlet.library.ContractConstants"%>
 <%@page import="com.leancrm.portlet.utils.PermissionChecker"%>
 <%@page import="com.liferay.portal.model.User"%>
@@ -122,6 +124,43 @@
 		name="Actions"
 		cssClass='<%= "leads-actions "%>'
 	>
+
+			<%-- Print red icon in case this lead was shared to me --%>
+			<%
+				UserContract userContract = null;
+				// get sharing date
+				try {
+					userContract = UserContractLocalServiceUtil.getByUserContract(themeDisplay.getUserId(), aItem.getContractId());
+				} catch (Exception ex) {}
+			%>
+	
+			<c:if test="<%= userContract != null && aItem.getLeadOwner().getUserId() != themeDisplay.getUserId() %>">
+				<% 
+					String shareDate = "";
+					if (userContract.getCreateDate() != null) {
+						shareDate = " at " + dateFormat.format(userContract.getCreateDate());
+					}
+				%>
+				<img src='<%= themeDisplay.getPathThemeImages() + "/u_admin/cymplar_icon_red.png"%>' title='<%= "Shared by " + aItem.getLeadOwner().getFullName() + shareDate  %>'></img>
+			</c:if>
+			
+			<!-- If report from another user and I'm owner - display green icon -->
+			<c:if test="<%= aItem.getLeadOwner().getUserId() == themeDisplay.getUserId() && aItem.getConsultant().getUserId() != themeDisplay.getUserId() %>">
+				<%
+					// get sharing date
+					try {
+						userContract = UserContractLocalServiceUtil.getByUserContract(aItem.getConsultant().getUserId(), aItem.getContractId());
+					} catch (Exception ex) {}
+				
+					String shareDate = "";
+					if (userContract != null && userContract.getCreateDate() != null) {
+						shareDate = " at " + dateFormat.format(userContract.getCreateDate());
+					}
+				%>
+				<img src='<%= themeDisplay.getPathThemeImages() + "/u_admin/cymplar_icon_green.png"%>' title='<%= "Shared to " + aItem.getConsultant().getFullName() + shareDate  %>'></img>
+			</c:if>
+			 
+			
 			<c:if test="<%= PermissionChecker.canCommentContract(aItem.getContractId(), themeDisplay.getUser()) %>">
 				<%
 					String reportInfoUrl = "javascript:addReportInfo(" + aItem.getReportId() + ")";

@@ -173,5 +173,7 @@
 		<field name="contractId" type="long" />
 		<field name="active" type="boolean" />
 		<field name="accessLevel" type="int" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 	</model>
 </model-hints>

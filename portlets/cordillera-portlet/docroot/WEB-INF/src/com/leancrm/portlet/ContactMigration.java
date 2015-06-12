@@ -1054,7 +1054,7 @@ public class ContactMigration extends MVCPortlet {
 				    double amount = 0.0;
 				    try {
 				    	amount = Double.valueOf(contractValue);
-				    } catch (Exception ex) {}
+				    } catch (Exception ex) {}  // ignore exception here 
 				    
 				    // create contract (if not exist yet)
 				    Contract contract = ContractLocalServiceUtil.findByName(themeDisplay.getUserId(), contact.getContactId(), orgId, enterprise.getEnterpriseId(), DEFAULT_LEAD_NAME);

@@ -214,6 +214,8 @@ create table crm_UserContract (
 	contractId LONG not null,
 	active_ BOOLEAN,
 	accessLevel INTEGER,
+	createDate DATE null,
+	modifiedDate DATE null,
 	primary key (userId, contractId)
 );
 

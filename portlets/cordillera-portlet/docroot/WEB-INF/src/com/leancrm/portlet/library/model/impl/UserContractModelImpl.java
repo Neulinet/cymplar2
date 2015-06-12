@@ -31,6 +31,7 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,9 +60,11 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 			{ "userId", Types.BIGINT },
 			{ "contractId", Types.BIGINT },
 			{ "active_", Types.BOOLEAN },
-			{ "accessLevel", Types.INTEGER }
+			{ "accessLevel", Types.INTEGER },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table crm_UserContract (userId LONG not null,contractId LONG not null,active_ BOOLEAN,accessLevel INTEGER,primary key (userId, contractId))";
+	public static final String TABLE_SQL_CREATE = "create table crm_UserContract (userId LONG not null,contractId LONG not null,active_ BOOLEAN,accessLevel INTEGER,createDate DATE null,modifiedDate DATE null,primary key (userId, contractId))";
 	public static final String TABLE_SQL_DROP = "drop table crm_UserContract";
 	public static final String ORDER_BY_JPQL = " ORDER BY userContract.id.userId ASC, userContract.id.contractId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_UserContract.userId ASC, crm_UserContract.contractId ASC";
@@ -126,6 +129,8 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		attributes.put("contractId", getContractId());
 		attributes.put("active", getActive());
 		attributes.put("accessLevel", getAccessLevel());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -154,6 +159,18 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 		if (accessLevel != null) {
 			setAccessLevel(accessLevel);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 	}
 
@@ -260,6 +277,26 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		return _originalAccessLevel;
 	}
 
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -282,6 +319,8 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		userContractImpl.setContractId(getContractId());
 		userContractImpl.setActive(getActive());
 		userContractImpl.setAccessLevel(getAccessLevel());
+		userContractImpl.setCreateDate(getCreateDate());
+		userContractImpl.setModifiedDate(getModifiedDate());
 
 		userContractImpl.resetOriginalValues();
 
@@ -357,12 +396,30 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 		userContractCacheModel.accessLevel = getAccessLevel();
 
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			userContractCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			userContractCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			userContractCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			userContractCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
 		return userContractCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{userId=");
 		sb.append(getUserId());
@@ -372,6 +429,10 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		sb.append(getActive());
 		sb.append(", accessLevel=");
 		sb.append(getAccessLevel());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -379,7 +440,7 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.leancrm.portlet.library.model.UserContract");
@@ -400,6 +461,14 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 		sb.append(
 			"<column><column-name>accessLevel</column-name><column-value><![CDATA[");
 		sb.append(getAccessLevel());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -424,6 +493,8 @@ public class UserContractModelImpl extends BaseModelImpl<UserContract>
 	private int _accessLevel;
 	private int _originalAccessLevel;
 	private boolean _setOriginalAccessLevel;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _columnBitmask;
 	private UserContract _escapedModel;
 }

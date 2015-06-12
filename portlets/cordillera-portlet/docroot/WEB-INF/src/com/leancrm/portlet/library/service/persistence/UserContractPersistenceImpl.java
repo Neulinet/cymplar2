@@ -2753,6 +2753,8 @@ public class UserContractPersistenceImpl extends BasePersistenceImpl<UserContrac
 		userContractImpl.setContractId(userContract.getContractId());
 		userContractImpl.setActive(userContract.isActive());
 		userContractImpl.setAccessLevel(userContract.getAccessLevel());
+		userContractImpl.setCreateDate(userContract.getCreateDate());
+		userContractImpl.setModifiedDate(userContract.getModifiedDate());
 
 		return userContractImpl;
 	}

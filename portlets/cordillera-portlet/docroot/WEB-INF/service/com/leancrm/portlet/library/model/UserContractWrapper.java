@@ -17,6 +17,7 @@ package com.leancrm.portlet.library.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +54,8 @@ public class UserContractWrapper implements UserContract,
 		attributes.put("contractId", getContractId());
 		attributes.put("active", getActive());
 		attributes.put("accessLevel", getAccessLevel());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -81,6 +84,18 @@ public class UserContractWrapper implements UserContract,
 
 		if (accessLevel != null) {
 			setAccessLevel(accessLevel);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 	}
 
@@ -215,6 +230,46 @@ public class UserContractWrapper implements UserContract,
 	@Override
 	public void setAccessLevel(int accessLevel) {
 		_userContract.setAccessLevel(accessLevel);
+	}
+
+	/**
+	* Returns the create date of this user contract.
+	*
+	* @return the create date of this user contract
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _userContract.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this user contract.
+	*
+	* @param createDate the create date of this user contract
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_userContract.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this user contract.
+	*
+	* @return the modified date of this user contract
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _userContract.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this user contract.
+	*
+	* @param modifiedDate the modified date of this user contract
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_userContract.setModifiedDate(modifiedDate);
 	}
 
 	@Override
