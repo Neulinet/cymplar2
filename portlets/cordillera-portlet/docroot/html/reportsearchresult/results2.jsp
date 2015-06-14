@@ -156,7 +156,7 @@
 					if (userContract != null && userContract.getCreateDate() != null) {
 						shareDate = " at " + dateFormat.format(userContract.getCreateDate());
 					}
-				%>
+				%>   
 				<img src='<%= themeDisplay.getPathThemeImages() + "/u_admin/cymplar_icon_green.png"%>' title='<%= "Shared to " + aItem.getConsultant().getFullName() + shareDate  %>'></img>
 			</c:if>
 			 

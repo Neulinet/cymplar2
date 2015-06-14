@@ -17,6 +17,8 @@ package com.leancrm.portlet.library.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.leancrm.portlet.library.model.Enterprise;
 import com.leancrm.portlet.library.service.base.EnterpriseLocalServiceBaseImpl;
 import com.leancrm.portlet.validator.ValidationsUtil;
@@ -81,7 +83,9 @@ public class EnterpriseLocalServiceImpl extends EnterpriseLocalServiceBaseImpl {
 		
 		enterprise = addEnterprise(name, companyId, taxId, description, email, industryId, isPrivate);
 		
-		AddressLocalServiceUtil.addAddress(userId, Enterprise.class.getName(), enterprise.getEnterpriseId(), street1, street2, street3, city, zipCode, regionId, Long.parseLong(countryId), billingAddres, true, true);
+		if (StringUtils.isNotBlank(street1)) {
+			AddressLocalServiceUtil.addAddress(userId, Enterprise.class.getName(), enterprise.getEnterpriseId(), street1, street2, street3, city, zipCode, regionId, Long.parseLong(countryId), billingAddres, true, true);
+		}
 		
 		return enterprise;
 	}

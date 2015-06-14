@@ -69,7 +69,7 @@
 			</c:forEach>
 		</aui:select>
 	
-		<aui:input type="text" id="zip" name="zip" autocomplete="off" label="Postal Code" />
+		<aui:input type="text" id="zip" name="zip" autocomplete="off" label="Postal Code" />   
 	
 		<aui:input type="text" id="city" name="city" autocomplete="off" label="City" />
 	</div>
@@ -77,7 +77,7 @@
 </div>
 
 	<!-- End Company Fields -->
-	<div class="accordionContact dropdown">
+	<div id="personalInfo" class="accordionContact dropdown">
 	<!-- Contact Form Header -->
 	<h4 class="form-box-header dropdown-toggle">
 		<liferay-ui:message key="Add/Edit Contact" />
@@ -176,58 +176,61 @@ AUI().use(
 </aui:script>
 
 <aui:script use="aui-form-validator">
+var rules = {
+    	<portlet:namespace />enterpriseName: {
+    		required: true
+    	},
+        <portlet:namespace />description: {
+    		maxlength: 70
+    	},
+    	<portlet:namespace />enterpriseEmail: {
+            email: true,
+            maxlength: 70
+    	},
+    	<portlet:namespace />street1: {
+    		required: true,
+    		maxlength: 70
+    	},
+    	<portlet:namespace />street2: {
+    		maxlength: 70
+    	},
+    	<portlet:namespace />street3: {
+    		maxlength: 70
+    	},
+    	<portlet:namespace />countryId: {
+    		required: true
+    	},
+    	<portlet:namespace />zip: {
+    		required: true,
+    		maxlength: 20
+    	},
+    	<portlet:namespace />city: {
+    		required: true,
+    		maxlength: 70
+    	},
+    	<portlet:namespace />fullName: {
+    		required: true,
+    		maxlength: 70
+    	},
+    	<portlet:namespace />position: {
+    		maxlength: 70
+    	},
+    	<portlet:namespace />email: {
+            email: true,
+            maxlength: 70
+    	},
+    	<portlet:namespace />personalEmail: {
+            email: true,
+            maxlength: 70
+    	},
+	};
+
+var formValidator;
 
 YUI().use(
 	'aui-form-validator',
 	function(Y) {
-		var rules = {
-        	<portlet:namespace />enterpriseName: {
-        		required: true
-        	},
-            <portlet:namespace />description: {
-        		maxlength: 70
-        	},
-        	<portlet:namespace />enterpriseEmail: {
-                email: true,
-                maxlength: 70
-        	},
-        	<portlet:namespace />street1: {
-        		required: true,
-        		maxlength: 70
-        	},
-        	<portlet:namespace />street2: {
-        		maxlength: 70
-        	},
-        	<portlet:namespace />street3: {
-        		maxlength: 70
-        	},
-        	<portlet:namespace />countryId: {
-        		required: true
-        	},
-        	<portlet:namespace />zip: {
-        		required: true,
-        		maxlength: 20
-        	},
-        	<portlet:namespace />city: {
-        		required: true,
-        		maxlength: 70
-        	},
-        	<portlet:namespace />fullName: {
-        		required: true,
-        		maxlength: 70
-        	},
-        	<portlet:namespace />position: {
-        		maxlength: 70
-        	},
-        	<portlet:namespace />email: {
-                email: true,
-                maxlength: 70
-        	},
-        	<portlet:namespace />personalEmail: {
-                email: true,
-                maxlength: 70
-        	},
-		};
+		
 		var fieldStrings = {
 			<portlet:namespace />description: 'Company description must be lowest that 70 characters',
 			<portlet:namespace />enterpriseEmail: 'Please enter a valid company email address',
@@ -242,26 +245,147 @@ YUI().use(
 			<portlet:namespace />email: 'Please enter a valid contact email address',
 			<portlet:namespace />personalEmail: 'Please enter a valid contact personal email address',
 		};
-		new Y.FormValidator({
+		formValidator = new Y.FormValidator({
 			boundingBox: '#contactForm',
 			fieldStrings: fieldStrings,
 			rules: rules,
 			showAllMessages: true
-		});
+		});   
 		
+		formValidator.on("validateField", function (event) {
+			var isPrivate = document.getElementById("<portlet:namespace />isPrivateCheckbox").checked;
+			
+			if (isPrivate) {
+	            for (var k in event.details) {
+	                var name = event.details[k].validator.field.get('name');
+	                if (name.indexOf("enterpriseName") != -1 ||
+	                		name.indexOf("street1") != -1 ||
+	                		name.indexOf("zip") != -1 ||
+	                		name.indexOf("city") != -1) {
+	                	
+	                   event.halt();
+	                   break;
+	                }
+	            }
+			}
+        });
 		
 		// process clicking on private checkbox
 		Y.one('#<portlet:namespace/>isPrivateCheckbox').on('click', function(){
 			var isPrivate = document.getElementById("<portlet:namespace />isPrivateCheckbox").checked;
 			if (isPrivate) {
-				Y.one('#enterpriseInfo').hide();	
+				Y.one('#enterpriseInfo').hide();
+				Y.one('#personalInfo .dropdown-toggle').toggleClass("active");
+				Y.one('#personalInfo .dropdown-toggle').ancestor().one('.accordionWrap').toggle();   
+				
+				/*
+				cancelValidation('<portlet:namespace />enterpriseName');
+				cancelValidation('<portlet:namespace />street1');
+				cancelValidation('<portlet:namespace />zip');
+				cancelValidation('<portlet:namespace />city');
+				
+				rules = {
+						<portlet:namespace />enterpriseName: {
+			        		required: false
+			        	},
+			        	<portlet:namespace />street1: {
+			        		required: false,
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />zip: {
+			        		required: false,
+			        		maxlength: 20
+			        	},
+			        	<portlet:namespace />city: {
+			        		required: false,
+			        		maxlength: 70
+			        	}
+					};
+				*/
+					/*
+					formValidator = new Y.FormValidator({
+						boundingBox: '#contactForm',
+						fieldStrings: fieldStrings,
+						rules: rules,
+						showAllMessages: true,
+						extractRules: false
+					}); 
+					*/
 			} else {
 				Y.one('#enterpriseInfo').show();
+				
+				rules = {
+			        	<portlet:namespace />enterpriseName: {
+			        		required: true
+			        	},
+			            <portlet:namespace />description: {
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />enterpriseEmail: {
+			                email: true,
+			                maxlength: 70
+			        	},
+			        	<portlet:namespace />street1: {
+			        		required: true,
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />street2: {
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />street3: {
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />countryId: {
+			        		required: true
+			        	},
+			        	<portlet:namespace />zip: {
+			        		required: true,
+			        		maxlength: 20
+			        	},
+			        	<portlet:namespace />city: {
+			        		required: true,
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />fullName: {
+			        		required: true,
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />position: {
+			        		maxlength: 70
+			        	},
+			        	<portlet:namespace />email: {
+			                email: true,
+			                maxlength: 70
+			        	},
+			        	<portlet:namespace />personalEmail: {
+			                email: true,
+			                maxlength: 70
+			        	},
+					};
+				
 			}
 			
 		});
 	}
 );
+
+
+function cancelValidation(fieldId) {
+		console.log("Cancel validation for " + fieldId)
+	     AUI().ready('aui-form-validator',
+	        function (A) {
+	        var v = formValidator;
+	        v.on("validateField", function (event) {
+	            for (var k in event.details) {
+	                var name = event.details[k].validator.field;
+	                if (name.lastIndexOf("#" + fieldId) != -1) {
+	                    event.halt();
+	                   break;
+	                }
+	            }
+	        });
+	    });
+}
 </aui:script>
 
 <script>

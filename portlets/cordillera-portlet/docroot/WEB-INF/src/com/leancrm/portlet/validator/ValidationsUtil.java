@@ -391,7 +391,7 @@ public class ValidationsUtil {
 				isEnterpriseValid = false;
 				logger.warn("Tried to save an enterprise street1 too long");
 				errorList.add(CRMErrorKey.INPUT_TEXT_TOO_LONG);
-			} else if (isEmpty(enterpriseStreet1)) {
+			} else if (isEmpty(enterpriseStreet1) && !isPrivate) {
 				isEnterpriseValid = false;
 				logger.warn("Tried to save an empty enterprise street1");
 				errorList.add(CRMErrorKey.EMPTY_ENTERPRISE_STREET1);
@@ -413,7 +413,7 @@ public class ValidationsUtil {
 				isEnterpriseValid = false;
 				logger.warn("Tried to save an enterprise zip code too long");
 				errorList.add(CRMErrorKey.INPUT_TEXT_TOO_LONG);
-			} else if (isEmpty(enterpriseZipCode)) {
+			} else if (isEmpty(enterpriseZipCode) && !isPrivate) {
 				isEnterpriseValid = false;
 				logger.warn("Tried to save an empty enterprise zip code");
 				errorList.add(CRMErrorKey.EMPTY_ENTERPRISE_ZIP_CODE);
@@ -423,7 +423,7 @@ public class ValidationsUtil {
 				isEnterpriseValid = false;
 				logger.warn("Tried to save an enterprise city too long");
 				errorList.add(CRMErrorKey.INPUT_TEXT_TOO_LONG);
-			} else if (isEmpty(enterpriseCity)) {
+			} else if (isEmpty(enterpriseCity) && !isPrivate) {
 				isEnterpriseValid = false;
 				logger.warn("Tried to save an empty enterprise city");
 				errorList.add(CRMErrorKey.EMPTY_ENTERPRISE_CITY);
@@ -448,8 +448,8 @@ public class ValidationsUtil {
 //				}
 //			}
 			
-			if (isEmpty(reqEnterpriseCountryId)) {
-				isEnterpriseValid = false;
+			if (isEmpty(reqEnterpriseCountryId) && !isPrivate) {
+				isEnterpriseValid = false;    
 				logger.error("Tried tov save a country id empty");
 				errorList.add(CRMErrorKey.EMPTY_ENTERPRISE_COUNTRY);
 			}
